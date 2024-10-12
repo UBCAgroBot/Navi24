@@ -2,6 +2,7 @@
 
 import glob
 import os
+import keyboard
 
 import serial
 from evdev import InputDevice, ecodes
@@ -75,40 +76,66 @@ def make_signal(direction, speed, mode):
     mode = mode << 6
     direction_out = direction_out | mode
 
-    out = direction_out.to_bytes(1, signed=False) + speed_out.to_bytes(1, signed=True)
+    print("direction_out:", direction_out, "Speed_out:", speed_out)
+
+    out = direction_out.to_bytes(1, "big", signed=True) + speed_out.to_bytes(1, "big", signed=True)
     return out
 
 
 def teleop(event_path=""):
 
-    event_dir = "/dev/input/"
+    # event_dir = "/dev/input/"
 
-    if event_path == "":
-        os.chdir("/dev/input")
-        for file in sorted(glob.glob("event20")):
-            print(file)  # TEST
-            event_path = file
+    # if event_path == "":
+    #     os.chdir("/dev/input")
+    #     for file in sorted(glob.glob("event20")):
+    #         print(file)  # TEST
+    #         event_path = file
 
-    print(event_dir + event_path)
-    device = InputDevice(event_dir + event_path)
+    # print(event_dir + event_path)
+    # device = InputDevice(event_dir + event_path)
 
     while True:
-        for event in device.read_loop():
-            if event.type == ecodes.EV_ABS:
-                if axis[event.code] in ["ls_y", "rs_x"]:
-                    last[axis[event.code]] = event.value
+        # for event in device.read_loop():
+        #     if event.type == ecodes.EV_ABS:
+        #         if axis[event.code] in ["ls_y", "rs_x"]:
+        #             last[axis[event.code]] = event.value
 
-                    value = event.value - center[axis[event.code]]
+        #             value = event.value - center[axis[event.code]]
 
-                    if abs(value) <= CENTER_TOLERANCE:
-                        value = 0
+        #             if abs(value) <= CENTER_TOLERANCE:
+        #                 value = 0
 
-                    print(
-                        "angle:"
-                        + str(last["rs_x"] / STICK_MAX)
-                        + " | speed:"
-                        + str(last["ls_y"] / STICK_MAX)
-                    )
+        #             print(
+        #                 "angle:"
+        #                 + str(last["rs_x"] / STICK_MAX)
+        #                 + " | speed:"
+        #                 + str(last["ls_y"] / STICK_MAX)
+        #             )
+
+
+                    if keyboard.read_key() == "a":
+                        last["rs_x"] -= 1000
+                        if last["rs_x"] <= 0:
+                            last["rs_x"] = 0
+
+                    elif keyboard.read_key() == "d":
+                        last["rs_x"] += 1000
+                        if last["rs_x"] >= STICK_MAX:
+                            last["rs_x"] = STICK_MAX
+
+                    if keyboard.read_key() == "s" and keyboard.read_key() == "w":
+                        last["ls_y"] = STICK_MAX/2
+
+                    elif keyboard.read_key() == "s":
+                        last["ls_y"] -= 1000
+                        if last["ls_y"] <= 0:
+                            last["ls_y"] = 0
+
+                    elif keyboard.read_key() == "w":
+                        last["ls_y"] += 1000
+                        if last["ls_y"] >= STICK_MAX:
+                            last["ls_y"] = STICK_MAX                        
 
                     message = make_signal(last["rs_x"], last["ls_y"], 0b00)
                     # ser.write(message)
