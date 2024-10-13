@@ -2,8 +2,9 @@
 
 import glob
 import os
-import keyboard
+import time
 
+import keyboard
 import serial
 from evdev import InputDevice, ecodes
 
@@ -42,14 +43,14 @@ last = {
     "rs_y": STICK_MAX / 2,
 }
 
-"""ser = serial.Serial(
+ser = serial.Serial(
     port="/dev/ttyACM0",
     baudrate=9600,
-    parity=serial.PARITY_NONE,
-    stopbits=serial.STOPBITS_ONE,
-    bytesize=serial.EIGHTBITS,
-    timeout=1
-)"""
+    # parity=serial.PARITY_NONE,
+    # stopbits=serial.STOPBITS_ONE,
+    # bytesize=serial.EIGHTBITS,
+    timeout=1,
+)
 
 
 def make_signal(direction, speed, mode):
@@ -71,14 +72,15 @@ def make_signal(direction, speed, mode):
 
     speed_out = int((speed - (STICK_MAX / 2)) / (STICK_MAX / 2) * 127)
     direction_out = int((direction - (STICK_MAX / 2)) / (STICK_MAX / 2) * 30)
+    print("direction_out:", direction_out, "Speed_out:", speed_out)
 
     direction_out = direction_out & 0b00111111
     mode = mode << 6
     direction_out = direction_out | mode
 
-    print("direction_out:", direction_out, "Speed_out:", speed_out)
-
-    out = direction_out.to_bytes(1, "big", signed=True) + speed_out.to_bytes(1, "big", signed=True)
+    out = direction_out.to_bytes(1, "big", signed=True) + speed_out.to_bytes(
+        1, "big", signed=True
+    )
     return out
 
 
@@ -113,34 +115,50 @@ def teleop(event_path=""):
         #                 + str(last["ls_y"] / STICK_MAX)
         #             )
 
+        if keyboard.read_key() == "a":
+            last["rs_x"] -= 1000
+            if last["rs_x"] <= 0:
+                last["rs_x"] = 0
 
-                    if keyboard.read_key() == "a":
-                        last["rs_x"] -= 1000
-                        if last["rs_x"] <= 0:
-                            last["rs_x"] = 0
+        elif keyboard.read_key() == "d":
+            last["rs_x"] += 1000
+            if last["rs_x"] >= STICK_MAX:
+                last["rs_x"] = STICK_MAX
 
-                    elif keyboard.read_key() == "d":
-                        last["rs_x"] += 1000
-                        if last["rs_x"] >= STICK_MAX:
-                            last["rs_x"] = STICK_MAX
+        if keyboard.read_key() == "s" and keyboard.read_key() == "w":
+            last["ls_y"] = STICK_MAX / 2
 
-                    if keyboard.read_key() == "s" and keyboard.read_key() == "w":
-                        last["ls_y"] = STICK_MAX/2
+        elif keyboard.read_key() == "s":
+            last["ls_y"] -= 1000
+            if last["ls_y"] <= 0:
+                last["ls_y"] = 0
 
-                    elif keyboard.read_key() == "s":
-                        last["ls_y"] -= 1000
-                        if last["ls_y"] <= 0:
-                            last["ls_y"] = 0
+        elif keyboard.read_key() == "w":
+            last["ls_y"] += 1000
+            if last["ls_y"] >= STICK_MAX:
+                last["ls_y"] = STICK_MAX
 
-                    elif keyboard.read_key() == "w":
-                        last["ls_y"] += 1000
-                        if last["ls_y"] >= STICK_MAX:
-                            last["ls_y"] = STICK_MAX                        
+        message = make_signal(last["rs_x"], last["ls_y"], 0b00)
+        ser.write(message + b"\n")
+        time.sleep(0.01)
 
-                    message = make_signal(last["rs_x"], last["ls_y"], 0b00)
-                    # ser.write(message)
-                    print(message)
+        print(message)
+        # print(ser.readall())
 
 
 if __name__ == "__main__":
     teleop()
+
+# import time
+#
+# time.sleep(1)
+#
+# signal = make_signal(0, 0, 0b11) + b"\n"
+#
+# print(signal)
+#
+# print(ser.write(signal))
+#
+# time.sleep(1)
+#
+# print(ser.readall())
