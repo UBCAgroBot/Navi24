@@ -23,6 +23,7 @@ def main():
 
     theta = []
     r = []
+    # l_data = []
 
     while True:
         l_data, l_time = lidar.latest()
