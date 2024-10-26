@@ -1,0 +1,5 @@
+services:
+  jetson_simulation:
+    build: .
+    container_name: jetson-container
+    command: ["python", "main.py"]
