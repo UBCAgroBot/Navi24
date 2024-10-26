@@ -1,9 +1,11 @@
 #! /usr/bin/python3
 
+import argparse
 import glob
 import os
 import time
 
+import evdev
 import keyboard
 import serial
 from evdev import InputDevice, ecodes
@@ -15,6 +17,8 @@ https://stackoverflow.com/questions/44934309/how-to-access-the-joysticks-of-a-ga
 
 CENTER_TOLERANCE = 350
 STICK_MAX = 65536
+USE_JOYSTICK = False
+SERIAL_PORT = "/dev/ttyACM0"
 
 axis = {
     ecodes.ABS_X: "ls_x",  # 0 - 65,536   the middle is 32768
@@ -43,14 +47,17 @@ last = {
     "rs_y": STICK_MAX / 2,
 }
 
-ser = serial.Serial(
-    port="/dev/ttyACM0",
-    baudrate=9600,
-    # parity=serial.PARITY_NONE,
-    # stopbits=serial.STOPBITS_ONE,
-    # bytesize=serial.EIGHTBITS,
-    timeout=1,
-)
+
+def start_serial():
+    global ser
+    ser = serial.Serial(
+        port=SERIAL_PORT,
+        baudrate=9600,
+        # parity=serial.PARITY_NONE,
+        # stopbits=serial.STOPBITS_ONE,
+        # bytesize=serial.EIGHTBITS,
+        timeout=1,
+    )
 
 
 def make_signal(direction, speed, mode):
@@ -84,9 +91,40 @@ def make_signal(direction, speed, mode):
     return out
 
 
-def teleop(event_path=""):
+def get_keyboard_inputs():
+    """
+    Reads the inputs from the keyboard and puts
+    the result in last["rs_x"] and last["ls_y"]
+    """
+    global last
 
-    # event_dir = "/dev/input/"
+    if keyboard.read_key() == "a":
+        last["rs_x"] -= 1000
+        if last["rs_x"] <= 0:
+            last["rs_x"] = 0
+
+    elif keyboard.read_key() == "d":
+        last["rs_x"] += 1000
+        if last["rs_x"] >= STICK_MAX:
+            last["rs_x"] = STICK_MAX
+
+    if keyboard.read_key() == "s" and keyboard.read_key() == "w":
+        last["ls_y"] = STICK_MAX / 2
+
+    elif keyboard.read_key() == "s":
+        last["ls_y"] -= 1000
+        if last["ls_y"] <= 0:
+            last["ls_y"] = 0
+
+    elif keyboard.read_key() == "w":
+        last["ls_y"] += 1000
+        if last["ls_y"] >= STICK_MAX:
+            last["ls_y"] = STICK_MAX
+
+
+def setup_joystick(event_path=""):
+    global device
+    event_dir = "/dev/input/"
 
     # if event_path == "":
     #     os.chdir("/dev/input")
@@ -94,71 +132,60 @@ def teleop(event_path=""):
     #         print(file)  # TEST
     #         event_path = file
 
-    # print(event_dir + event_path)
-    # device = InputDevice(event_dir + event_path)
+    devices = [evdev.InputDevice(path) for path in evdev.list_devices()]
+    for device in devices:
+        if "Gamepad" in device.name:
+            event_dir = device.path
 
-    while True:
-        # for event in device.read_loop():
-        #     if event.type == ecodes.EV_ABS:
-        #         if axis[event.code] in ["ls_y", "rs_x"]:
-        #             last[axis[event.code]] = event.value
+    print(event_dir + event_path)
+    device = InputDevice(event_dir + event_path)
 
-        #             value = event.value - center[axis[event.code]]
 
-        #             if abs(value) <= CENTER_TOLERANCE:
-        #                 value = 0
+def get_joystick_inputs():
+    global device, last
+    for event in device.read_loop():
+        if event.type == ecodes.EV_ABS:
+            if axis[event.code] in ["ls_y", "rs_x"]:
+                last[axis[event.code]] = event.value + 32768
 
-        #             print(
-        #                 "angle:"
-        #                 + str(last["rs_x"] / STICK_MAX)
-        #                 + " | speed:"
-        #                 + str(last["ls_y"] / STICK_MAX)
-        #             )
+                value = event.value - center[axis[event.code]]
 
-        if keyboard.read_key() == "a":
-            last["rs_x"] -= 1000
-            if last["rs_x"] <= 0:
-                last["rs_x"] = 0
+                if abs(value) <= CENTER_TOLERANCE:
+                    value = 0
 
-        elif keyboard.read_key() == "d":
-            last["rs_x"] += 1000
-            if last["rs_x"] >= STICK_MAX:
-                last["rs_x"] = STICK_MAX
+                print("angle:" + str(last["rs_x"]) + " | speed:" + str(last["ls_y"]))
 
-        if keyboard.read_key() == "s" and keyboard.read_key() == "w":
-            last["ls_y"] = STICK_MAX / 2
+                # get_keyboard_inputs()
 
-        elif keyboard.read_key() == "s":
-            last["ls_y"] -= 1000
-            if last["ls_y"] <= 0:
-                last["ls_y"] = 0
+                message = make_signal(last["rs_x"], last["ls_y"], 0b00)
+                print(message)
+                ser.write(message + b"\n")
+                time.sleep(0.01)
 
-        elif keyboard.read_key() == "w":
-            last["ls_y"] += 1000
-            if last["ls_y"] >= STICK_MAX:
-                last["ls_y"] = STICK_MAX
+                print(message)
+                print(ser.readall())
 
-        message = make_signal(last["rs_x"], last["ls_y"], 0b00)
-        ser.write(message + b"\n")
-        time.sleep(0.01)
 
-        print(message)
-        # print(ser.readall())
+def teleop(event_path=""):
+    if USE_JOYSTICK:
+        setup_joystick(event_path)
+
+    start_serial()
+
+    get_joystick_inputs()
 
 
 if __name__ == "__main__":
-    teleop()
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--joystick", help="Enable joystick control", action="store_true"
+    )
+    parser.add_argument(
+        "-p", "--port", default="/dev/ttyACM0", help="increase output verbosity"
+    )
+    args = parser.parse_args()
 
-# import time
-#
-# time.sleep(1)
-#
-# signal = make_signal(0, 0, 0b11) + b"\n"
-#
-# print(signal)
-#
-# print(ser.write(signal))
-#
-# time.sleep(1)
-#
-# print(ser.readall())
+    USE_JOYSTICK = args.joystick
+    SERIAL_PORT = args.port
+
+    teleop()
