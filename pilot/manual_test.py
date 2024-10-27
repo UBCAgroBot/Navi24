@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
 import argparse
+import argparse
 import glob
 import os
 import time
@@ -94,9 +95,18 @@ def make_signal(direction, speed, mode):
     out = direction_out.to_bytes(1, "big", signed=True) + speed_out.to_bytes(
         1, "big", signed=True
     )
+    out = direction_out.to_bytes(1, "big", signed=True) + speed_out.to_bytes(
+        1, "big", signed=True
+    )
     return out
 
 
+def get_keyboard_inputs():
+    """
+    Reads the inputs from the keyboard and puts
+    the result in last["rs_x"] and last["ls_y"]
+    """
+    global last
 def get_keyboard_inputs():
     """
     Reads the inputs from the keyboard and puts
@@ -108,7 +118,15 @@ def get_keyboard_inputs():
         last["rs_x"] -= 1000
         if last["rs_x"] <= 0:
             last["rs_x"] = 0
+    if keyboard.read_key() == "a":
+        last["rs_x"] -= 1000
+        if last["rs_x"] <= 0:
+            last["rs_x"] = 0
 
+    elif keyboard.read_key() == "d":
+        last["rs_x"] += 1000
+        if last["rs_x"] >= STICK_MAX:
+            last["rs_x"] = STICK_MAX
     elif keyboard.read_key() == "d":
         last["rs_x"] += 1000
         if last["rs_x"] >= STICK_MAX:
@@ -116,12 +134,22 @@ def get_keyboard_inputs():
 
     if keyboard.read_key() == "s" and keyboard.read_key() == "w":
         last["ls_y"] = STICK_MAX / 2
+    if keyboard.read_key() == "s" and keyboard.read_key() == "w":
+        last["ls_y"] = STICK_MAX / 2
 
     elif keyboard.read_key() == "s":
         last["ls_y"] -= 1000
         if last["ls_y"] <= 0:
             last["ls_y"] = 0
+    elif keyboard.read_key() == "s":
+        last["ls_y"] -= 1000
+        if last["ls_y"] <= 0:
+            last["ls_y"] = 0
 
+    elif keyboard.read_key() == "w":
+        last["ls_y"] += 1000
+        if last["ls_y"] >= STICK_MAX:
+            last["ls_y"] = STICK_MAX
     elif keyboard.read_key() == "w":
         last["ls_y"] += 1000
         if last["ls_y"] >= STICK_MAX:
@@ -224,6 +252,18 @@ def teleop(event_path=""):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--joystick", help="Enable joystick control", action="store_true"
+    )
+    parser.add_argument(
+        "-p", "--port", default="/dev/ttyACM0", help="increase output verbosity"
+    )
+    args = parser.parse_args()
+
+    USE_JOYSTICK = args.joystick
+    SERIAL_PORT = args.port
+
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--joystick", help="Enable joystick control", action="store_true"
