@@ -12,8 +12,8 @@ import serial
 #from evdev import InputDevice, ecodes
 import pygame
 
-from enum import Enum
 from time import sleep
+from types import MappingProxyType
 
 """
 Gamepad part taken from Nick as answer on StackOverflow
@@ -52,8 +52,60 @@ SERIAL_PORT = "/dev/ttyACM0"
 #     "rs_y": STICK_MAX / 2,
 # }
 
+class JoystickHandler:
 
-AxisNumbers = {"LEFT_X":0, "LEFT_Y":1, "LEFT_TRIGGER":4, "RIGHT_Y":3, "RIGHT_X":2,"RIGHT_TRIGGER":5}
+
+    def __init__(self, controller:pygame.joystick.Joystick):
+
+        # immutable dictionary
+        self.__AxisNumbers = MappingProxyType( {"LEFT_X":0, "LEFT_Y":1, "LEFT_TRIGGER":4, "RIGHT_Y":3, "RIGHT_X":2,"RIGHT_TRIGGER":5})
+
+        self.__movement_data:dict[str,float] = {"speed":0, "angle":0}
+
+        self.__deadzone_val:float = 0.05
+        self.__controller:pygame.joystick.Joystick = controller
+
+        
+    
+    def get_joystick_inputs(self):
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.JOYAXISMOTION:
+
+                angle_signal = round(self.axis_to_signal_format(self.__controller.get_axis(self.AxisNumbers["RIGHT_X"])) )
+                speed_signal = round(self.axis_to_signal_format(-self.__controller.get_axis(self.AxisNumbers["LEFT_Y"])))
+
+                self.__movement_data["speed"] = self.axis_to_speed(self.__controller.get_axis(self.__AxisNumbers["LEFT_Y"]))
+                self.__movement_data["angle"] = self.axis_to_angle(self.__controller.get_axis(self.__AxisNumbers["RIGHT_X"]))
+
+
+                message = make_signal(angle_signal, speed_signal, 0b00)
+                print(message)
+
+    
+    def get_axis_numbers(self)->MappingProxyType:
+        return self.__AxisNumbers
+    
+
+    def axis_to_signal_format(self, axis_signal:float)->float:
+        """Turn an axis signal into a bit signal for the make_signal function"""
+        return STICK_MAX/2*(axis_signal + 1)
+    
+    # TODO: Add code to these methods to turn axis values into physical quantities
+    def axis_to_speed(self,axis_signal:float)->float:
+        return 0
+
+    def axis_to_angle(self,axis_signal:float)->float:
+        return 0
+
+    def get_movement_data(self)->dict:
+        return None
+
+
+
+
+
 
 def start_serial():
     global ser
@@ -86,6 +138,7 @@ def make_signal(direction, speed, mode):
 
     speed_out = clamp(5,int((speed - (STICK_MAX / 2)) / (STICK_MAX / 2) * 127))
     direction_out = clamp(1,int((direction - (STICK_MAX / 2)) / (STICK_MAX / 2) * 30))
+
     print("direction_out:", direction_out, "Speed_out:", speed_out)
 
     direction_out = direction_out & 0b00111111
@@ -157,7 +210,7 @@ def get_keyboard_inputs():
 
 
 
-def setup_joystick(event_path=""):
+def setup_joystick(event_path="")-> pygame.joystick.Joystick:
     global device
     event_dir = "/dev/input/"
     global joystick
@@ -179,9 +232,20 @@ def setup_joystick(event_path=""):
     pygame.init()
     pygame.joystick.init()
     
-    joystick =  pygame.joystick.Joystick(0); # This might not work later but lets see heeehee
+    # We require a joystick for any of this to function
+    try:
+        joystick =  pygame.joystick.Joystick(0); 
+    except pygame.error:
+        print("No joystick found")
+        exit()
+    else:
+        return joystick
 
-def clamp(threshold, value):
+
+
+def clamp(threshold:int, value:int) -> int:
+
+    """:param threshold: positive """
 
     print(threshold, value)
     if abs(value) <= threshold:
@@ -191,31 +255,24 @@ def clamp(threshold, value):
     
 
 
-def get_joystick_inputs():
+# def get_joystick_inputs():
 
-    # important things to note: down is positive and up is negative
 
-    for event in pygame.event.get():
-        if event.type == pygame.JOYAXISMOTION:
+#     for event in pygame.event.get():
+#         if event.type == pygame.JOYAXISMOTION:
 
-            angle_signal = round( STICK_MAX/2 *(joystick.get_axis(AxisNumbers["RIGHT_X"])+1) )
-            speed_signal = round( STICK_MAX/2 * (-joystick.get_axis(AxisNumbers["LEFT_Y"])+ 1) )
+#             angle_signal = round( STICK_MAX/2 *(joystick.get_axis(AxisNumbers["RIGHT_X"])+1) )
+#             speed_signal = round( STICK_MAX/2 * (-joystick.get_axis(AxisNumbers["LEFT_Y"])+ 1) )
 
             
-            message = make_signal(angle_signal, speed_signal, 0b00)
-            print(message)
+#             message = make_signal(angle_signal, speed_signal, 0b00)
+#             print(message)
                  #ser.write(message + b"\n")
     #             time.sleep(0.01)
             #print(joystick.get_axis(AxisNumbers["RIGHT_X"]))
             #print(joystick.get_axis(AxisNumbers["RIGHT_TRIGGER"]))
                 
-            
-
-            
-
-           
-
-            
+ 
     # global device, last
     # for event in device.read_loop():
     #     if event.type == ecodes.EV_ABS:
@@ -244,11 +301,11 @@ def teleop(event_path=""):
 
     # if USE_JOYSTICK:
     #     setup_joystick(event_path)
-    setup_joystick()
+    controllerStick = JoystickHandler(setup_joystick())
 
     #start_serial() uncomment this later
     while True:
-        get_joystick_inputs()
+        controllerStick.get_joystick_inputs()
 
 
 if __name__ == "__main__":
