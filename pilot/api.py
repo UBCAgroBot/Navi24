@@ -3,10 +3,12 @@ import time
 
 import serial
 from flask import Flask, jsonify, request
+from flask_cors import CORS
 
 SERIAL_PORT = "/dev/ttyACM0"
 
 app = Flask(__name__)
+CORS(app)
 
 
 def start_serial():
@@ -32,6 +34,8 @@ def hello_world():
 @app.route("/control", methods=["POST"])
 def update_record():
     input = json.loads(request.data)
+    input["speed"] = int(round(input["speed"]))
+    input["direction"] = int(round(input["direction"]))
     if not ("speed" in input and input["speed"] >= -128 and input["speed"] <= 127):
         return json.dumps({"error": "Speed missing or out or range"})
 
