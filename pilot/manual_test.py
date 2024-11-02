@@ -247,16 +247,22 @@ def clamp(threshold:int, value:int) -> int:
 
     """:param threshold: positive """
 
+    joystick = pygame.joystick.Joystick(0)
+    # This might not work later but lets see heeehee
+
+
+def clamp(threshold, value):
+
     print(threshold, value)
     if abs(value) <= threshold:
         return 0
-    
+
     return value
-    
 
 
 # def get_joystick_inputs():
 
+    # important things to note: down is positive and up is negative
 
 #     for event in pygame.event.get():
 #         if event.type == pygame.JOYAXISMOTION:
@@ -303,7 +309,7 @@ def teleop(event_path=""):
     #     setup_joystick(event_path)
     controllerStick = JoystickHandler(setup_joystick())
 
-    #start_serial() uncomment this later
+    # start_serial() uncomment this later
     while True:
         controllerStick.get_joystick_inputs()
 
@@ -321,16 +327,8 @@ if __name__ == "__main__":
     USE_JOYSTICK = args.joystick
     SERIAL_PORT = args.port
 
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--joystick", help="Enable joystick control", action="store_true"
-    )
-    parser.add_argument(
-        "-p", "--port", default="/dev/ttyACM0", help="increase output verbosity"
-    )
-    args = parser.parse_args()
-
-    USE_JOYSTICK = args.joystick
-    SERIAL_PORT = args.port
-
+<<<<<<<<< Temporary merge branch 1
     teleop()
+=========
+    teleop()
+>>>>>>>>> Temporary merge branch 2
