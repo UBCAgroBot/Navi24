@@ -1,2 +1,41 @@
 __pycache__/
 **/__pycache__
+
+
+# ROS Stuff:
+# General Python ignores
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment folders
+venv/
+env/
+.virtualenv/
+
+# ROS 2 build artifacts
+build/
+install/
+log/
+.colcon/
+
+# System-specific files
+.DS_Store
+Thumbs.db
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*~
+
+# CMake artifacts (if any C++ code is added later)
+CMakeLists.txt.user
+
+# Python egg and package metadata
+*.egg-info/
+.eggs/
+
+# Cach
