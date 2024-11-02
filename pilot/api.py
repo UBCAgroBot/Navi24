@@ -1,29 +1,54 @@
 import json
 import time
 
-import serial
-from flask import Flask, jsonify, request
-from flask_cors import CORS
+import os
+import rclpy
+from rclpy.node import Node
+import threading
+from std_msgs.msg import String
 
-SERIAL_PORT = "/dev/ttyACM0"
+import html
+
+# import serial
+from flask import Flask, jsonify, request, render_template, redirect
+
+# SERIAL_PORT = "/dev/ttyACM0"
 
 app = Flask(__name__)
-CORS(app)
 
 
-def start_serial():
-    global ser
-    ser = serial.Serial(
-        port=SERIAL_PORT,
-        baudrate=9600,
-        # parity=serial.PARITY_NONE,
-        # stopbits=serial.STOPBITS_ONE,
-        # bytesize=serial.EIGHTBITS,
-        timeout=1,
-    )
+class Publisher(Node):
+    def __init__(self):
+        super().__init__('publisher_node')
+
+        self.publisher_ = self.create_publisher(String, '/publish', 5)
+
+    def publish_motion(self, message):
+        msg = String()
+        msg.data = message
+        
+        self.publisher_.publish(msg)
+        self.get_logger().info(f'Published: {msg.data}')
 
 
-start_serial()
+rclpy.init()
+motion_publisher = Publisher()
+
+
+
+# def start_serial():
+#     global ser
+#     ser = serial.Serial(
+#         port=SERIAL_PORT,
+#         baudrate=9600,
+#         # parity=serial.PARITY_NONE,
+#         # stopbits=serial.STOPBITS_ONE,
+#         # bytesize=serial.EIGHTBITS,
+#         timeout=1,
+#     )
+
+
+# start_serial()
 
 
 @app.route("/")
@@ -34,8 +59,6 @@ def hello_world():
 @app.route("/control", methods=["POST"])
 def update_record():
     input = json.loads(request.data)
-    input["speed"] = int(round(input["speed"]))
-    input["direction"] = int(round(input["direction"]))
     if not ("speed" in input and input["speed"] >= -128 and input["speed"] <= 127):
         return json.dumps({"error": "Speed missing or out or range"})
 
@@ -58,9 +81,27 @@ def update_record():
         1, "big", signed=True
     )
 
-    ser.write(out + b"\n")
-    time.sleep(0.01)
+    threading.Thread(target=motion_publisher.publish_motion, args=(out.hex(),)).start()
+
+    # ser.write(out + b"\n")
+    # time.sleep(0.01)
+
     print("Sent: ", out)
     print("Got: ", input)
 
     return json.dumps({"message": "okay"})
+
+def run_flask():
+    app.run(host='0.0.0.0', port=5000)
+
+if __name__ == '__main__':
+    try:
+        threading.Thread(target=run_flask).start()
+        
+        rclpy.spin(motion_publisher)
+    
+    except KeyboardInterrupt:
+        pass
+    finally:
+        motion_publisher.destroy_node()
+        rclpy.shutdown()
