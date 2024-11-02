@@ -55,15 +55,20 @@ SERIAL_PORT = "/dev/ttyACM0"
 class JoystickHandler:
 
 
-    def __init__(self, controller:pygame.joystick.Joystick):
+    def __init__(self, controller:pygame.joystick.Joystick, use_keyboard:bool = False):
 
         # immutable dictionary
         self.__AxisNumbers = MappingProxyType( {"LEFT_X":0, "LEFT_Y":1, "LEFT_TRIGGER":4, "RIGHT_Y":3, "RIGHT_X":2,"RIGHT_TRIGGER":5})
 
-        self.__movement_data:dict[str,float] = {"speed":0, "angle":0}
+        self.__raw_movement_data:dict[str,float] = {"speed":0, "angle":0}
+        self.__formatted_movement_data:dict[str,float] = self.__raw_movement_data.copy()
 
         self.__deadzone_val:float = 0.05
         self.__controller:pygame.joystick.Joystick = controller
+
+        self.__message_signal = None;
+
+        self.__use_keyboard = use_keyboard
 
         
     
@@ -72,16 +77,15 @@ class JoystickHandler:
         for event in pygame.event.get():
 
             if event.type == pygame.JOYAXISMOTION:
+                
 
-                angle_signal = round(self.axis_to_signal_format(self.__controller.get_axis(self.AxisNumbers["RIGHT_X"])) )
-                speed_signal = round(self.axis_to_signal_format(-self.__controller.get_axis(self.AxisNumbers["LEFT_Y"])))
+                self.__raw_movement_data["speed"] = -self.__controller.get_axis(self.__AxisNumbers["LEFT_Y"])
+                self.__raw_movement_data["angle"] = self.__controller.get_axis(self.__AxisNumbers["RIGHT_X"])
 
-                self.__movement_data["speed"] = self.axis_to_speed(self.__controller.get_axis(self.__AxisNumbers["LEFT_Y"]))
-                self.__movement_data["angle"] = self.axis_to_angle(self.__controller.get_axis(self.__AxisNumbers["RIGHT_X"]))
+                self.format_all_signals()
 
-
-                message = make_signal(angle_signal, speed_signal, 0b00)
-                print(message)
+                self.generateSignal()
+                self.sendSignal()
 
     
     def get_axis_numbers(self)->MappingProxyType:
@@ -90,7 +94,11 @@ class JoystickHandler:
 
     def axis_to_signal_format(self, axis_signal:float)->float:
         """Turn an axis signal into a bit signal for the make_signal function"""
-        return STICK_MAX/2*(axis_signal + 1)
+        return round(STICK_MAX/2*(axis_signal + 1))
+    
+    def format_all_signals(self):
+        for key in self.__raw_movement_data.keys():
+            self.__formatted_movement_data[key] = self.axis_to_signal_format(self.__raw_movement_data[key])
     
     # TODO: Add code to these methods to turn axis values into physical quantities
     def axis_to_speed(self,axis_signal:float)->float:
@@ -101,118 +109,142 @@ class JoystickHandler:
 
     def get_movement_data(self)->dict:
         return None
+    
+    @staticmethod
+    def upperBound(value, threshold):
+        return threshold if value > threshold else value
+
+    @staticmethod
+    def lowerBound(value, threshold):
+        return threshold if value < threshold else value
+    
+    @staticmethod
+    def deadzone_adjust(self, value:int,threshold:int) -> int:
+
+        """:param threshold: positive """
+    
+        if abs(value) <= threshold:
+            return 0
+
+        return value
+    
+    
+    def get_keyboard_inputs(self):
+    
+        if keyboard.read_key() == "a":
+
+            self.__formatted_movement_data["angle"] = self.lowerBound(self.__formatted_movement_data["angle"]-1000, 0)
+            # last["rs_x"] -= 1000
+            # if last["rs_x"] <= 0:
+            #     last["rs_x"] = 0
+
+     
+
+        elif keyboard.read_key() == "d":
+
+            self.__formatted_movement_data["angle"] = self.upperBound(self.__formatted_movement_data["angle"]+1000,STICK_MAX)
+
+            # last["rs_x"] += 1000
+            # if last["rs_x"] >= STICK_MAX:
+            #     last["rs_x"] = STICK_MAX
+
+        if keyboard.read_key() == "s" and keyboard.read_key() == "w":
+            self.__formatted_movement_data["speed"] = STICK_MAX / 2
+        
+
+    
+        elif keyboard.read_key() == "s":
+
+            self.__formatted_movement_data["speed"] = self.lowerBound(self.__formatted_movement_data["speed"]-1000,0)
+
+            # last["ls_y"] -= 1000
+            # if last["ls_y"] <= 0:
+            #     last["ls_y"] = 0
+
+        elif keyboard.read_key() == "w":
+            
+            self.__formatted_movement_data["speed"] = self.upperBound(self.__formatted_movement_data["speed"]+1000,STICK_MAX)
+
+            # last["ls_y"] += 1000
+            # if last["ls_y"] >= STICK_MAX:
+            #     last["ls_y"] = STICK_MAX
+
+        self.generateSignal()
+        self.sendSignal()
+        
+
+    def sendSignal(self):
+        ser.write(self.__message_signal,  + b"\n")
+        sleep(0.01)
+
+    def generateSignal(self):
+        self.__message_signal = SignalHandler.make_signal(self.__formatted_movement_data["angle"], self.__formatted_movement_data["speed"], 0b00)
+
+    def loop(self):
+        self.get_joystick_inputs() if not self.__use_keyboard else self.get_keyboard_inputs()
 
 
 
 
 
-
-def start_serial():
-    global ser
-    ser = serial.Serial(
-        port=SERIAL_PORT,
-        baudrate=9600,
-        # parity=serial.PARITY_NONE,
-        # stopbits=serial.STOPBITS_ONE,
-        # bytesize=serial.EIGHTBITS,
-        timeout=1,
-    )
+class SignalHandler:
 
 
-def make_signal(direction, speed, mode):
-    """
-    direction: between 0 and 65536 where 32768 is the middle
-    speed: between 0 and 65536 where 32768 is the middle
-    mode: 2 bits which specifies the mode
+    def start_serial():
+        global ser
+        ser = serial.Serial(
+            port=SERIAL_PORT,
+            baudrate=9600,
+            # parity=serial.PARITY_NONE,
+            # stopbits=serial.STOPBITS_ONE,
+            # bytesize=serial.EIGHTBITS,
+            timeout=1,
+        )
 
-    Outputs a byte string such that the first 2 bits are the mode,
-    the next 6 bits are the signed direction (-30 to 30), the last
-    8 bits are the signed speed from (-127 to 127)
-    """
-    """message = bytes(
-        str(5 + int(10 * direction / STICK_MAX))
-        + str(5 + int(10 * speed / STICK_MAX))
-        + "\n",
-        "utf-8",
-    )"""
+    @staticmethod
+    def make_signal(direction, speed, mode):
+        """
+        direction: between 0 and 65536 where 32768 is the middle
+        speed: between 0 and 65536 where 32768 is the middle
+        mode: 2 bits which specifies the mode
 
-    speed_out = clamp(5,int((speed - (STICK_MAX / 2)) / (STICK_MAX / 2) * 127))
-    direction_out = clamp(1,int((direction - (STICK_MAX / 2)) / (STICK_MAX / 2) * 30))
+        Outputs a byte string such that the first 2 bits are the mode,
+        the next 6 bits are the signed direction (-30 to 30), the last
+        8 bits are the signed speed from (-127 to 127)
+        """
+        """message = bytes(
+            str(5 + int(10 * direction / STICK_MAX))
+            + str(5 + int(10 * speed / STICK_MAX))
+            + "\n",
+            "utf-8",
+        )"""
 
-    print("direction_out:", direction_out, "Speed_out:", speed_out)
+        speed_out = int((speed - (STICK_MAX / 2)) / (STICK_MAX / 2) * 127)
+        direction_out = int((direction - (STICK_MAX / 2)) / (STICK_MAX / 2) * 30)
 
-    direction_out = direction_out & 0b00111111
-    mode = mode << 6
-    direction_out = direction_out | mode
+        print("direction_out:", direction_out, "Speed_out:", speed_out)
 
-    out = direction_out.to_bytes(1, "big", signed=True) + speed_out.to_bytes(
-        1, "big", signed=True
-    )
-    out = direction_out.to_bytes(1, "big", signed=True) + speed_out.to_bytes(
-        1, "big", signed=True
-    )
-    return out
+        direction_out = direction_out & 0b00111111
+        mode = mode << 6
+        direction_out = direction_out | mode
+
+        out = direction_out.to_bytes(1, "big", signed=True) + speed_out.to_bytes(
+            1, "big", signed=True
+        )
+        out = direction_out.to_bytes(1, "big", signed=True) + speed_out.to_bytes(
+            1, "big", signed=True
+        )
+        return out
 
 
-def get_keyboard_inputs():
-    """
-    Reads the inputs from the keyboard and puts
-    the result in last["rs_x"] and last["ls_y"]
-    """
-    global last
-def get_keyboard_inputs():
-    """
-    Reads the inputs from the keyboard and puts
-    the result in last["rs_x"] and last["ls_y"]
-    """
-    global last
-
-    if keyboard.read_key() == "a":
-        last["rs_x"] -= 1000
-        if last["rs_x"] <= 0:
-            last["rs_x"] = 0
-    if keyboard.read_key() == "a":
-        last["rs_x"] -= 1000
-        if last["rs_x"] <= 0:
-            last["rs_x"] = 0
-
-    elif keyboard.read_key() == "d":
-        last["rs_x"] += 1000
-        if last["rs_x"] >= STICK_MAX:
-            last["rs_x"] = STICK_MAX
-    elif keyboard.read_key() == "d":
-        last["rs_x"] += 1000
-        if last["rs_x"] >= STICK_MAX:
-            last["rs_x"] = STICK_MAX
-
-    if keyboard.read_key() == "s" and keyboard.read_key() == "w":
-        last["ls_y"] = STICK_MAX / 2
-    if keyboard.read_key() == "s" and keyboard.read_key() == "w":
-        last["ls_y"] = STICK_MAX / 2
-
-    elif keyboard.read_key() == "s":
-        last["ls_y"] -= 1000
-        if last["ls_y"] <= 0:
-            last["ls_y"] = 0
-    elif keyboard.read_key() == "s":
-        last["ls_y"] -= 1000
-        if last["ls_y"] <= 0:
-            last["ls_y"] = 0
-
-    elif keyboard.read_key() == "w":
-        last["ls_y"] += 1000
-        if last["ls_y"] >= STICK_MAX:
-            last["ls_y"] = STICK_MAX
-    elif keyboard.read_key() == "w":
-        last["ls_y"] += 1000
-        if last["ls_y"] >= STICK_MAX:
-            last["ls_y"] = STICK_MAX
+   
 
 
 
-def setup_joystick(event_path="")-> pygame.joystick.Joystick:
+
+def setup_joystick(use_keyboard:bool = False)-> pygame.joystick.Joystick:
     global device
-    event_dir = "/dev/input/"
+    
     global joystick
 
     # if event_path == "":
@@ -232,32 +264,22 @@ def setup_joystick(event_path="")-> pygame.joystick.Joystick:
     pygame.init()
     pygame.joystick.init()
     
-    # We require a joystick for any of this to function
     try:
         joystick =  pygame.joystick.Joystick(0); 
     except pygame.error:
         print("No joystick found")
-        exit()
+
+        if (use_keyboard):
+            return None
+        else:
+            exit()
+
     else:
         return joystick
 
 
 
-def clamp(threshold:int, value:int) -> int:
 
-    """:param threshold: positive """
-
-    joystick = pygame.joystick.Joystick(0)
-    # This might not work later but lets see heeehee
-
-
-def clamp(threshold, value):
-
-    print(threshold, value)
-    if abs(value) <= threshold:
-        return 0
-
-    return value
 
 
 # def get_joystick_inputs():
@@ -305,13 +327,13 @@ def clamp(threshold, value):
 
 def teleop(event_path=""):
 
-    # if USE_JOYSTICK:
-    #     setup_joystick(event_path)
-    controllerStick = JoystickHandler(setup_joystick())
+    controllerStick = JoystickHandler(setup_joystick(True), use_keyboard=True)
 
-    # start_serial() uncomment this later
+    # can uncomment this later as needed
+    # SignalHandler.start_serial() 
+
     while True:
-        controllerStick.get_joystick_inputs()
+        controllerStick.loop()
 
 
 if __name__ == "__main__":
@@ -327,8 +349,5 @@ if __name__ == "__main__":
     USE_JOYSTICK = args.joystick
     SERIAL_PORT = args.port
 
-<<<<<<<<< Temporary merge branch 1
     teleop()
-=========
-    teleop()
->>>>>>>>> Temporary merge branch 2
+
