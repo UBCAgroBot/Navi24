@@ -16,3 +16,11 @@ source install/setup.bash
 colcon test --packages-select ros_example
 colcon test-result --verbose
 ~~~
+
+### ROSBRIDGE:
+This is a program that lets the frontend javascript communicate to ROS
+
+To run:
+```
+ros2 launch rosbridge_server rosbridge_websocket_launch.xml
+```

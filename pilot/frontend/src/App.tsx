@@ -1,8 +1,9 @@
-import { KeyboardEventHandler, useState } from 'react'
+import { KeyboardEventHandler, useEffect, useRef, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Button from './Button'
+import ROSLIB from 'roslib';
 
 // let API_ENDPOINT = "http://0.0.0.0:5000/"
 let API_ENDPOINT = "http://10.43.26.25:5000/"
@@ -13,43 +14,84 @@ function App() {
   let [direction, _setDirection] = useState(0);
   let [speedMagnitude, setSpeedMagnitude] = useState(1);
 
+  const rosRef = useRef<null | ROSLIB.Ros>(null);
 
-  let sendToRobot = () => {
-    fetch(API_ENDPOINT + "control"
-      , {
-        method: 'POST',
-        body: JSON.stringify({
-          speed: speed * speedMagnitude,
-          direction: direction,
-          mode: 0,
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      }
-    )
-      .then(response => response.json())
-      .then(data => console.log(data));
-  }
+  useEffect(() => {
+    if (rosRef.current === null) {
+      rosRef.current = new ROSLIB.Ros({
+        url: 'ws://localhost:9090'
+      });
+      rosRef.current.on('connection', function() {
+        console.log('Connected to websocket server.');
+      });
+
+      rosRef.current.on('error', function(error) {
+        console.log('Error connecting to websocket server: ', error);
+      });
+
+      rosRef.current.on('close', function() {
+        console.log('Connection to websocket server closed.');
+      })
+    }
+
+    if (rosRef.current !== null) {
+      var cmdDir = new ROSLIB.Topic({
+        ros: rosRef.current,
+        name: 'direction',
+        messageType: 'std_msgs/Float64'
+      });
+
+      var dir_msg = new ROSLIB.Message({ data: direction });
+      cmdDir.publish(dir_msg);
+
+      var cmdSpd = new ROSLIB.Topic({
+        ros: rosRef.current,
+        name: 'speed',
+        messageType: 'std_msgs/Float64'
+      });
+
+      var spd_msg = new ROSLIB.Message({ data: speed });
+      cmdSpd.publish(spd_msg);
+
+      console.log("Sent packet: ", speed, " ", direction);
+    }
+  }, [speed, direction]);
+
+
+  // let sendToRobot = () => {
+  //   fetch(API_ENDPOINT + "control"
+  //     , {
+  //       method: 'POST',
+  //       body: JSON.stringify({
+  //         speed: speed * speedMagnitude,
+  //         direction: direction,
+  //         mode: 0,
+  //       }),
+  //       headers: {
+  //         'Content-type': 'application/json; charset=UTF-8',
+  //       },
+  //     }
+  //   )
+  //     .then(response => response.json())
+  //     .then(data => console.log(data));
+  // }
 
   let setSpeed = (speed: number) => {
-    _setSpeed(speed);
-    sendToRobot();
+    _setSpeed(speed * speedMagnitude);
   }
 
   let setDirection = (dir: number) => {
     _setDirection(dir);
-    sendToRobot();
   }
 
   let keyPress = (event: any) => {
     switch (event.key) {
       case "w":
-        setSpeed(127 * speedMagnitude);
+        setSpeed(127);
         break;
 
       case "s":
-        setSpeed(-128 * speedMagnitude);
+        setSpeed(-128);
         break;
 
       case "a":
@@ -68,11 +110,11 @@ function App() {
   let keyRelease = (event: any) => {
     switch (event.key) {
       case "w":
-        setSpeed(0 * speedMagnitude);
+        setSpeed(0);
         break;
 
       case "s":
-        setSpeed(0 * speedMagnitude);
+        setSpeed(0);
         break;
 
       case "a":
