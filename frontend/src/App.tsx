@@ -6,7 +6,7 @@ import Button from './Button'
 import ROSLIB from 'roslib';
 
 // let API_ENDPOINT = "http://0.0.0.0:5000/"
-let API_ENDPOINT = "http://10.43.26.25:5000/"
+// let API_ENDPOINT = "http://10.43.26.25:5000/"
 
 function App() {
 
@@ -35,23 +35,14 @@ function App() {
     }
 
     if (rosRef.current !== null) {
-      var cmdDir = new ROSLIB.Topic({
+      var cmd_motor = new ROSLIB.Topic({
         ros: rosRef.current,
-        name: 'direction',
-        messageType: 'std_msgs/Float64'
+        name: 'motor_instruction',
+        messageType: 'interfaces/msg/Motor'
       });
 
-      var dir_msg = new ROSLIB.Message({ data: direction });
-      cmdDir.publish(dir_msg);
-
-      var cmdSpd = new ROSLIB.Topic({
-        ros: rosRef.current,
-        name: 'speed',
-        messageType: 'std_msgs/Float64'
-      });
-
-      var spd_msg = new ROSLIB.Message({ data: speed });
-      cmdSpd.publish(spd_msg);
+      var motor_msg = new ROSLIB.Message({ direction: direction, mode: 1, speed: speed });
+      cmd_motor.publish(motor_msg);
 
       console.log("Sent packet: ", speed, " ", direction);
     }

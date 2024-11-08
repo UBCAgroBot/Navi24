@@ -22,7 +22,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'motor_subscriber = ros_nav.motor_subscriber:main',
+            'motor_controller = ros_nav.motor_controller:main',
             'dummy_motor_publisher = ros_nav.dummy_publisher:main'
         ],
     },

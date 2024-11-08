@@ -1,13 +1,12 @@
 import rclpy
 from rclpy.node import Node
-
 from ros_nav.msg import Motor
 
 
 class DummyMotorPublisher(Node):
 
     def __init__(self):
-        super().__init__('dummy_motor_publisher')
+        super().__init__('cant_drive')
         self.publisher_ = self.create_publisher(Motor, 'motor_instruction', 10)
         timer_period = 0.5
         self.timer = self.create_timer(timer_period, self.timer_callback)
