@@ -1,6 +1,10 @@
+"""
+Instead of self driving, this publisher cannot drive. It just sends garbage info...
+"""
+
 import rclpy
 from rclpy.node import Node
-from ros_nav.msg import Motor
+from interfaces.msg import Motor
 
 
 class DummyMotorPublisher(Node):
@@ -14,11 +18,11 @@ class DummyMotorPublisher(Node):
 
     def timer_callback(self):
         msg = Motor()
-        msg.speed = 10
-        msg.direction = 5
+        msg.speed = 40
+        msg.direction = 0
         msg.mode = 1
         self.publisher_.publish(msg)
-        self.get_logger().info('Publishing: "%s"' % msg.data)
+        self.get_logger().info('Publishing: "%s"' % msg)
         self.i += 1
 
 
