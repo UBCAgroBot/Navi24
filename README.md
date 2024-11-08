@@ -10,12 +10,6 @@ in the [FRE competition guidelines](https://drive.google.com/file/d/10Hz0DrzzQsz
 The manual control system will allow a pilot to control the movement of Agrobot remotely.
 
 ## Overview
-Navi24 consists of three subsystems that run on different devices.
-Pilot subsystem runs on the user's personal computer and communicates
-with the robot through the internet protocol. Jetson and Arduino
-subsystems are installed onto the robot. Jetson pulls data from
-sensors and does the heavy processing. Arduino runs the motor
-controllers to perform the actions requested by Jetson. Arduino
-receives data from the feedback sensors installed with the motors
-to ensure the actions are executed correctly.
+Navi24 consists of three subsystems, the frontend, Jetson and Arduino. Frontend runs on the user's personal computer and communicates with ROS using a websocket (right now on ws://localhost:9090). The Arduino is connected to the Jetson. On the Jetson the ROS `motor_controller` node receives `interfaces/msg/Motor` messages and sends them to the Arduino.
 
+Once the Zed cameras arrive they will publish data to ROS and the path planning node will use that info to send messages to the `motor_controller` node.
