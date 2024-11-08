@@ -1,4 +1,6 @@
 from setuptools import find_packages, setup
+import os
+from glob import glob
 
 package_name = 'ros_nav'
 
@@ -15,12 +17,13 @@ setup(
     zip_safe=True,
     maintainer='Arman D',
     maintainer_email='adrismir@gmail.com',
-    description='Agrobot's navigation nodes',
+    description='Agrobot\'s navigation nodes',
     license='Apache-2.0',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'my_node = ros_nav.my_node:main'
+            'motor_subscriber = ros_nav.motor_subscriber:main',
+            'dummy_motor_publisher = ros_nav.dummy_publisher:main'
         ],
     },
 )
