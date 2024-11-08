@@ -12,7 +12,11 @@
     "mounts": [],
     "runArgs": [
         "--net=host",
-        "-it"
+        "-it",
+        "--device=/dev/ttyACM0",
+        "--privileged"    
     ],
+    
     "postCreateCommand": "bash -c 'echo source /opt/ros/humble/setup.bash >> ~/.bashrc && source /opt/ros/humble/setup.bash'"
+
 }
