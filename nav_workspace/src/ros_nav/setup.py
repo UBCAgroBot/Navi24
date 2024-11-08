@@ -23,7 +23,7 @@ setup(
     entry_points={
         'console_scripts': [
             'motor_controller = ros_nav.motor_controller:main',
-            'dummy_motor_publisher = ros_nav.dummy_publisher:main'
+            'drive_forward = ros_nav.drive_forward:main'
         ],
     },
 )
