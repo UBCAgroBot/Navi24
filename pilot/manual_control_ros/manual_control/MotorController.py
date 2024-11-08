@@ -1,4 +1,5 @@
 import rclpy
+import time
 from std_msgs.msg import Float64
 from rclpy.node import Node
 import serial
@@ -34,25 +35,26 @@ class MotorControllerNode(Node):
     def speed_callback(self, msg):
         print(f'Received - Speed: {msg.data}')
         self.speed = msg.data
-        send_data()
+        self.send_data()
 
     def direction_callback(self, msg):
         self.direction = msg.data
         print(f'received - Direction {msg.data}')
+        self.send_data()
 
     def send_data(self):
-        direction_out = self.direction & 0b00111111
+        direction_out = int(self.direction) & 0b00111111
         mode = 0 << 6
         direction_out = direction_out | mode
 
-        out = direction_out.to_bytes(1, "big", signed=True) + self.speed.to_bytes(
+        out = direction_out.to_bytes(1, "big", signed=True) + int(self.speed).to_bytes(
             1, "big", signed=True
         )
 
-        ser.write(out + b"\n")
-        time.sleep(0.01)
+        self.ser.write(out + b"\n")
+        # time.sleep(0.01)
         # print(message)
-        print(self.ser.readall())
+        #print(self.ser.readall())
 
 
 def main(args=None):
