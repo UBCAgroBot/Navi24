@@ -1,2 +1,36 @@
 __pycache__/
 **/__pycache__
+
+# ROS:
+/build/
+/devel/
+/install/
+/log/
+
+# Catkin workspace
+/build_isolated/
+/devel_isolated/
+/catkin_tools_prebuild/
+
+# ROS-specific files
+*.bag
+*.swp
+*.vscode/
+
+# CLion specific files
+.idea/
+*.iml
+cmake-build-debug/
+cmake-build-release/
+
+# Ignore Python compiled files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore other common files
+*.DS_Store
+*.bak
+*.old
+*~
+Thumbs.db
