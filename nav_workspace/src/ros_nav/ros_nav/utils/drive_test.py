@@ -6,11 +6,11 @@ the Arduino, no ROS.
 import argparse
 from motor_serial import send_motor_instruction
 
-mode_one = "01"
+mode_one = "00"
 direction_straight = "000000"
-direction_left = "111110"
+direction_left = "100010"
 direction_right = "011110"
-max_speed = "11111111"
+max_speed = "01111111"
 no_speed = "00000000"
 
 def go_forward():
