@@ -37,20 +37,15 @@ void loop() {
   recvWithEndMarker();
   
   if (newData == true) {
-    // Print receivedChars
-    for (byte i = 0; i < MESSAGE_LENGTH; i++) {
-      Serial.print(receivedChars[i]);
-    }
-    Serial.println();
-    processCommand(&receivedChars[0], &receivedChars[1]);  // corrected function name
+    processCommand(receivedChars);  // corrected function name
     speed_input = get_drive_speed();
     newData = false;
   }
 
   analogWrite(M_REAR_LEFT_DRIVE, (int)(MAX_SPEED * speed_input));
   analogWrite(M_FRONT_LEFT_DRIVE, (int)(MAX_SPEED * speed_input));
-  analogWrite(M_REAR_RIGHT_DRIVE, (int)(MAX_SPEED * turn_input));
-  analogWrite(M_FRONT_RIGHT_DRIVE, (int)(MAX_SPEED * turn_input)); 
+  analogWrite(M_REAR_RIGHT_DRIVE, (int)(MAX_SPEED * speed_input));
+  analogWrite(M_FRONT_RIGHT_DRIVE, (int)(MAX_SPEED * speed_input));
 
 }
 
