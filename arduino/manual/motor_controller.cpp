@@ -1,6 +1,6 @@
-#include 'motorController.h'
+#include "motorController.h"
 #include <cstdint>
-#include <algorithm>
+#include <algorithm>    
 
  struct Command{
     int8_t mode : 2;
@@ -15,7 +15,7 @@ struct WheelDirection{
     int16_t rear_left;
 };
 
-MAX_ROTATION_ANGLE = 90;
+int MAX_ROTATION_ANGLE = 90;
 
 WheelDirection wheel_direction = {0, 0, 0, 0};
 Command current_command = {0, 0,0 };
@@ -28,7 +28,7 @@ void processCommand(char* input1, char* input2){
 }
 
 int calculateWheelDirections(){
-    direction = current_command.direction;
+    int direction = current_command.direction;
     switch (current_command.mode){
             // Mode 1: Crab walk, all wheels activated
         case 0b01:
@@ -50,6 +50,10 @@ int calculateWheelDirections(){
             wheel_direction.rear_right = 45;
             wheel_direction.rear_left = -45;
     }
+}
+
+float get_drive_speed(){
+    return (float) current_command.speed / 127;
 }
 
 
