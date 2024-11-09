@@ -1,33 +1,23 @@
 #include "motorController.h"
-#include <cstdint>
-#include <algorithm>    
+#include <stdint.h>
 
  struct Command{
-    int8_t mode : 2;
+    uint8_t mode : 2;
     int8_t direction : 6;
     int8_t speed : 8;
 };
 
-struct WheelDirection{
-    int16_t front_right;
-    int16_t front_left;
-    int16_t rear_right;
-    int16_t rear_left;
-};
-
-int MAX_ROTATION_ANGLE = 90;
-
-WheelDirection wheel_direction = {0, 0, 0, 0};
-Command current_command = {0, 0,0 };
+struct Command current_command;
+struct WheelDirection wheel_direction;
 
 // Must be called to follow instructions of a new command
 void processCommand(char* input1, char* input2){
-    current_command.mode = std::clamp(-MAX_ROTATION_ANGLE, (int) (*input1 >> 6) * 3, MAX_ROTATION_ANGLE);
+    current_command.mode = *input1 >> 6;
     current_command.direction = *input1;
     current_command.speed = *input2;
 }
 
-int calculateWheelDirections(){
+void calculateWheelDirections(){
     int direction = current_command.direction;
     switch (current_command.mode){
             // Mode 1: Crab walk, all wheels activated

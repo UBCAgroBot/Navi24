@@ -1,4 +1,5 @@
 #include "motorController.h"
+#include <Arduino.h>
 
 const byte numChars = 32;
 char receivedChars[numChars];   // an array to store the received data
@@ -6,19 +7,19 @@ char receivedChars[numChars];   // an array to store the received data
 boolean newData = false;
 
 // Define motor pins
-#define M_REAR_LEFT_DRIVE = 2
-#define M_FRONT_LEFT_DRIVE = 3
-#define M_REAR_RIGHT_DRIVE = 4
-#define M_FRONT_RIGHT_DRIVE = 5
+#define M_REAR_LEFT_DRIVE 2
+#define M_FRONT_LEFT_DRIVE 3
+#define M_REAR_RIGHT_DRIVE 4
+#define M_FRONT_RIGHT_DRIVE 5
 
 
 // Define direction pins
-#define M_REAR_LEFT_DRIVE_DIR = 30
-#define M_FRONT_LEFT_DRIVE_DIR = 31
-#define M_REAR_RIGHT_DRIVE_DIR = 32
-#define M_FRONT_RIGHT_DRIVE_DIR = 33
+#define M_REAR_LEFT_DRIVE_DIR 30
+#define M_FRONT_LEFT_DRIVE_DIR 31
+#define M_REAR_RIGHT_DRIVE_DIR 32
+#define M_FRONT_RIGHT_DRIVE_DIR 33
 
-#define MAX_SPEED = 255;
+#define MAX_SPEED 255
 
 
 void setup() {
@@ -42,7 +43,7 @@ void loop() {
   byte data[] = {255, 255};
   Serial.write(data, 2);
   if (newData == true) {
-    process_command(&receivedChars[0], &receivedChars[1])
+    processCommand(&receivedChars[0], &receivedChars[1]);
     speed_input = get_drive_speed();
     newData = false;
   }
