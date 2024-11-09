@@ -4,7 +4,7 @@ the Arduino, no ROS.
 """
 
 import argparse
-from motor_serial import send_bits
+from motor_serial import send_motor_instruction
 
 mode_one = "01"
 direction_straight = "000000"
@@ -14,16 +14,16 @@ max_speed = "11111111"
 no_speed = "00000000"
 
 def go_forward():
-    send_bits(mode_one, direction_straight, max_speed)
+    send_motor_instruction(mode_one, direction_straight, max_speed)
 
 def go_left():
-    send_bits(mode_one, direction_left, max_speed)
+    send_motor_instruction(mode_one, direction_left, max_speed)
 
 def go_right():
-    send_bits(mode_one, direction_right, max_speed)
+    send_motor_instruction(mode_one, direction_right, max_speed)
 
 def go_stop():
-    send_bits(mode_one, direction_straight, no_speed)
+    send_motor_instruction(mode_one, direction_straight, no_speed)
 
 def main():
     # Set up argument parser

@@ -1,9 +1,13 @@
+"""
+This module provides 2 functions. send_motor_instruction and convert 
+"""
+
 import time
 import serial
 
 SERIAL_PORT = "/dev/cu.usbmodem1101"
 
-def send_bits(mode:str, direction:str, speed:str):
+def send_motor_instruction(mode:str, direction:str, speed:str):
     """
     Writes 16bits to the arduino. The 16 bits should follow 
     the protocol in the Navi24 document. Note the bits are 
@@ -39,3 +43,13 @@ def send_bits(mode:str, direction:str, speed:str):
     response = serial_conn.read_until()
     print("Raw Arduino response:", response.decode('utf-8'))
     serial_conn.close()
+
+
+def int_to_str_bits(num, bits):
+    if num < 0:
+        num = (1 << bits) + num
+    elif num >= (1 << bits):
+        raise ValueError("More bits than expected")
+    
+    binary_str = format(num, f'0{bits}b')
+    return binary_str
