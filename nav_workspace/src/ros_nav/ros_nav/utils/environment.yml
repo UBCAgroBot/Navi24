@@ -1,0 +1,9 @@
+name: ab-ros
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.12.3
+  - conda-forge::pyserial
+  - pip
+  - pip:

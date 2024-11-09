@@ -1,6 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from interfaces.msg import Motor
+from ros_nav.utils.motor_serial import send_bits
 
 class MotorController(Node):
     def __init__(self):

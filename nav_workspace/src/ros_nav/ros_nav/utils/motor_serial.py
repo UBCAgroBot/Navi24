@@ -1,7 +1,7 @@
 import time
 import serial
 
-SERIAL_PORT = "/dev/cu.usbmodem101"
+SERIAL_PORT = "/dev/cu.usbmodem1101"
 
 def send_bits(bits:str):
     """
@@ -23,4 +23,4 @@ def send_bits(bits:str):
     serial_conn.close()
 
 
-send_bits("1110011100111111")
+send_bits("1110011111111111")
