@@ -1,0 +1,4 @@
+[console_scripts]
+drive_forward = ros_nav.drive_forward:main
+motor_controller = ros_nav.motor_controller:main
+

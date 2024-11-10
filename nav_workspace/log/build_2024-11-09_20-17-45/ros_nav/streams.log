@@ -1,0 +1,53 @@
+[1.416s] Invoking command in '/home/vscode/workspace/nav_workspace/src/ros_nav': PYTHONPATH=/home/vscode/workspace/nav_workspace/build/ros_nav/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/ros_nav build --build-base /home/vscode/workspace/nav_workspace/build/ros_nav/build install --record /home/vscode/workspace/nav_workspace/build/ros_nav/install.log --single-version-externally-managed install_data
+[1.885s] running egg_info
+[1.886s] creating ../../build/ros_nav/ros_nav.egg-info
+[1.887s] writing ../../build/ros_nav/ros_nav.egg-info/PKG-INFO
+[1.887s] writing dependency_links to ../../build/ros_nav/ros_nav.egg-info/dependency_links.txt
+[1.887s] writing entry points to ../../build/ros_nav/ros_nav.egg-info/entry_points.txt
+[1.887s] writing requirements to ../../build/ros_nav/ros_nav.egg-info/requires.txt
+[1.888s] writing top-level names to ../../build/ros_nav/ros_nav.egg-info/top_level.txt
+[1.888s] writing manifest file '../../build/ros_nav/ros_nav.egg-info/SOURCES.txt'
+[1.891s] reading manifest file '../../build/ros_nav/ros_nav.egg-info/SOURCES.txt'
+[1.891s] adding license file 'LICENSE'
+[1.893s] writing manifest file '../../build/ros_nav/ros_nav.egg-info/SOURCES.txt'
+[1.893s] running build
+[1.893s] running build_py
+[1.893s] creating /home/vscode/workspace/nav_workspace/build/ros_nav/build
+[1.893s] creating /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib
+[1.893s] creating /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib/ros_nav
+[1.894s] copying ros_nav/__init__.py -> /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib/ros_nav
+[1.894s] copying ros_nav/drive_forward.py -> /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib/ros_nav
+[1.894s] copying ros_nav/motor_controller.py -> /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib/ros_nav
+[1.894s] creating /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib/ros_nav/utils
+[1.894s] copying ros_nav/utils/__init__.py -> /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib/ros_nav/utils
+[1.894s] copying ros_nav/utils/drive_test.py -> /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib/ros_nav/utils
+[1.894s] copying ros_nav/utils/motor_serial.py -> /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib/ros_nav/utils
+[1.895s] running install
+[1.895s] running install_lib
+[1.897s] creating /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav
+[1.897s] copying /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib/ros_nav/__init__.py -> /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav
+[1.897s] copying /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib/ros_nav/drive_forward.py -> /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav
+[1.898s] copying /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib/ros_nav/motor_controller.py -> /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav
+[1.898s] creating /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav/utils
+[1.898s] copying /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib/ros_nav/utils/__init__.py -> /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav/utils
+[1.898s] copying /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib/ros_nav/utils/drive_test.py -> /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav/utils
+[1.898s] copying /home/vscode/workspace/nav_workspace/build/ros_nav/build/lib/ros_nav/utils/motor_serial.py -> /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav/utils
+[1.899s] byte-compiling /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav/__init__.py to __init__.cpython-310.pyc
+[1.900s] byte-compiling /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav/drive_forward.py to drive_forward.cpython-310.pyc
+[1.901s] byte-compiling /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav/motor_controller.py to motor_controller.cpython-310.pyc
+[1.902s] byte-compiling /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav/utils/__init__.py to __init__.cpython-310.pyc
+[1.902s] byte-compiling /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav/utils/drive_test.py to drive_test.cpython-310.pyc
+[1.903s] byte-compiling /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav/utils/motor_serial.py to motor_serial.cpython-310.pyc
+[1.904s] running install_data
+[1.904s] creating /home/vscode/workspace/nav_workspace/install/ros_nav/share/ament_index
+[1.904s] creating /home/vscode/workspace/nav_workspace/install/ros_nav/share/ament_index/resource_index
+[1.905s] creating /home/vscode/workspace/nav_workspace/install/ros_nav/share/ament_index/resource_index/packages
+[1.905s] copying resource/ros_nav -> /home/vscode/workspace/nav_workspace/install/ros_nav/share/ament_index/resource_index/packages
+[1.905s] copying package.xml -> /home/vscode/workspace/nav_workspace/install/ros_nav/share/ros_nav
+[1.905s] running install_egg_info
+[1.910s] Copying ../../build/ros_nav/ros_nav.egg-info to /home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages/ros_nav-0.0.0-py3.10.egg-info
+[1.912s] running install_scripts
+[1.958s] Installing drive_forward script to /home/vscode/workspace/nav_workspace/install/ros_nav/lib/ros_nav
+[1.958s] Installing motor_controller script to /home/vscode/workspace/nav_workspace/install/ros_nav/lib/ros_nav
+[1.959s] writing list of installed files to '/home/vscode/workspace/nav_workspace/build/ros_nav/install.log'
+[2.004s] Invoked command in '/home/vscode/workspace/nav_workspace/src/ros_nav' returned '0': PYTHONPATH=/home/vscode/workspace/nav_workspace/build/ros_nav/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/ros_nav build --build-base /home/vscode/workspace/nav_workspace/build/ros_nav/build install --record /home/vscode/workspace/nav_workspace/build/ros_nav/install.log --single-version-externally-managed install_data
