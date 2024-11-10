@@ -1,0 +1,202 @@
+[0.256s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build']
+[0.256s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=8, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=None, cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, mixin_files=None, mixin=None, verb_parser=<colcon_mixin.mixin.mixin_argument.MixinArgumentDecorator object at 0x7fea2b3fff70>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7fea2b338610>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7fea2b338610>>, mixin_verb=('build',))
+[0.622s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.622s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.622s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.622s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.622s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.622s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.622s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/vscode/workspace/nav_workspace'
+[0.622s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.623s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.623s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.623s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.623s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.623s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.623s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.623s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.623s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.649s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.649s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.649s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.649s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.649s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.649s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.649s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.650s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore'
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ignore_ament_install'
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_pkg']
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_pkg'
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['colcon_meta']
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'colcon_meta'
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['ros']
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'ros'
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['cmake', 'python']
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'cmake'
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python'
+[0.651s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extensions ['python_setup_py']
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(src) by extension 'python_setup_py'
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(src/interfaces) by extensions ['ignore', 'ignore_ament_install']
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(src/interfaces) by extension 'ignore'
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(src/interfaces) by extension 'ignore_ament_install'
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(src/interfaces) by extensions ['colcon_pkg']
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(src/interfaces) by extension 'colcon_pkg'
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(src/interfaces) by extensions ['colcon_meta']
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(src/interfaces) by extension 'colcon_meta'
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(src/interfaces) by extensions ['ros']
+[0.652s] Level 1:colcon.colcon_core.package_identification:_identify(src/interfaces) by extension 'ros'
+[0.658s] DEBUG:colcon.colcon_core.package_identification:Package 'src/interfaces' with type 'ros.ament_cmake' and name 'interfaces'
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros_nav) by extensions ['ignore', 'ignore_ament_install']
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros_nav) by extension 'ignore'
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros_nav) by extension 'ignore_ament_install'
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros_nav) by extensions ['colcon_pkg']
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros_nav) by extension 'colcon_pkg'
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros_nav) by extensions ['colcon_meta']
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros_nav) by extension 'colcon_meta'
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros_nav) by extensions ['ros']
+[0.659s] Level 1:colcon.colcon_core.package_identification:_identify(src/ros_nav) by extension 'ros'
+[0.660s] DEBUG:colcon.colcon_core.package_identification:Package 'src/ros_nav' with type 'ros.ament_python' and name 'ros_nav'
+[0.660s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.661s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.661s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.661s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.661s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.704s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.704s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.710s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 187 installed packages in /opt/ros/humble
+[0.712s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.785s] Level 5:colcon.colcon_core.verb:set package 'interfaces' build argument 'cmake_args' from command line to 'None'
+[0.786s] Level 5:colcon.colcon_core.verb:set package 'interfaces' build argument 'cmake_target' from command line to 'None'
+[0.786s] Level 5:colcon.colcon_core.verb:set package 'interfaces' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.786s] Level 5:colcon.colcon_core.verb:set package 'interfaces' build argument 'cmake_clean_cache' from command line to 'False'
+[0.786s] Level 5:colcon.colcon_core.verb:set package 'interfaces' build argument 'cmake_clean_first' from command line to 'False'
+[0.786s] Level 5:colcon.colcon_core.verb:set package 'interfaces' build argument 'cmake_force_configure' from command line to 'False'
+[0.786s] Level 5:colcon.colcon_core.verb:set package 'interfaces' build argument 'ament_cmake_args' from command line to 'None'
+[0.786s] Level 5:colcon.colcon_core.verb:set package 'interfaces' build argument 'catkin_cmake_args' from command line to 'None'
+[0.786s] Level 5:colcon.colcon_core.verb:set package 'interfaces' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.786s] DEBUG:colcon.colcon_core.verb:Building package 'interfaces' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/vscode/workspace/nav_workspace/build/interfaces', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/vscode/workspace/nav_workspace/install/interfaces', 'merge_install': False, 'path': '/home/vscode/workspace/nav_workspace/src/interfaces', 'symlink_install': False, 'test_result_base': None}
+[0.787s] Level 5:colcon.colcon_core.verb:set package 'ros_nav' build argument 'cmake_args' from command line to 'None'
+[0.787s] Level 5:colcon.colcon_core.verb:set package 'ros_nav' build argument 'cmake_target' from command line to 'None'
+[0.787s] Level 5:colcon.colcon_core.verb:set package 'ros_nav' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.787s] Level 5:colcon.colcon_core.verb:set package 'ros_nav' build argument 'cmake_clean_cache' from command line to 'False'
+[0.787s] Level 5:colcon.colcon_core.verb:set package 'ros_nav' build argument 'cmake_clean_first' from command line to 'False'
+[0.787s] Level 5:colcon.colcon_core.verb:set package 'ros_nav' build argument 'cmake_force_configure' from command line to 'False'
+[0.787s] Level 5:colcon.colcon_core.verb:set package 'ros_nav' build argument 'ament_cmake_args' from command line to 'None'
+[0.788s] Level 5:colcon.colcon_core.verb:set package 'ros_nav' build argument 'catkin_cmake_args' from command line to 'None'
+[0.788s] Level 5:colcon.colcon_core.verb:set package 'ros_nav' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.788s] DEBUG:colcon.colcon_core.verb:Building package 'ros_nav' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/vscode/workspace/nav_workspace/build/ros_nav', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': None, 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/vscode/workspace/nav_workspace/install/ros_nav', 'merge_install': False, 'path': '/home/vscode/workspace/nav_workspace/src/ros_nav', 'symlink_install': False, 'test_result_base': None}
+[0.788s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.790s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.790s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/vscode/workspace/nav_workspace/src/interfaces' with build type 'ament_cmake'
+[0.791s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/vscode/workspace/nav_workspace/src/interfaces'
+[0.796s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.796s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.796s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.802s] INFO:colcon.colcon_ros.task.ament_python.build:Building ROS package in '/home/vscode/workspace/nav_workspace/src/ros_nav' with build type 'ament_python'
+[0.803s] Level 1:colcon.colcon_core.shell:create_environment_hook('ros_nav', 'ament_prefix_path')
+[0.803s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/vscode/workspace/nav_workspace/install/ros_nav/share/ros_nav/hook/ament_prefix_path.ps1'
+[0.806s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/vscode/workspace/nav_workspace/install/ros_nav/share/ros_nav/hook/ament_prefix_path.dsv'
+[0.808s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/vscode/workspace/nav_workspace/install/ros_nav/share/ros_nav/hook/ament_prefix_path.sh'
+[0.809s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.810s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.820s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/vscode/workspace/nav_workspace/build/interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/vscode/workspace/nav_workspace/src/interfaces -DCMAKE_INSTALL_PREFIX=/home/vscode/workspace/nav_workspace/install/interfaces
+[1.407s] INFO:colcon.colcon_core.task.python.build:Building Python package in '/home/vscode/workspace/nav_workspace/src/ros_nav'
+[1.408s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[1.408s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[2.218s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/vscode/workspace/nav_workspace/src/ros_nav': PYTHONPATH=/home/vscode/workspace/nav_workspace/build/ros_nav/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/ros_nav build --build-base /home/vscode/workspace/nav_workspace/build/ros_nav/build install --record /home/vscode/workspace/nav_workspace/build/ros_nav/install.log --single-version-externally-managed install_data
+[2.807s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/vscode/workspace/nav_workspace/src/ros_nav' returned '0': PYTHONPATH=/home/vscode/workspace/nav_workspace/build/ros_nav/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../../build/ros_nav build --build-base /home/vscode/workspace/nav_workspace/build/ros_nav/build install --record /home/vscode/workspace/nav_workspace/build/ros_nav/install.log --single-version-externally-managed install_data
+[2.815s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/ros_nav' for CMake module files
+[2.816s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/ros_nav' for CMake config files
+[2.818s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/ros_nav/lib'
+[2.818s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/ros_nav/bin'
+[2.818s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/ros_nav/lib/pkgconfig/ros_nav.pc'
+[2.819s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/ros_nav/lib/python3.10/site-packages'
+[2.819s] Level 1:colcon.colcon_core.shell:create_environment_hook('ros_nav', 'pythonpath')
+[2.819s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/vscode/workspace/nav_workspace/install/ros_nav/share/ros_nav/hook/pythonpath.ps1'
+[2.821s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/vscode/workspace/nav_workspace/install/ros_nav/share/ros_nav/hook/pythonpath.dsv'
+[2.822s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/vscode/workspace/nav_workspace/install/ros_nav/share/ros_nav/hook/pythonpath.sh'
+[2.823s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/ros_nav/bin'
+[2.823s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(ros_nav)
+[2.824s] INFO:colcon.colcon_core.shell:Creating package script '/home/vscode/workspace/nav_workspace/install/ros_nav/share/ros_nav/package.ps1'
+[2.826s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/vscode/workspace/nav_workspace/install/ros_nav/share/ros_nav/package.dsv'
+[2.828s] INFO:colcon.colcon_core.shell:Creating package script '/home/vscode/workspace/nav_workspace/install/ros_nav/share/ros_nav/package.sh'
+[2.830s] INFO:colcon.colcon_core.shell:Creating package script '/home/vscode/workspace/nav_workspace/install/ros_nav/share/ros_nav/package.bash'
+[2.831s] INFO:colcon.colcon_core.shell:Creating package script '/home/vscode/workspace/nav_workspace/install/ros_nav/share/ros_nav/package.zsh'
+[2.833s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/vscode/workspace/nav_workspace/install/ros_nav/share/colcon-core/packages/ros_nav)
+[5.670s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/vscode/workspace/nav_workspace/build/interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/vscode/workspace/nav_workspace/src/interfaces -DCMAKE_INSTALL_PREFIX=/home/vscode/workspace/nav_workspace/install/interfaces
+[5.674s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/vscode/workspace/nav_workspace/build/interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/vscode/workspace/nav_workspace/build/interfaces -- -j8 -l8
+[9.602s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/vscode/workspace/nav_workspace/build/interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/vscode/workspace/nav_workspace/build/interfaces -- -j8 -l8
+[9.700s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/vscode/workspace/nav_workspace/build/interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/vscode/workspace/nav_workspace/build/interfaces
+[9.824s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(interfaces)
+[9.825s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/interfaces' for CMake module files
+[9.825s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/vscode/workspace/nav_workspace/build/interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/vscode/workspace/nav_workspace/build/interfaces
+[9.826s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/interfaces' for CMake config files
+[9.827s] Level 1:colcon.colcon_core.shell:create_environment_hook('interfaces', 'cmake_prefix_path')
+[9.827s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/hook/cmake_prefix_path.ps1'
+[9.828s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/hook/cmake_prefix_path.dsv'
+[9.829s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/hook/cmake_prefix_path.sh'
+[9.831s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/interfaces/lib'
+[9.831s] Level 1:colcon.colcon_core.shell:create_environment_hook('interfaces', 'ld_library_path_lib')
+[9.832s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/hook/ld_library_path_lib.ps1'
+[9.833s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/hook/ld_library_path_lib.dsv'
+[9.834s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/hook/ld_library_path_lib.sh'
+[9.835s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/interfaces/bin'
+[9.835s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/interfaces/lib/pkgconfig/interfaces.pc'
+[9.836s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/interfaces/lib/python3.10/site-packages'
+[9.836s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/interfaces/bin'
+[9.837s] INFO:colcon.colcon_core.shell:Creating package script '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/package.ps1'
+[9.838s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/package.dsv'
+[9.839s] INFO:colcon.colcon_core.shell:Creating package script '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/package.sh'
+[9.840s] INFO:colcon.colcon_core.shell:Creating package script '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/package.bash'
+[9.841s] INFO:colcon.colcon_core.shell:Creating package script '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/package.zsh'
+[9.842s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/vscode/workspace/nav_workspace/install/interfaces/share/colcon-core/packages/interfaces)
+[9.933s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(interfaces)
+[9.933s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/interfaces' for CMake module files
+[9.935s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/interfaces' for CMake config files
+[9.935s] Level 1:colcon.colcon_core.shell:create_environment_hook('interfaces', 'cmake_prefix_path')
+[9.936s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/hook/cmake_prefix_path.ps1'
+[9.938s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/hook/cmake_prefix_path.dsv'
+[9.938s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/hook/cmake_prefix_path.sh'
+[9.940s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/interfaces/lib'
+[9.940s] Level 1:colcon.colcon_core.shell:create_environment_hook('interfaces', 'ld_library_path_lib')
+[9.940s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/hook/ld_library_path_lib.ps1'
+[9.941s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/hook/ld_library_path_lib.dsv'
+[9.942s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/hook/ld_library_path_lib.sh'
+[9.943s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/interfaces/bin'
+[9.943s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/interfaces/lib/pkgconfig/interfaces.pc'
+[9.943s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/interfaces/lib/python3.10/site-packages'
+[9.944s] Level 1:colcon.colcon_core.environment:checking '/home/vscode/workspace/nav_workspace/install/interfaces/bin'
+[9.945s] INFO:colcon.colcon_core.shell:Creating package script '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/package.ps1'
+[9.946s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/package.dsv'
+[9.947s] INFO:colcon.colcon_core.shell:Creating package script '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/package.sh'
+[9.949s] INFO:colcon.colcon_core.shell:Creating package script '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/package.bash'
+[9.950s] INFO:colcon.colcon_core.shell:Creating package script '/home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/package.zsh'
+[9.951s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/vscode/workspace/nav_workspace/install/interfaces/share/colcon-core/packages/interfaces)
+[9.951s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[9.952s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[9.952s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '0'
+[9.952s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[9.974s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.notify_send': Could not find 'notify-send'
+[9.974s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[9.974s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[9.974s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[9.984s] DEBUG:colcon.colcon_notification.desktop_notification.notify2:Failed to initialize notify2: org.freedesktop.DBus.Error.Spawn.ExecFailed: /usr/bin/dbus-launch terminated abnormally without any error message
+[9.985s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[9.987s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/vscode/workspace/nav_workspace/install/local_setup.ps1'
+[9.990s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/vscode/workspace/nav_workspace/install/_local_setup_util_ps1.py'
+[9.994s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/vscode/workspace/nav_workspace/install/setup.ps1'
+[9.997s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/vscode/workspace/nav_workspace/install/local_setup.sh'
+[9.998s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/vscode/workspace/nav_workspace/install/_local_setup_util_sh.py'
+[10.000s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/vscode/workspace/nav_workspace/install/setup.sh'
+[10.002s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/vscode/workspace/nav_workspace/install/local_setup.bash'
+[10.004s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/vscode/workspace/nav_workspace/install/setup.bash'
+[10.005s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/vscode/workspace/nav_workspace/install/local_setup.zsh'
+[10.007s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/vscode/workspace/nav_workspace/install/setup.zsh'

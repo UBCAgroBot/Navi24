@@ -1,0 +1,225 @@
+[0.029s] Invoking command in '/home/vscode/workspace/nav_workspace/build/interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/vscode/workspace/nav_workspace/src/interfaces -DCMAKE_INSTALL_PREFIX=/home/vscode/workspace/nav_workspace/install/interfaces
+[0.264s] -- The C compiler identification is GNU 11.4.0
+[0.466s] -- The CXX compiler identification is GNU 11.4.0
+[0.504s] -- Detecting C compiler ABI info
+[0.642s] -- Detecting C compiler ABI info - done
+[0.678s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.679s] -- Detecting C compile features
+[0.681s] -- Detecting C compile features - done
+[0.690s] -- Detecting CXX compiler ABI info
+[0.852s] -- Detecting CXX compiler ABI info - done
+[0.889s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.890s] -- Detecting CXX compile features
+[0.892s] -- Detecting CXX compile features - done
+[0.908s] -- Found ament_cmake: 1.3.10 (/opt/ros/humble/share/ament_cmake/cmake)
+[1.230s] -- Found Python3: /usr/bin/python3 (found version "3.10.12") found components: Interpreter
+[1.461s] -- Found rosidl_default_generators: 1.2.0 (/opt/ros/humble/share/rosidl_default_generators/cmake)
+[1.474s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.498s] -- Found rosidl_adapter: 3.1.5 (/opt/ros/humble/share/rosidl_adapter/cmake)
+[1.613s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.544s] -- Found ament_cmake_ros: 0.10.0 (/opt/ros/humble/share/ament_cmake_ros/cmake)
+[3.377s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[4.495s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[4.556s] -- Found PythonInterp: /usr/bin/python3 (found suitable version "3.10.12", minimum required is "3.6")
+[4.559s] -- Found python_cmake_module: 0.10.0 (/opt/ros/humble/share/python_cmake_module/cmake)
+[4.611s] -- Found PythonLibs: /usr/lib/x86_64-linux-gnu/libpython3.10.so (found suitable version "3.10.12", minimum required is "3.5")
+[4.611s] -- Using PYTHON_EXECUTABLE: /usr/bin/python3
+[4.612s] -- Using PYTHON_INCLUDE_DIRS: /usr/include/python3.10
+[4.612s] -- Using PYTHON_LIBRARIES: /usr/lib/x86_64-linux-gnu/libpython3.10.so
+[4.656s] -- Found PythonExtra: .so
+[4.719s] -- Found ament_lint_auto: 0.12.11 (/opt/ros/humble/share/ament_lint_auto/cmake)
+[4.767s] -- Added test 'lint_cmake' to check CMake code style
+[4.769s] -- Added test 'xmllint' to check XML markup files
+[4.775s] -- Configuring done (4.7s)
+[4.868s] -- Generating done (0.1s)
+[4.869s] -- Build files have been written to: /home/vscode/workspace/nav_workspace/build/interfaces
+[4.879s] Invoked command in '/home/vscode/workspace/nav_workspace/build/interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/vscode/workspace/nav_workspace/src/interfaces -DCMAKE_INSTALL_PREFIX=/home/vscode/workspace/nav_workspace/install/interfaces
+[4.883s] Invoking command in '/home/vscode/workspace/nav_workspace/build/interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/vscode/workspace/nav_workspace/build/interfaces -- -j8 -l8
+[4.922s] [  3%] [34m[1mGenerating C code for ROS interfaces[0m
+[4.933s] [  6%] [34m[1mGenerating C++ code for ROS interfaces[0m
+[4.943s] [  6%] Built target ament_cmake_python_copy_interfaces
+[5.393s] running egg_info
+[5.394s] creating interfaces.egg-info
+[5.395s] writing interfaces.egg-info/PKG-INFO
+[5.395s] writing dependency_links to interfaces.egg-info/dependency_links.txt
+[5.395s] writing top-level names to interfaces.egg-info/top_level.txt
+[5.396s] writing manifest file 'interfaces.egg-info/SOURCES.txt'
+[5.400s] reading manifest file 'interfaces.egg-info/SOURCES.txt'
+[5.401s] writing manifest file 'interfaces.egg-info/SOURCES.txt'
+[5.449s] [  6%] Built target ament_cmake_python_build_interfaces_egg
+[5.517s] [  6%] Built target interfaces__cpp
+[5.528s] [  9%] [34m[1mGenerating C++ type support dispatch for ROS interfaces[0m
+[5.537s] [ 12%] [34m[1mGenerating C++ introspection for ROS interfaces[0m
+[5.538s] [ 19%] [34m[1mGenerating C++ type support for eProsima Fast-RTPS[0m
+[5.539s] [ 19%] [32mBuilding C object CMakeFiles/interfaces__rosidl_generator_c.dir/rosidl_generator_c/interfaces/msg/detail/motor__functions.c.o[0m
+[5.659s] [ 22%] [32m[1mLinking C shared library libinterfaces__rosidl_generator_c.so[0m
+[5.716s] [ 22%] Built target interfaces__rosidl_generator_c
+[5.728s] [ 25%] [34m[1mGenerating C type support for eProsima Fast-RTPS[0m
+[5.733s] [ 32%] [34m[1mGenerating C type support dispatch for ROS interfaces[0m
+[5.733s] [ 32%] [34m[1mGenerating C introspection for ROS interfaces[0m
+[6.049s] [ 35%] [32mBuilding CXX object CMakeFiles/interfaces__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/interfaces/msg/motor__type_support.cpp.o[0m
+[6.163s] [ 38%] [32mBuilding CXX object CMakeFiles/interfaces__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/interfaces/msg/detail/motor__type_support.cpp.o[0m
+[6.253s] [ 41%] [32mBuilding CXX object CMakeFiles/interfaces__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/interfaces/msg/detail/dds_fastrtps/motor__type_support.cpp.o[0m
+[6.370s] [ 45%] [32mBuilding CXX object CMakeFiles/interfaces__rosidl_typesupport_c.dir/rosidl_typesupport_c/interfaces/msg/motor__type_support.cpp.o[0m
+[6.420s] [ 48%] [32m[1mLinking CXX shared library libinterfaces__rosidl_typesupport_c.so[0m
+[6.507s] [ 48%] Built target interfaces__rosidl_typesupport_c
+[6.512s] [ 51%] [32mBuilding CXX object CMakeFiles/interfaces__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/interfaces/msg/detail/motor__type_support_c.cpp.o[0m
+[6.551s] [ 54%] [32mBuilding C object CMakeFiles/interfaces__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/interfaces/msg/detail/motor__type_support.c.o[0m
+[6.651s] [ 58%] [32m[1mLinking C shared library libinterfaces__rosidl_typesupport_introspection_c.so[0m
+[6.712s] [ 58%] Built target interfaces__rosidl_typesupport_introspection_c
+[6.807s] [ 61%] [32m[1mLinking CXX shared library libinterfaces__rosidl_typesupport_cpp.so[0m
+[6.893s] [ 61%] Built target interfaces__rosidl_typesupport_cpp
+[7.118s] [ 64%] [32m[1mLinking CXX shared library libinterfaces__rosidl_typesupport_introspection_cpp.so[0m
+[7.179s] [ 67%] [32m[1mLinking CXX shared library libinterfaces__rosidl_typesupport_fastrtps_cpp.so[0m
+[7.191s] [ 67%] Built target interfaces__rosidl_typesupport_introspection_cpp
+[7.290s] [ 70%] [32m[1mLinking CXX shared library libinterfaces__rosidl_typesupport_fastrtps_c.so[0m
+[7.317s] [ 70%] Built target interfaces__rosidl_typesupport_fastrtps_cpp
+[7.440s] [ 70%] Built target interfaces__rosidl_typesupport_fastrtps_c
+[7.464s] [ 70%] Built target interfaces
+[7.484s] [ 74%] [34m[1mGenerating Python code for ROS interfaces[0m
+[8.204s] [ 74%] Built target interfaces__py
+[8.224s] [ 77%] [32mBuilding C object CMakeFiles/interfaces__rosidl_generator_py.dir/rosidl_generator_py/interfaces/msg/_motor_s.c.o[0m
+[8.487s] [ 80%] [32m[1mLinking C shared library rosidl_generator_py/interfaces/libinterfaces__rosidl_generator_py.so[0m
+[8.542s] [ 80%] Built target interfaces__rosidl_generator_py
+[8.566s] [ 87%] [32mBuilding C object CMakeFiles/interfaces__rosidl_typesupport_c__pyext.dir/rosidl_generator_py/interfaces/_interfaces_s.ep.rosidl_typesupport_c.c.o[0m
+[8.567s] [ 87%] [32mBuilding C object CMakeFiles/interfaces__rosidl_typesupport_introspection_c__pyext.dir/rosidl_generator_py/interfaces/_interfaces_s.ep.rosidl_typesupport_introspection_c.c.o[0m
+[8.567s] [ 90%] [32mBuilding C object CMakeFiles/interfaces__rosidl_typesupport_fastrtps_c__pyext.dir/rosidl_generator_py/interfaces/_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c.o[0m
+[8.751s] [ 93%] [32m[1mLinking C shared library rosidl_generator_py/interfaces/interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so[0m
+[8.752s] [ 96%] [32m[1mLinking C shared library rosidl_generator_py/interfaces/interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so[0m
+[8.758s] [100%] [32m[1mLinking C shared library rosidl_generator_py/interfaces/interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so[0m
+[8.798s] [100%] Built target interfaces__rosidl_typesupport_fastrtps_c__pyext
+[8.799s] [100%] Built target interfaces__rosidl_typesupport_introspection_c__pyext
+[8.800s] [100%] Built target interfaces__rosidl_typesupport_c__pyext
+[8.811s] Invoked command in '/home/vscode/workspace/nav_workspace/build/interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/vscode/workspace/nav_workspace/build/interfaces -- -j8 -l8
+[8.909s] Invoking command in '/home/vscode/workspace/nav_workspace/build/interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/vscode/workspace/nav_workspace/build/interfaces
+[8.917s] -- Install configuration: ""
+[8.917s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/ament_index/resource_index/rosidl_interfaces/interfaces
+[8.917s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces
+[8.918s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg
+[8.918s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/rosidl_generator_c__visibility_control.h
+[8.918s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/motor.h
+[8.918s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail
+[8.919s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail/motor__functions.c
+[8.919s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail/motor__functions.h
+[8.919s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail/motor__struct.h
+[8.919s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail/motor__type_support.h
+[8.919s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/environment/library_path.sh
+[8.919s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/environment/library_path.dsv
+[8.920s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_generator_c.so
+[8.921s] -- Set non-toolchain portion of runtime path of "/home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_generator_c.so" to ""
+[8.921s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces
+[8.921s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg
+[8.921s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[8.921s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail
+[8.922s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail/motor__rosidl_typesupport_fastrtps_c.h
+[8.922s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_typesupport_fastrtps_c.so
+[8.923s] -- Set non-toolchain portion of runtime path of "/home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_typesupport_fastrtps_c.so" to ""
+[8.923s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces
+[8.923s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg
+[8.923s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[8.923s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail
+[8.924s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail/motor__rosidl_typesupport_introspection_c.h
+[8.924s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail/motor__type_support.c
+[8.924s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_typesupport_introspection_c.so
+[8.926s] -- Set non-toolchain portion of runtime path of "/home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_typesupport_introspection_c.so" to ""
+[8.926s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_typesupport_c.so
+[8.927s] -- Set non-toolchain portion of runtime path of "/home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_typesupport_c.so" to ""
+[8.927s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces
+[8.927s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg
+[8.927s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/motor.hpp
+[8.927s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail
+[8.927s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail/motor__builder.hpp
+[8.928s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail/motor__struct.hpp
+[8.928s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail/motor__traits.hpp
+[8.928s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces
+[8.928s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg
+[8.928s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[8.928s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail
+[8.928s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail/motor__rosidl_typesupport_fastrtps_cpp.hpp
+[8.929s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail/dds_fastrtps
+[8.929s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_typesupport_fastrtps_cpp.so
+[8.930s] -- Set non-toolchain portion of runtime path of "/home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_typesupport_fastrtps_cpp.so" to ""
+[8.930s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces
+[8.930s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg
+[8.930s] -- Up-to-date: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail
+[8.930s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail/motor__rosidl_typesupport_introspection_cpp.hpp
+[8.931s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/include/interfaces/interfaces/msg/detail/motor__type_support.cpp
+[8.931s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_typesupport_introspection_cpp.so
+[8.932s] -- Set non-toolchain portion of runtime path of "/home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_typesupport_introspection_cpp.so" to ""
+[8.932s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_typesupport_cpp.so
+[8.933s] -- Set non-toolchain portion of runtime path of "/home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_typesupport_cpp.so" to ""
+[8.933s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/environment/pythonpath.sh
+[8.933s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/environment/pythonpath.dsv
+[8.933s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces-0.0.0-py3.10.egg-info
+[8.934s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces-0.0.0-py3.10.egg-info/PKG-INFO
+[8.934s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces-0.0.0-py3.10.egg-info/dependency_links.txt
+[8.934s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces-0.0.0-py3.10.egg-info/top_level.txt
+[8.934s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces-0.0.0-py3.10.egg-info/SOURCES.txt
+[8.934s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces
+[8.935s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/__init__.py
+[8.935s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/msg
+[8.935s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/msg/_motor.py
+[8.935s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/msg/_motor_s.c
+[8.936s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/msg/__init__.py
+[8.936s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/_interfaces_s.ep.rosidl_typesupport_fastrtps_c.c
+[8.936s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/_interfaces_s.ep.rosidl_typesupport_introspection_c.c
+[8.937s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/_interfaces_s.ep.rosidl_typesupport_c.c
+[8.938s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/libinterfaces__rosidl_generator_py.so
+[8.938s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+[8.939s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+[8.939s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+[9.009s] Listing '/home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces'...
+[9.009s] Compiling '/home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/__init__.py'...
+[9.009s] Listing '/home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/msg'...
+[9.009s] Compiling '/home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/msg/__init__.py'...
+[9.009s] Compiling '/home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/msg/_motor.py'...
+[9.018s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so
+[9.019s] -- Set non-toolchain portion of runtime path of "/home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/interfaces_s__rosidl_typesupport_fastrtps_c.cpython-310-x86_64-linux-gnu.so" to ""
+[9.019s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so
+[9.020s] -- Set non-toolchain portion of runtime path of "/home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/interfaces_s__rosidl_typesupport_introspection_c.cpython-310-x86_64-linux-gnu.so" to ""
+[9.020s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so
+[9.021s] -- Set non-toolchain portion of runtime path of "/home/vscode/workspace/nav_workspace/install/interfaces/local/lib/python3.10/dist-packages/interfaces/interfaces_s__rosidl_typesupport_c.cpython-310-x86_64-linux-gnu.so" to ""
+[9.021s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_generator_py.so
+[9.022s] -- Set non-toolchain portion of runtime path of "/home/vscode/workspace/nav_workspace/install/interfaces/lib/libinterfaces__rosidl_generator_py.so" to ""
+[9.022s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/msg/Motor.idl
+[9.022s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/msg/Motor.msg
+[9.023s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/ament_index/resource_index/package_run_dependencies/interfaces
+[9.023s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/ament_index/resource_index/parent_prefix_path/interfaces
+[9.023s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/environment/ament_prefix_path.sh
+[9.023s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/environment/ament_prefix_path.dsv
+[9.023s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/environment/path.sh
+[9.024s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/environment/path.dsv
+[9.024s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/local_setup.bash
+[9.024s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/local_setup.sh
+[9.024s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/local_setup.zsh
+[9.024s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/local_setup.dsv
+[9.025s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/package.dsv
+[9.025s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/ament_index/resource_index/packages/interfaces
+[9.025s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/export_interfaces__rosidl_generator_cExport.cmake
+[9.025s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/export_interfaces__rosidl_generator_cExport-noconfig.cmake
+[9.025s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/export_interfaces__rosidl_typesupport_fastrtps_cExport.cmake
+[9.026s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/export_interfaces__rosidl_typesupport_fastrtps_cExport-noconfig.cmake
+[9.026s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/interfaces__rosidl_typesupport_introspection_cExport.cmake
+[9.026s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/interfaces__rosidl_typesupport_introspection_cExport-noconfig.cmake
+[9.026s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/interfaces__rosidl_typesupport_cExport.cmake
+[9.026s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/interfaces__rosidl_typesupport_cExport-noconfig.cmake
+[9.027s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/export_interfaces__rosidl_generator_cppExport.cmake
+[9.027s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/export_interfaces__rosidl_typesupport_fastrtps_cppExport.cmake
+[9.027s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/export_interfaces__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake
+[9.027s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/interfaces__rosidl_typesupport_introspection_cppExport.cmake
+[9.027s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/interfaces__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+[9.027s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/interfaces__rosidl_typesupport_cppExport.cmake
+[9.028s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/interfaces__rosidl_typesupport_cppExport-noconfig.cmake
+[9.028s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/export_interfaces__rosidl_generator_pyExport.cmake
+[9.028s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/export_interfaces__rosidl_generator_pyExport-noconfig.cmake
+[9.028s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/rosidl_cmake-extras.cmake
+[9.028s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/ament_cmake_export_include_directories-extras.cmake
+[9.029s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/ament_cmake_export_libraries-extras.cmake
+[9.029s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/ament_cmake_export_targets-extras.cmake
+[9.029s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[9.029s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/ament_cmake_export_dependencies-extras.cmake
+[9.029s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[9.030s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/interfacesConfig.cmake
+[9.030s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/cmake/interfacesConfig-version.cmake
+[9.030s] -- Installing: /home/vscode/workspace/nav_workspace/install/interfaces/share/interfaces/package.xml
+[9.034s] Invoked command in '/home/vscode/workspace/nav_workspace/build/interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/vscode/workspace/nav_workspace/build/interfaces
