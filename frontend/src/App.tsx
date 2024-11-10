@@ -14,6 +14,8 @@ function App() {
   let [direction, _setDirection] = useState(0);
   let [speedMagnitude, setSpeedMagnitude] = useState(1);
 
+  let [connectionStatus, setConnectionStatus] = useState(false);
+
   const rosRef = useRef<null | ROSLIB.Ros>(null);
 
   useEffect(() => {
@@ -23,14 +25,19 @@ function App() {
       });
       rosRef.current.on('connection', function() {
         console.log('Connected to websocket server.');
+        setConnectionStatus(true);
       });
 
       rosRef.current.on('error', function(error) {
         console.log('Error connecting to websocket server: ', error);
+        setConnectionStatus(false);
       });
 
       rosRef.current.on('close', function() {
         console.log('Connection to websocket server closed.');
+        setConnectionStatus(false);
+
+        rosRef.current = null;
       })
     }
 
@@ -124,6 +131,9 @@ function App() {
   return (
     <div onKeyDown={(event) => { keyPress(event) }} onKeyUp={keyRelease} >
       <h1 className="text-xxxl">Manual Control</h1>
+      <p className="font-bold">Connection status: <span className={connectionStatus ? "text-green-600" : "text-red-600"}>
+        {connectionStatus ? "Connected" : "Disconnected"}
+      </span></p>
       <p>Speed: {speed}, Direction: {direction}, Speed mag: {speedMagnitude}</p>
 
       <div className="flex flex-col">
