@@ -1,4 +1,0 @@
-Invoking command in '/home/vscode/workspace/nav_workspace/build/interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/vscode/workspace/nav_workspace/build/interfaces -- -j8 -l8
-Invoked command in '/home/vscode/workspace/nav_workspace/build/interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --build /home/vscode/workspace/nav_workspace/build/interfaces -- -j8 -l8
-Invoking command in '/home/vscode/workspace/nav_workspace/build/interfaces': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/vscode/workspace/nav_workspace/build/interfaces
-Invoked command in '/home/vscode/workspace/nav_workspace/build/interfaces' returned '0': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake --install /home/vscode/workspace/nav_workspace/build/interfaces
