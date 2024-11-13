@@ -8,6 +8,10 @@
 #define M_FRONT_LEFT_DRIVE 3
 #define M_REAR_RIGHT_DRIVE 4
 #define M_FRONT_RIGHT_DRIVE 5
+#define M_REAR_LEFT_TURN 6
+#define M_FRONT_LEFT_TURN 7
+#define M_REAR_RIGHT_TURN 8
+#define M_FRONT_RIGHT_TURN 9
 #define MAX_SPEED 255
 
 // Structures for commands and wheel directions

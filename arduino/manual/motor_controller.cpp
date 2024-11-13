@@ -51,6 +51,8 @@ void processCommand(char * receivedChars) {
   Serial.print(current_command.speed);
   Serial.println();
 
+  calculateWheelDirections();
+
 }
 
 int calculateWheelDirections() {
