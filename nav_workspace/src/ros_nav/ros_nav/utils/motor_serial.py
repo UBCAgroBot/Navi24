@@ -5,8 +5,8 @@ This module provides 2 functions. send_motor_instruction and convert
 import time
 import serial
 
-# SERIAL_PORT = "/dev/cu.usbmodem1101"
-SERIAL_PORT = "/dev/ttyACM0"
+SERIAL_PORT = "/dev/cu.usbmodem1101"
+# SERIAL_PORT = "/dev/ttyACM0"
 
 print("Connecting to serial...")
 serial_conn = serial.Serial(port=SERIAL_PORT, baudrate=9600, timeout=None )
@@ -45,10 +45,8 @@ def send_motor_instruction(mode:str, direction:str, speed:str):
     out = (message + '\n').encode('utf-8')
     serial_conn.write(out)
     
-    # For testing read the next 2 bits sent back.
-    response = serial_conn.read_until()
+    response = serial_conn.read_until('\n')
     print("Raw Arduino response:", response.decode('utf-8'))
-    # serial_conn.close()
 
 
 def int_to_str_bits(num, bits):
