@@ -45,7 +45,7 @@ def send_motor_instruction(mode:str, direction:str, speed:str):
     out = (message + '\n').encode('utf-8')
     serial_conn.write(out)
     
-    response = serial_conn.read_until('\n')
+    response = serial_conn.read_until()
     print("Raw Arduino response:", response.decode('utf-8'))
 
 
