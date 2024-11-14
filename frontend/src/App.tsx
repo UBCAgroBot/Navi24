@@ -16,7 +16,42 @@ function App() {
 
   let [connectionStatus, setConnectionStatus] = useState(false);
 
+  let [dbg, setDbg] = useState("");
+
   const rosRef = useRef<null | ROSLIB.Ros>(null);
+  const gamepadRef = useRef<null | Gamepad>(null);
+
+  useEffect(() => {
+    let start = null;
+
+    function gameLoop() {
+
+      if (gamepadRef.current == null) {
+        return;
+      }
+
+      const gp = gamepadRef.current;
+
+      console.log(gp.axes[0]);
+      setDbg(gp.axes[0].toString());
+
+      start = requestAnimationFrame(gameLoop);
+    }
+    window.addEventListener("gamepadconnected", (e) => {
+      // Gamepad connected
+      if (gamepadRef.current == null) {
+        gamepadRef.current = navigator.getGamepads()[e.gamepad.index];
+        requestAnimationFrame(gameLoop);
+      }
+      else {
+        console.log("Second gamepad connected?!?");
+      }
+
+      window.addEventListener("gamepaddisconnected", (e) => {
+        gamepadRef.current = null;
+      });
+    });
+  }, []);
 
   useEffect(() => {
     if (rosRef.current === null) {
@@ -55,24 +90,6 @@ function App() {
     }
   }, [speed, direction]);
 
-
-  // let sendToRobot = () => {
-  //   fetch(API_ENDPOINT + "control"
-  //     , {
-  //       method: 'POST',
-  //       body: JSON.stringify({
-  //         speed: speed * speedMagnitude,
-  //         direction: direction,
-  //         mode: 0,
-  //       }),
-  //       headers: {
-  //         'Content-type': 'application/json; charset=UTF-8',
-  //       },
-  //     }
-  //   )
-  //     .then(response => response.json())
-  //     .then(data => console.log(data));
-  // }
 
   let setSpeed = (speed: number) => {
     _setSpeed(speed * speedMagnitude);
@@ -133,7 +150,7 @@ function App() {
       <h1 className="text-xxxl">Manual Control</h1>
       <p className="font-bold">Connection status: <span className={connectionStatus ? "text-green-600" : "text-red-600"}>
         {connectionStatus ? "Connected" : "Disconnected"}
-      </span></p>
+      </span> {dbg}</p>
       <p>Speed: {speed}, Direction: {direction}, Speed mag: {speedMagnitude}</p>
 
       <div className="flex flex-col">
