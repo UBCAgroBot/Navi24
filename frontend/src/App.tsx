@@ -8,6 +8,31 @@ import ROSLIB from 'roslib';
 // let API_ENDPOINT = "http://0.0.0.0:5000/"
 // let API_ENDPOINT = "http://10.43.26.25:5000/"
 
+// Calibrate deadzone as needed
+const DEADZONE = (input: number) => {
+  if (Math.abs(input) < 0.1) {
+    return 0;
+  }
+
+  return input;
+};
+
+// On the joystick, - is upwards, so the sign is flipped
+const SPEED_FUNCTION = (input: number) => {
+  // Start with a basic squaring function
+  let sign = input <= 0 ? 1 : -1;
+  return input * input * sign;
+};
+
+const DIRECTION_FUNCTION = (input: number) => {
+  // Start with a basic squaring function
+  let sign = input <= 0 ? -1 : 1;
+  return input * input * sign;
+};
+
+const MAX_SPEED = 127;
+const MAX_DIRECTION = 30;
+
 function App() {
 
   let [speed, _setSpeed] = useState(0);
@@ -16,43 +41,50 @@ function App() {
 
   let [connectionStatus, setConnectionStatus] = useState(false);
 
+  // Use this if you want to add little debug messages
   let [dbg, setDbg] = useState("");
 
   const rosRef = useRef<null | ROSLIB.Ros>(null);
-  const gamepadRef = useRef<null | Gamepad>(null);
+  let [gamepadConnected, setGamepadConnected] = useState(false);
 
-  useEffect(() => {
-    let start = null;
+  // Deal with the joystick stuff
+  const loopRef = useRef<null | number>(null);
 
-    function gameLoop() {
+  const gameLoop = () => {
 
-      if (gamepadRef.current == null) {
-        return;
-      }
-
-      const gp = gamepadRef.current;
-
-      console.log(gp.axes[0]);
-      setDbg(gp.axes[0].toString());
-
-      start = requestAnimationFrame(gameLoop);
+    // On Chrome we have to get a new gamepad instance
+    // On firefox using the one in gamepadRef works fine
+    // Massive chrome L
+    // const gp = gamepadRef.current;
+    const [gp] = navigator.getGamepads();
+    if (gp == null) {
+      return;
     }
+
+    _setSpeed(MAX_SPEED * SPEED_FUNCTION(DEADZONE(gp.axes[1])));
+    _setDirection(MAX_DIRECTION * DIRECTION_FUNCTION(DEADZONE(gp.axes[2])));
+
+    loopRef.current = requestAnimationFrame(gameLoop);
+  }
+  useEffect(() => {
+
     window.addEventListener("gamepadconnected", (e) => {
       // Gamepad connected
-      if (gamepadRef.current == null) {
-        gamepadRef.current = navigator.getGamepads()[e.gamepad.index];
-        requestAnimationFrame(gameLoop);
-      }
-      else {
-        console.log("Second gamepad connected?!?");
-      }
+      setGamepadConnected(true);
+      requestAnimationFrame(gameLoop);
+      console.log("Gamepad connected:", e.gamepad.id);
 
-      window.addEventListener("gamepaddisconnected", (e) => {
-        gamepadRef.current = null;
-      });
+    });
+
+    window.addEventListener("gamepaddisconnected", (e) => {
+      setGamepadConnected(false);
+
+      console.log("Gamepad disconnected:", e.gamepad.id);
     });
   }, []);
 
+  // Communcate with ROS
+  // This code runs every time speed or direction changes
   useEffect(() => {
     if (rosRef.current === null) {
       rosRef.current = new ROSLIB.Ros({
@@ -76,7 +108,7 @@ function App() {
       })
     }
 
-    if (rosRef.current !== null) {
+    if (rosRef.current !== null && connectionStatus) {
       var cmd_motor = new ROSLIB.Topic({
         ros: rosRef.current,
         name: 'motor_instruction',
@@ -102,19 +134,19 @@ function App() {
   let keyPress = (event: any) => {
     switch (event.key) {
       case "w":
-        setSpeed(127);
+        setSpeed(MAX_SPEED);
         break;
 
       case "s":
-        setSpeed(-128);
+        setSpeed(-MAX_SPEED);
         break;
 
       case "a":
-        setDirection(-30);
+        setDirection(-MAX_DIRECTION);
         break;
 
       case "d":
-        setDirection(30);
+        setDirection(MAX_DIRECTION);
         break;
 
       default:
@@ -148,23 +180,31 @@ function App() {
   return (
     <div onKeyDown={(event) => { keyPress(event) }} onKeyUp={keyRelease} >
       <h1 className="text-xxxl">Manual Control</h1>
-      <p className="font-bold">Connection status: <span className={connectionStatus ? "text-green-600" : "text-red-600"}>
-        {connectionStatus ? "Connected" : "Disconnected"}
-      </span> {dbg}</p>
+      <p className="font-bold">
+        Connection status: &nbsp;
+        <span className={connectionStatus ? "text-green-600" : "text-red-600"}>
+          {connectionStatus ? "Connected" : "Disconnected"}
+        </span> &nbsp;
+        Joystick status: &nbsp;
+        <span className={gamepadConnected ? "text-green-600" : "text-red-600"}>
+          {gamepadConnected ? "Connected" : "Disconnected"}
+        </span> &nbsp;
+        {dbg}
+      </p>
       <p>Speed: {speed}, Direction: {direction}, Speed mag: {speedMagnitude}</p>
 
       <div className="flex flex-col">
-        <Button onPress={() => { setSpeed(127) }}
+        <Button onPress={() => { setSpeed(MAX_SPEED) }}
           onRelease={() => { setSpeed(0) }}>^</Button>
 
-        <Button onPress={() => { setSpeed(-128) }}
+        <Button onPress={() => { setSpeed(-MAX_SPEED) }}
           onRelease={() => { setSpeed(0) }}>V</Button>
       </div>
 
       <p>
 
         Direction: <button className="bg-red-100 m-1 p-2" onClick={() => { setDirection(0) }}>Reset to straight</button>
-        <input type="range" className="w-full" min={-30} max={30} step={1} onChange={(event) => { setDirection(Number(event.target.value)) }} value={direction} />
+        <input type="range" className="w-full" min={-MAX_DIRECTION} max={MAX_DIRECTION} step={1} onChange={(event) => { setDirection(Number(event.target.value)) }} value={direction} />
 
         Speed:
         <input type="range" className="w-full" min={0} max={1} step={0.1} onChange={(event) => { setSpeedMagnitude(Number(event.target.value)) }} value={speedMagnitude} />

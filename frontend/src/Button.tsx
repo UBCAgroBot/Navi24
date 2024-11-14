@@ -8,7 +8,9 @@ function Button(props: {
   return (
     <button className="p-20 m-5 bg-green-100 text-xl"
       onMouseDown={props.onPress}
-      onMouseUp={props.onRelease}>
+      onMouseUp={props.onRelease}
+      onTouchStart={props.onPress}
+      onTouchEnd={props.onRelease}>
       {props.children}
     </button>
   )
