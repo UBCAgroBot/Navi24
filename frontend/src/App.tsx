@@ -5,8 +5,7 @@ import './App.css'
 import Button from './Button'
 import ROSLIB from 'roslib';
 
-// let API_ENDPOINT = "http://0.0.0.0:5000/"
-// let API_ENDPOINT = "http://10.43.26.25:5000/"
+let API_ENDPOINT = "ws://100.115.190.38:9090"
 
 // Calibrate deadzone as needed
 const DEADZONE = (input: number) => {
@@ -88,7 +87,7 @@ function App() {
   useEffect(() => {
     if (rosRef.current === null) {
       rosRef.current = new ROSLIB.Ros({
-        url: 'ws://localhost:9090'
+        url: API_ENDPOINT
       });
       rosRef.current.on('connection', function() {
         console.log('Connected to websocket server.');
@@ -115,10 +114,10 @@ function App() {
         messageType: 'interfaces/msg/Motor'
       });
 
-      var motor_msg = new ROSLIB.Message({ direction: direction, mode: 1, speed: speed });
+      var motor_msg = new ROSLIB.Message({ direction: Math.round(direction), mode: 0, speed: Math.round(speed) });
       cmd_motor.publish(motor_msg);
 
-      console.log("Sent packet: ", speed, " ", direction);
+      console.log("Sent packet: ", motor_msg);
     }
   }, [speed, direction]);
 
