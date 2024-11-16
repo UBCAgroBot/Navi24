@@ -8,10 +8,7 @@ import serial
 # SERIAL_PORT = "/dev/cu.usbmodem1101"
 SERIAL_PORT = "/dev/ttyACM0"
 
-print("Connecting to serial...")
 serial_conn = serial.Serial(port=SERIAL_PORT, baudrate=9600, timeout=None )
-time.sleep(2)
-print("Done.")
 
 def send_motor_instruction(mode:str, direction:str, speed:str):
     """
@@ -31,7 +28,7 @@ def send_motor_instruction(mode:str, direction:str, speed:str):
         raise ValueError("Speed must be 8 bits and consist of 0's & 1's")
     
     if mode == '11':
-        raise ValueError("Mode 3,'11' is undefined")
+        raise ValueError("Mode 3, ie. '11' is undefined")
     # There are 3 invalid direction values, -32, -31, and 31
     if direction == '100000':
         raise ValueError("-32 is an invalid direction")
@@ -46,7 +43,7 @@ def send_motor_instruction(mode:str, direction:str, speed:str):
     serial_conn.write(out)
     
     response = serial_conn.read_until()
-    print("Raw Arduino response:", response.decode('utf-8'))
+    print(response.decode('utf-8'))
 
 
 def int_to_str_bits(num, bits):

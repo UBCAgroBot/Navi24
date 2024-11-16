@@ -3,10 +3,10 @@ __pycache__/
 **/node_modules
 
 # ROS:
-/build/
-/devel/
-/install/
-/log/
+*/build/
+*/devel/
+*/install/
+*/log/
 
 # Catkin workspace
 /build_isolated/

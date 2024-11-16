@@ -1,5 +1,5 @@
 """
-Instead of self driving, this publisher cannot drive. It just sends garbage info...
+Sends drive forward signals
 """
 
 import rclpy
@@ -10,8 +10,8 @@ from interfaces.msg import Motor
 class DummyMotorPublisher(Node):
 
     def __init__(self):
-        super().__init__('cant_drive')
-        self.publisher_ = self.create_publisher(Motor, 'motor_instruction', 10)
+        super().__init__('drive_forward')
+        self.publisher_ = self.create_publisher(Motor, 'motor_instruction', 1)
         timer_period = 0.5
         self.timer = self.create_timer(timer_period, self.timer_callback)
         self.i = 0
