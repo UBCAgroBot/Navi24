@@ -5,8 +5,8 @@ This module provides 2 functions. send_motor_instruction and convert
 import time
 import serial
 
-SERIAL_PORT = "/dev/cu.usbmodem1101"
-# SERIAL_PORT = "/dev/ttyACM0"
+# SERIAL_PORT = "/dev/cu.usbmodem1101"
+SERIAL_PORT = "/dev/ttyACM0"
 
 print("Connecting to serial...")
 serial_conn = serial.Serial(port=SERIAL_PORT, baudrate=9600, timeout=None )
