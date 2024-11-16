@@ -57,11 +57,19 @@ void loop() {
   analogWrite(M_FRONT_RIGHT_DRIVE, (int)(MAX_SPEED * speed_input));
 
   if(wheel_direction.front_right != 0){
+    if(wheel_direction.front_right > 0){
+      digitalWrite(M_FRONT_LEFT_TURN_DIR, 1);
+      digitalWrite(M_FRONT_RIGHT_TURN_DIR, 1);
+    }
+    else if(wheel_direction.front_right < 0){
+      digitalWrite(M_FRONT_LEFT_TURN_DIR, 0);
+      digitalWrite(M_FRONT_RIGHT_TURN_DIR, 0);
+
+    }
     analogWrite(M_REAR_LEFT_TURN, (int)(turn_input));
     analogWrite(M_FRONT_LEFT_TURN, (int)(turn_input));
     analogWrite(M_REAR_RIGHT_TURN, (int)(turn_input));
     analogWrite(M_FRONT_RIGHT_TURN, (int)(turn_input));
-    
   }  
 
 }

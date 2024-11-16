@@ -12,15 +12,16 @@ direction_left = "100010"
 direction_right = "011110"
 max_speed = "01111111"
 no_speed = "00000000"
+half_speed = "00111111"
 
 def go_forward():
-    send_motor_instruction(mode_one, direction_straight, max_speed)
+    send_motor_instruction(mode_one, direction_straight, half_speed)
 
 def go_left():
-    send_motor_instruction(mode_one, direction_left, max_speed)
+    send_motor_instruction(mode_one, direction_left, no_speed)
 
 def go_right():
-    send_motor_instruction(mode_one, direction_right, max_speed)
+    send_motor_instruction(mode_one, direction_right, no_speed)
 
 def go_stop():
     send_motor_instruction(mode_one, direction_straight, no_speed)
