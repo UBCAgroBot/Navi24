@@ -5,7 +5,7 @@ import './App.css'
 import Button from './Button'
 import ROSLIB from 'roslib';
 
-let API_ENDPOINT = "ws://100.115.190.38:9090"
+let API_ENDPOINT = "ws://192.168.0.101:9090"
 
 // Calibrate deadzone as needed
 const DEADZONE = (input: number) => {
@@ -121,6 +121,20 @@ function App() {
     }
   }, [speed, direction]);
 
+  let absStop = () => {
+    if (rosRef.current !== null && connectionStatus) {
+      var cmd_motor = new ROSLIB.Topic({
+        ros: rosRef.current,
+        name: 'motor_instruction',
+        messageType: 'interfaces/msg/Motor'
+      });
+
+      var motor_msg = new ROSLIB.Message({ direction: Math.round(0), mode: 0, speed: Math.round(0) });
+      cmd_motor.publish(motor_msg);
+
+      console.log("Sent packet: ", motor_msg);
+    }
+  }
 
   let setSpeed = (speed: number) => {
     _setSpeed(speed * speedMagnitude);
@@ -207,6 +221,9 @@ function App() {
 
         Speed:
         <input type="range" className="w-full" min={0} max={1} step={0.1} onChange={(event) => { setSpeedMagnitude(Number(event.target.value)) }} value={speedMagnitude} />
+
+        <br />
+<button className="bg-red-500 m-1 p-2" onClick={() => { absStop(); }}>OVERRIDE STOP</button>
       </p>
     </div>
   )
