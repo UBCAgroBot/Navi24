@@ -5,7 +5,7 @@ import './App.css'
 import Button from './Button'
 import ROSLIB from 'roslib';
 
-let API_ENDPOINT = "ws://192.168.0.101:9090"
+let API_ENDPOINT = "ws://localhost:9090"
 
 // Calibrate deadzone as needed
 const DEADZONE = (input: number) => {
@@ -30,7 +30,7 @@ const DIRECTION_FUNCTION = (input: number) => {
 };
 
 const MAX_SPEED = 127;
-const MAX_DIRECTION = 30;
+const MAX_DIRECTION = 127;
 
 function App() {
 
