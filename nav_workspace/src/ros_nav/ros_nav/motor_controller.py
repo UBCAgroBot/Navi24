@@ -15,11 +15,8 @@ class MotorController(Node):
     
     def listener_callback(self, msg):
         # print(f"Speed: {msg.speed}, Direction: {msg.direction}, Mode: {msg.mode}")
-        spd_str = int_to_str_bits(msg.speed, 8)
-        dir_str = int_to_str_bits(msg.direction, 6)
-        mode_str = int_to_str_bits(msg.mode, 2)
 
-        send_motor_instruction(mode_str, dir_str, spd_str)
+        send_motor_instruction(msg.mode, msg.speed, msg.direction)
 
 
 def main(args=None):

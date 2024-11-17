@@ -31,17 +31,8 @@ int bits_to_int(const int* bits, int num_bits) {
 }
 
 void processCommand(char * receivedChars) {
-  int int_arr[16] = {};
-  for (int i = 0; i < 16; i ++) {
-    if (receivedChars[i] == '0') { int_arr[i] = 0; }
-    else { int_arr[i] = 1; }
-  }
-
-  current_command.mode = bits_to_int(int_arr, 2);
-
-  current_command.direction = bits_to_int(&int_arr[2], 6);
-
-  current_command.speed = bits_to_int(&int_arr[8], 8);
+  // One char should equal one int8_t
+  current_command = {receivedChars[0], receivedChars[2], receivedChars[1]};
 
   Serial.print("Mode: ");
   Serial.print(current_command.mode);

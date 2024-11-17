@@ -45,6 +45,26 @@ def send_motor_instruction(mode:str, direction:str, speed:str):
     response = serial_conn.read_until()
     print(response.decode('utf-8'))
 
+def send_motor_instruction(mode: int, speed: int, direction: int):
+    if (mode > 2):
+        raise ValueError("Invalid mode")
+
+    if (speed > 127 or speed < -128):
+        raise ValueError("Invalid speed")
+
+    if (direction > 127 or direction < -128):
+        raise ValueError("Invalid direction")
+
+    output = mode.to_bytes(1, 'little', signed=True) + \
+            speed.to_bytes(1, 'little', signed=True) + \
+            direction.to_bytes(1, 'little', signed=True)
+    serial_conn.write(output)
+    print(f"Sent: {mode} , {speed}, {direction}")
+
+    response = serial_conn.read_until()
+    print(response.decode('utf-8'))
+
+
 
 def int_to_str_bits(num, bits):
     if num < 0:

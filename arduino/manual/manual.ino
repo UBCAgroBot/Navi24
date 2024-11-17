@@ -1,6 +1,6 @@
 #include "motorController.h"
 
-const byte MESSAGE_LENGTH = 16;
+const byte MESSAGE_LENGTH = 3;
 char receivedChars[MESSAGE_LENGTH];   // an array to store the received data
 
 boolean newData = false;
@@ -75,18 +75,16 @@ void loop() {
 }
 
 void recvWithEndMarker() {
-  if (Serial.available() == 0) { return; }
+  if (Serial.available() < MESSAGE_LENGTH) { return; }
 
-  String received = Serial.readString();
+  Serial.readBytes(receivedChars, 3);
 
-  // If string is wrong size, abort
-  if (received.length() < MESSAGE_LENGTH) {
-    Serial.print("INVALID MESSAGE LENGTH");
+  // Validate to make sure the mode is correct
+  if (receivedChars[0] > 2) {
+    Serial.println("INVALID COMMAND");
+
+    // Throw out the data
     return;
-  }
-
-  for (byte i = 0; i < MESSAGE_LENGTH; i++) {
-    receivedChars[i] = received[i];
   }
 
   newData = true;
