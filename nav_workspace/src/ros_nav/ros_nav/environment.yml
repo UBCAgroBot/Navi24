@@ -5,5 +5,7 @@ channels:
 dependencies:
   - python=3.12.3
   - conda-forge::pyserial
+  - conda-forge::numpy
   - pip
   - pip:
+    - opencv-python

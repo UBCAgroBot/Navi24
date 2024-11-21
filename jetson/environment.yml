@@ -1,6 +1,0 @@
-name: jetson_env
-channels:
-  - defaults
-  - conda-forge
-dependencies:
-  - numpy
