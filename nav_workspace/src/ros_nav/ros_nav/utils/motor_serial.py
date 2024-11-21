@@ -37,13 +37,9 @@ def send_motor_instruction(mode:str, direction:str, speed:str):
     if direction == '011111':
         raise ValueError("31 is an invalid direction")
 
-    
     message = str(mode + direction + speed)
     out = (message + '\n').encode('utf-8')
     serial_conn.write(out)
-    
-    response = serial_conn.read_until()
-    print(response.decode('utf-8'))
 
 def send_motor_instruction(mode: int, speed: int, direction: int):
     if (mode > 2):
@@ -58,13 +54,18 @@ def send_motor_instruction(mode: int, speed: int, direction: int):
     output = mode.to_bytes(1, 'little', signed=True) + \
             speed.to_bytes(1, 'little', signed=True) + \
             direction.to_bytes(1, 'little', signed=True)
+    
     serial_conn.write(output)
     print(f"Sent: {mode} , {speed}, {direction}")
 
-    response = serial_conn.read_until()
-    print(response.decode('utf-8'))
+def read_from_arduino():
 
+    try:
+        response = serial_conn.read_until()
+        print(response.decode('utf-8'))
 
+    except Exception as e:
+        print(f"Error reading from serial: {e}")
 
 def int_to_str_bits(num, bits):
     if num < 0:

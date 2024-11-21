@@ -23,7 +23,8 @@ setup(
     entry_points={
         'console_scripts': [
             'motor_controller = ros_nav.motor_controller:main',
-            'drive_forward = ros_nav.drive_forward:main'
+            'drive_forward = ros_nav.drive_forward:main',
+            'arduino_listener = ros_nav.arduino_listener:main'
         ],
     },
 )
