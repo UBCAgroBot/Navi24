@@ -18,10 +18,10 @@ def go_forward():
     send_motor_instruction(mode_zero, no_speed, 0)
 
 def go_left():
-    send_motor_instruction(mode_zero, max_speed, -10)
+    send_motor_instruction(mode_zero, 0, 60)
 
 def go_right():
-    send_motor_instruction(mode_zero, no_speed, 10)
+    send_motor_instruction(mode_zero, no_speed, 60)
 
 def go_stop():
     send_motor_instruction(mode_zero, no_speed, direction_straight)

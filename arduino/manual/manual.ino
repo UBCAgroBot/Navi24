@@ -90,10 +90,13 @@ void loop() {
     //read the angles of the wheels
     int pot_front_left_val = analogRead(POT_FRONT_LEFT);
     int pot_front_right_val = analogRead(POT_FRONT_RIGHT);
-    int pot_front_left_angle = map(pot_front_left_val, 0, 1023, 0, 360);
-    int pot_front_right_angle = map(pot_front_right_val, 0, 1023, 0, 360);
+    int pot_front_left_angle = map(pot_front_left_val, 0, 1023, -180, 180);
+    int pot_front_right_angle = map(pot_front_right_val, 0, 1023, -180, 180);
 
-    Serial.println(pot_front_left_angle);
+    // Serial.print("Left at: ");
+    // Serial.print(pot_front_right_angle);
+    // Serial.print(" Target angle: ");
+    // Serial.println(wheel_direction.front_right);
 
     //turn the wheels if input angle and the wheel angle are not the same
     if(pot_front_left_angle != wheel_direction.front_left && pot_front_right_angle != wheel_direction.front_right){
@@ -126,7 +129,9 @@ void loop() {
 
     //check for new input
     recvWithEndMarker();
-    processCommand(receivedChars);
+    if (newData == true) {
+      processCommand(receivedChars);
+    }
     speed_input = get_drive_speed();
 
     //kill process if new input is different from before
@@ -139,6 +144,7 @@ void loop() {
 void recvWithEndMarker() {
   if (Serial.available() < MESSAGE_LENGTH) { return; }
 
+  Serial.println("Doing stuff");
   Serial.readBytes(receivedChars, 3);
 
   // Validate to make sure the mode is correct
