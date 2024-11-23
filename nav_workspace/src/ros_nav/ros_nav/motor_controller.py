@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from interfaces.msg import Motor
-from ros_nav.utils.motor_serial import send_motor_instruction, int_to_str_bits
+from ros_nav.utils.motor_serial import send_motor_instruction
 
 class MotorController(Node):
     def __init__(self):
@@ -16,7 +16,7 @@ class MotorController(Node):
     def listener_callback(self, msg):
         # print(f"Speed: {msg.speed}, Direction: {msg.direction}, Mode: {msg.mode}")
 
-        send_motor_instruction(msg.mode, msg.speed, msg.direction)
+        send_motor_instruction(msg.mode, msg.direction, msg.speed)
 
 
 def main(args=None):
