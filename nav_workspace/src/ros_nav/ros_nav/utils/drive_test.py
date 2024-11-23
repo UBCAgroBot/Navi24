@@ -6,25 +6,20 @@ the Arduino, no ROS.
 import argparse
 from motor_serial import send_motor_instruction
 
-mode_zero = 0
-direction_straight = 0
-direction_left = -60
-direction_right = 127
-max_speed = 127
 no_speed = 0
 half_speed = 63
 
 def go_forward():
-    send_motor_instruction(mode_zero, 0, no_speed)
+    send_motor_instruction(0, 0, half_speed)
 
 def go_left():
-    send_motor_instruction(mode_zero, 60, 0)
+    send_motor_instruction(0, 60, half_speed)
 
 def go_right():
-    send_motor_instruction(mode_zero, 60, no_speed)
+    send_motor_instruction(0, 60, half_speed)
 
 def go_stop():
-    send_motor_instruction(mode_zero, direction_straight, no_speed)
+    send_motor_instruction(0, 0, 0)
 
 def main():
     # Set up argument parser
