@@ -5,7 +5,7 @@ import './App.css'
 import Button from './Button'
 import ROSLIB from 'roslib';
 
-let API_ENDPOINT = "ws://localhost:9090"
+let API_ENDPOINT = "ws://agrobot.local:9090"
 
 // Calibrate deadzone as needed
 const DEADZONE = (input: number) => {
