@@ -16,7 +16,7 @@ class ArduinoListener(Node):
         self.timer = self.create_timer(self.timer_period, self.read_serial_data)
 
     def read_serial_data(self):
-
+        
         read_from_arduino()
 
 
