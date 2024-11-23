@@ -15,16 +15,16 @@ no_speed = 0
 half_speed = 63
 
 def go_forward():
-    send_motor_instruction(mode_zero, no_speed, 0)
+    send_motor_instruction(mode_zero, 0, no_speed)
 
 def go_left():
-    send_motor_instruction(mode_zero, 0, 60)
+    send_motor_instruction(mode_zero, 60, 0)
 
 def go_right():
-    send_motor_instruction(mode_zero, no_speed, 60)
+    send_motor_instruction(mode_zero, 60, no_speed)
 
 def go_stop():
-    send_motor_instruction(mode_zero, no_speed, direction_straight)
+    send_motor_instruction(mode_zero, direction_straight, no_speed)
 
 def main():
     # Set up argument parser
