@@ -144,7 +144,6 @@ void loop() {
 void recvWithEndMarker() {
   if (Serial.available() < MESSAGE_LENGTH) { return; }
 
-  Serial.println("Doing stuff");
   Serial.readBytes(receivedChars, 3);
 
   // Validate to make sure the mode is correct
