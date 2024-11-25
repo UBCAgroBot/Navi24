@@ -30,11 +30,16 @@ def send_motor_instruction(mode: int, direction:int, speed:int ):
     if (direction > 127 or direction < -128):
         raise ValueError("Invalid direction")
 
+    # We want to map [-127, -1] to [191, 255]
+    # We want to map [0, 127] to [0, 63]
+    converted_direction = None
     if (direction < 0):
-        direction = 255 - abs(direction)
+        converted_direction =  int(191 + (direction + 127) * (255 - 191) / (-1 + 127))
+    else:
+        converted_direction = int(direction * 63 / 127)
 
     output = mode.to_bytes(1, 'little', signed=True) + \
-            direction.to_bytes(1, 'little', signed=False) + \
+            converted_direction.to_bytes(1, 'little', signed=False) + \
             speed.to_bytes(1, 'little', signed=True)
     serial_conn.write(output)
 
