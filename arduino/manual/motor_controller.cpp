@@ -32,7 +32,7 @@ int bits_to_int(const int* bits, int num_bits) {
 
 void processCommand(char * receivedChars) {
   // One char should equal one int8_t
-  current_command = {receivedChars[0], receivedChars[2], receivedChars[1]};
+  current_command = {receivedChars[0], receivedChars[1], receivedChars[2]};
 
   Serial.print("Mode: ");
   Serial.print(current_command.mode);

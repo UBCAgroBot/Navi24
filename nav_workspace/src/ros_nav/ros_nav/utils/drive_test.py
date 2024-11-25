@@ -4,7 +4,7 @@ the Arduino, no ROS.
 """
 
 import argparse
-from motor_serial import send_motor_instruction
+from motor_serial import send_motor_instruction, read_from_arduino
 
 no_speed = 0
 half_speed = 63
@@ -42,6 +42,8 @@ def main():
         go_right()
     elif args.direction == 's':
         go_stop()
+    
+    read_from_arduino()
 
 if __name__ == "__main__":
     main()
