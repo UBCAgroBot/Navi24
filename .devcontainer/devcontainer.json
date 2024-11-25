@@ -14,7 +14,6 @@
         "--net=host",
         "-it",
         "--device=/dev/ttyACM0",
-        // "--device=/dev/cu.usbmodem1101:/dev/cu.usbmodem1101",
         "--privileged"
     ],
     "postCreateCommand": "bash -c 'echo source /opt/ros/humble/setup.bash >> ~/.bashrc && source /opt/ros/humble/setup.bash'"
