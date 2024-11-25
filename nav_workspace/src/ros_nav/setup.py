@@ -12,6 +12,7 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[pxy][yma]*')))
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -23,7 +24,6 @@ setup(
     entry_points={
         'console_scripts': [
             'motor_controller = ros_nav.motor_controller:main',
-            'drive_forward = ros_nav.drive_forward:main',
             'arduino_listener = ros_nav.arduino_listener:main'
         ],
     },
