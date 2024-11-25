@@ -1,8 +1,9 @@
 # Navigation's ROS Packages
-Build with:
+Build & run with:
 ~~~
 colcon build
 source install/setup.bash
+ros2 launch ros_nav ros_nav_launch.py
 ~~~
 
 ### interfaces:  
