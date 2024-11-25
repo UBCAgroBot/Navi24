@@ -27,7 +27,7 @@ def run_algorithm(frame):
     alg = SeesawAlgorithm(config)
     processed_image, angle = alg.process_frame(frame)
 
-    cv.imshow(f'processing', processed_image)
+    #cv.imshow(f'processing', processed_image)
     print(angle)
 
     return angle
