@@ -34,7 +34,7 @@ def send_motor_instruction(mode: int, direction:int, speed:int ):
     # We want to map [0, 127] to [0, 63]
     converted_direction = None
     if (direction < 0):
-        converted_direction =  int(191 + (direction + 127) * (255 - 191) / (-1 + 127))
+        converted_direction =  int(191 + (direction + 127) * 64 / 126)
     else:
         converted_direction = int(direction * 63 / 127)
 
