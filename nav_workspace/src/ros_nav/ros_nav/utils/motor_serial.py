@@ -34,8 +34,8 @@ def send_motor_instruction(mode: int, direction:int, speed:int ):
         direction = 255 - abs(direction)
 
     output = mode.to_bytes(1, 'little', signed=True) + \
-            direction.to_bytes(1, 'little', signed=True) + \
-            speed.to_bytes(1, 'little', signed=False)
+            direction.to_bytes(1, 'little', signed=False) + \
+            speed.to_bytes(1, 'little', signed=True)
     serial_conn.write(output)
 
 
