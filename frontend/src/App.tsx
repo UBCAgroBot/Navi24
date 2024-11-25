@@ -1,6 +1,4 @@
-import { KeyboardEventHandler, useEffect, useRef, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import Button from './Button'
 import ROSLIB from 'roslib';
@@ -92,11 +90,13 @@ function App() {
       rosRef.current.on('connection', function() {
         console.log('Connected to websocket server.');
         setConnectionStatus(true);
+        setDbg("");
       });
 
       rosRef.current.on('error', function(error) {
         console.log('Error connecting to websocket server: ', error);
         setConnectionStatus(false);
+        setDbg("");
       });
 
       rosRef.current.on('close', function() {
