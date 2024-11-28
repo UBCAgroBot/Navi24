@@ -5,43 +5,22 @@ This module provides 2 functions. send_motor_instruction and convert
 import time
 import serial
 
-# SERIAL_PORT = "/dev/cu.usbmodem1101"
-SERIAL_PORT = "/dev/ttyACM0"
+POTENTIAL_SERIAL_PORTS = ["/dev/ttyACM0", "/dev/cu.usbmodem1101"]
 
-serial_conn = serial.Serial(port=SERIAL_PORT, baudrate=9600, timeout=None )
+serial_conn = None
+for SERIAL_PORT in POTENTIAL_SERIAL_PORTS:
+    try:
+        serial_conn = serial.Serial(port=SERIAL_PORT, baudrate=9600, timeout=None)
+        break
+    except serial.SerialException:
+        continue
 
-def send_motor_instruction(mode:str, direction:str, speed:str):
-    """
-    Writes 16bits to the arduino. The 16 bits should follow 
-    the protocol in the Navi24 document. Note the bits are 
-    passed as a string.
+if serial_conn is None:
+    raise serial.SerialException("Could not open any of the specified serial ports.")
 
-    Example:
-        send_bits("1110011111111111")
-    """
-    global serial_conn
-    if len(mode) != 2 and all(bit in '01' for bit in mode):
-        raise ValueError("Mode must be 2 bits and consist of 0 & 1's")
-    if len(direction) != 6 and all (bit in '01' for bit in direction):
-        raise ValueError("Direction must be 6 bits and consist of 0's & 1's")
-    if len(speed) != 8 and all (bit in '01' for bit in speed):
-        raise ValueError("Speed must be 8 bits and consist of 0's & 1's")
-    
-    if mode == '11':
-        raise ValueError("Mode 3, ie. '11' is undefined")
-    # There are 3 invalid direction values, -32, -31, and 31
-    if direction == '100000':
-        raise ValueError("-32 is an invalid direction")
-    if direction == '100001':
-        raise ValueError("-31 is an invalid direction")
-    if direction == '011111':
-        raise ValueError("31 is an invalid direction")
+time.sleep(2)
 
-    message = str(mode + direction + speed)
-    out = (message + '\n').encode('utf-8')
-    serial_conn.write(out)
-
-def send_motor_instruction(mode: int, speed: int, direction: int):
+def send_motor_instruction(mode: int, direction:int, speed:int ):
     if (mode > 2):
         raise ValueError("Invalid mode")
 
@@ -51,15 +30,21 @@ def send_motor_instruction(mode: int, speed: int, direction: int):
     if (direction > 127 or direction < -128):
         raise ValueError("Invalid direction")
 
-    output = mode.to_bytes(1, 'little', signed=True) + \
-            speed.to_bytes(1, 'little', signed=True) + \
-            direction.to_bytes(1, 'little', signed=True)
-    
-    serial_conn.write(output)
-    print(f"Sent: {mode} , {speed}, {direction}")
+    # We want to map [-127, -1] to [191, 255]
+    # We want to map [0, 127] to [0, 63]
+    converted_direction = None
+    if (direction < 0):
+        converted_direction =  int(191 + (direction + 127) * 64 / 126)
+    else:
+        converted_direction = int(direction * 63 / 127)
 
-    # response = serial_conn.read_until()
-    # print(response.decode('utf-8'))
+    speed = max(min(speed, 100), -100)
+
+    output = mode.to_bytes(1, 'little', signed=True) + \
+            converted_direction.to_bytes(1, 'little', signed=False) + \
+            speed.to_bytes(1, 'little', signed=True)
+    serial_conn.write(output)
+
 
 def read_from_arduino():
 
@@ -69,12 +54,3 @@ def read_from_arduino():
 
     except Exception as e:
         print(f"Error reading from serial: {e}")
-
-def int_to_str_bits(num, bits):
-    if num < 0:
-        num = (1 << bits) + num
-    elif num >= (1 << bits):
-        raise ValueError("More bits than expected")
-    
-    binary_str = format(num, f'0{bits}b')
-    return binary_str
