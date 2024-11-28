@@ -5,7 +5,7 @@ char receivedChars[MESSAGE_LENGTH];   // an array to store the received data
 
 boolean newData = false;
 
-// Potentiometer connection to A0 port
+// Potentiometer connections to analog ports
 #define POT_FRONT_RIGHT A0
 #define POT_FRONT_LEFT A1
 
@@ -59,14 +59,14 @@ void loop() {
     newData = false;
   }
 
-  //go backwards (1s and 0s to be tested)
+  //go backwards
   if(speed_input < 0){
     digitalWrite(M_REAR_LEFT_DRIVE_DIR, 0);
     digitalWrite(M_REAR_RIGHT_DRIVE_DIR, 1);
     digitalWrite(M_FRONT_LEFT_DRIVE_DIR, 0);
     digitalWrite(M_FRONT_RIGHT_DRIVE_DIR, 1);  
   }
-  //go forwards (1s and 0s to be tested)
+  //go forwards
   else if(speed_input > 0){
     digitalWrite(M_REAR_LEFT_DRIVE_DIR, 1);
     digitalWrite(M_REAR_RIGHT_DRIVE_DIR, 0);
@@ -93,23 +93,23 @@ void loop() {
     int pot_front_left_angle = map(pot_front_left_val, 0, 1023, -180, 180);
     int pot_front_right_angle = map(pot_front_right_val, 0, 1023, -180, 180);
 
-    // Serial.print("Left at: ");
-    // Serial.print(pot_front_right_angle);
-    // Serial.print(" Target angle: ");
-    // Serial.println(wheel_direction.front_right);
+    Serial.print("wheel angle: ");
+    Serial.println(pot_front_right_angle);
+    Serial.print("target angle: ");
+    Serial.println(wheel_direction.front_right);
 
     //turn the wheels if input angle and the wheel angle are not the same
-    if(pot_front_left_angle != wheel_direction.front_left && pot_front_right_angle != wheel_direction.front_right){
+    if(pot_front_right_angle != wheel_direction.front_right){
 
-      //turn left
-      if(pot_front_left_angle < wheel_direction.front_left && pot_front_right_angle < wheel_direction.front_right){
+      //turn right
+      if((wheel_direction.front_right - pot_front_right_angle) < 180){
         digitalWrite(M_FRONT_LEFT_TURN_DIR, 0);
         digitalWrite(M_FRONT_RIGHT_TURN_DIR, 0);
         analogWrite(M_FRONT_LEFT_TURN, (int)(turn_input));
         analogWrite(M_FRONT_RIGHT_TURN, (int)(turn_input));
       }
-      //turn right
-      else if(pot_front_left_angle > wheel_direction.front_left && pot_front_right_angle > wheel_direction.front_right){
+      //turn left
+      else if((wheel_direction.front_right - pot_front_right_angle) >= 180){
         digitalWrite(M_FRONT_LEFT_TURN_DIR, 1);
         digitalWrite(M_FRONT_RIGHT_TURN_DIR, 1);
         analogWrite(M_FRONT_LEFT_TURN, (int)(turn_input));
