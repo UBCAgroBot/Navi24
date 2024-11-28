@@ -90,8 +90,8 @@ void loop() {
     //read the angles of the wheels
     int pot_front_left_val = analogRead(POT_FRONT_LEFT);
     int pot_front_right_val = analogRead(POT_FRONT_RIGHT);
-    int pot_front_left_angle = map(pot_front_left_val, 0, 1023, -180, 180);
-    int pot_front_right_angle = map(pot_front_right_val, 0, 1023, -180, 180);
+    int pot_front_left_angle = map(pot_front_left_val, 0, 1023, 0, 360);
+    int pot_front_right_angle = map(pot_front_right_val, 0, 1023, 0, 360);
 
     Serial.print("wheel angle: ");
     Serial.println(pot_front_right_angle);
