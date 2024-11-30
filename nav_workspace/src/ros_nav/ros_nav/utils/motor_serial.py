@@ -5,7 +5,7 @@ This module provides 2 functions. send_motor_instruction and convert
 import time
 import serial
 
-POTENTIAL_SERIAL_PORTS = ["/dev/ttyACM0", "/dev/ttyACM1" "/dev/cu.usbmodem1101"]
+POTENTIAL_SERIAL_PORTS = ["/dev/ttyACM0", "/dev/ttyACM1", "/dev/cu.usbmodem1101"]
 
 serial_conn = None
 for SERIAL_PORT in POTENTIAL_SERIAL_PORTS:
@@ -15,12 +15,10 @@ for SERIAL_PORT in POTENTIAL_SERIAL_PORTS:
     except serial.SerialException:
         continue
 
-if serial_conn is None:
-    raise serial.SerialException("Could not open any of the specified serial ports.")
-
 time.sleep(2)
 
 def send_motor_instruction(mode: int, direction:int, speed:int ):
+
     if (mode > 2):
         raise ValueError("Invalid mode")
 
@@ -40,6 +38,10 @@ def send_motor_instruction(mode: int, direction:int, speed:int ):
 
     speed = max(min(speed, 100), -100)
 
+    if serial_conn == None:
+        print("No serial connection, skipping write")
+        return
+        
     output = mode.to_bytes(1, 'little', signed=True) + \
             converted_direction.to_bytes(1, 'little', signed=False) + \
             speed.to_bytes(1, 'little', signed=True)
@@ -49,8 +51,11 @@ def send_motor_instruction(mode: int, direction:int, speed:int ):
 def read_from_arduino():
 
     try:
-        response = serial_conn.read_until()
-        print(response.decode('utf-8'))
+        if serial_conn:
+            response = serial_conn.read_until()
+            print(response.decode('utf-8'))
+        else:
+            print("No serial connection, skipping read")
 
     except Exception as e:
         print(f"Error reading from serial: {e}")
