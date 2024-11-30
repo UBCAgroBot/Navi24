@@ -21,6 +21,37 @@ This should open an ugly terminal. To start a basic desktop environment, run:
 openbox
 ```
 
+## Setup X11 Forwarding
+This assumes you're on Linux.
+Make sure your devcontainer.json looks like this:
+```json
+...
+"runArgs": [
+        "--net=host",
+        "-it",
+        "--device=/dev/ttyACM0", // Or whatever port
+        "--privileged",
+        // For X
+        "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
+        "--volume=/home/<your username>/.Xauthority:/home/vscode/.Xauthority",
+        "-e DISPLAY=$DISPLAY"
+    ],
+...
+```
+Now, on your host machine, run:
+```bash
+xhost + local:
+```
+And in the container, run:
+```
+sudo usermod -a -G video vscode
+```
+To test if it works, run
+```
+xeyes
+```
+If you see a pair of eyes, you;re good to go!
+
 ## Setup Gazebo
 Install a bunch of packages:
 ```bash

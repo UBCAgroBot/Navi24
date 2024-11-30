@@ -16,9 +16,9 @@
         "--device=/dev/ttyACM0",
         "--privileged",
         // For X
-        // "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
-        // "--volume=/home/finn/.Xauthority:/home/vscode/.Xauthority",
-        // "-e DISPLAY=$DISPLAY"
+        "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
+        "--volume=/home/finn/.Xauthority:/home/vscode/.Xauthority",
+        "-e DISPLAY=$DISPLAY"
     ],
     "postCreateCommand": "bash -c 'echo source /opt/ros/humble/setup.bash >> ~/.bashrc && source /opt/ros/humble/setup.bash'"
 }

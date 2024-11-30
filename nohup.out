@@ -1,2 +1,7 @@
 _XSERVTransmkdir: Owner of /tmp/.X11-unix should be set to root
 (EE) Failed to open authorization file "/tmp/.xas322815383.9WsZz9": No such file or directory
+Authorization required, but no authorization protocol specified
+xterm: Xt error: Can't open display: :20
+(EE) Failed to open authorization file "/tmp/.xas260124629.6WBRRf": No such file or directory
+Authorization required, but no authorization protocol specified
+xterm: Xt error: Can't open display: :21
