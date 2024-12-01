@@ -20,15 +20,11 @@ For the quickstart we will run the frontend, the ros server and the motor contro
 
 Firstly you will need a ROS2 environment. To get one open the command palette in VS Code and select *Dev Containers: Rebuild and Reopen in Container*.  
 In the container's terminal run:  
+
 ~~~
 colcon build
 source install/setup.bash
-ros2 run ros_nav motor_controller
-~~~
-Then open a new terminal in the container and run:  
-~~~
-source install/setup.bash
-ros2 launch rosbridge_server rosbridge_websocket_launch.xml
+ros2 launch ros_nav nav_launch.py
 ~~~
 
 Finally in a new terminal outside of the ros evironment start the frontend:  
