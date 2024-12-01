@@ -2,7 +2,7 @@ import rclpy
 from rclpy.node import Node
 from std_msgs.msg import String
 import serial
-from ros_nav.utils.motor_serial import read_from_arduino
+from ros_nav.utils.motor_serial import read_from_arduino, connected_to_serial
 
 class ArduinoListener(Node):
     def __init__(self):
@@ -12,8 +12,10 @@ class ArduinoListener(Node):
             'arduino_data', 
             1)
 
-        self.timer_period = 0.001
-        self.timer = self.create_timer(self.timer_period, self.read_serial_data)
+
+        if connected_to_serial():
+            self.timer_period = 0.001
+            self.timer = self.create_timer(self.timer_period, self.read_serial_data)
 
     def read_serial_data(self):
         

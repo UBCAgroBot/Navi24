@@ -11,12 +11,19 @@ serial_conn = None
 for SERIAL_PORT in POTENTIAL_SERIAL_PORTS:
     try:
         serial_conn = serial.Serial(port=SERIAL_PORT, baudrate=9600, timeout=None)
-        print("Using port: ", SERIAL_PORT)
+        print("Using port: ", SERIAL_PORT, flush=True)
         break
     except serial.SerialException:
         continue
-if serial_conn == None:
-    print("Did not connect to any serial ports")
+
+def connected_to_serial():
+    if serial_conn is not None:
+        return True
+    else:
+        return False
+
+if not connected_to_serial() == None:
+    print("Did not connect to any serial ports", flush=True)
 
 time.sleep(2)
 
@@ -43,8 +50,8 @@ def send_motor_instruction(mode: int, direction:int, speed:int ):
 
     speed = max(min(speed, 100), -100)
 
-    if serial_conn == None:
-        print("No serial connection, skipping write")
+    if not connected_to_serial():
+        print("No serial connection, skipping write", flush=True)
         return
         
     output = mode.to_bytes(1, 'little', signed=True) + \
@@ -56,17 +63,11 @@ def send_motor_instruction(mode: int, direction:int, speed:int ):
 def read_from_arduino():
 
     try:
-        if serial_conn:
+        if connected_to_serial():
             response = serial_conn.read_until()
-            print(response.decode('utf-8'))
+            print(response.decode('utf-8'), flush=True)
         else:
-            print("No serial connection, skipping read")
+            print("No serial connection, skipping read", flush=True)
 
     except Exception as e:
-        print(f"Error reading from serial: {e}")
-
-def connected_to_serial():
-    if serial_conn is not None:
-        return True
-    else:
-        return False
+        print(f"Error reading from serial: {e}", flush=True)
