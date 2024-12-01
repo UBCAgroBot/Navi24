@@ -7,19 +7,16 @@ from ros_nav.utils.motor_serial import read_from_arduino, connected_to_serial
 class ArduinoListener(Node):
     def __init__(self):
         super().__init__('arduino_listener')
-        self.publisher_ = self.create_publisher(
-            String, 
-            'arduino_data', 
-            1)
-
+        self.BACKGROUND_GREEN = "\033[42m"
+        self.RESET = "\033[0m"
 
         if connected_to_serial():
             self.timer_period = 0.001
             self.timer = self.create_timer(self.timer_period, self.read_serial_data)
 
     def read_serial_data(self):
-        
-        read_from_arduino()
+        msg = read_from_arduino()
+        self.get_logger().info(f"{self.BACKGROUND_GREEN} {SERIAL_NAME} {self.RESET} {msg}")
 
 
 def main(args=None):

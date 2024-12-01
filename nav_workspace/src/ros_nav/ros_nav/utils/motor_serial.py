@@ -1,31 +1,27 @@
-"""
-This module provides 2 functions. send_motor_instruction and convert 
-"""
-
 import time
 import serial
 
 POTENTIAL_SERIAL_PORTS = ["/dev/ttyACM0", "/dev/ttyACM1", "/dev/cu.usbmodem1101"]
 
-serial_conn = None
+SERIAL_CONN = None
+SERIAL_NAME = "NO SERIAL CONN"
 for SERIAL_PORT in POTENTIAL_SERIAL_PORTS:
     try:
-        serial_conn = serial.Serial(port=SERIAL_PORT, baudrate=9600, timeout=None)
-        print("Using port: ", SERIAL_PORT, flush=True)
+        SERIAL_CONN = serial.Serial(port=SERIAL_PORT, baudrate=9600, timeout=None)
+        SERIAL_NAME = SERIAL_PORT
         break
     except serial.SerialException:
         continue
 
+time.sleep(2)
+
 def connected_to_serial():
-    if serial_conn is not None:
+    if SERIAL_CONN is not None:
         return True
     else:
         return False
 
-if not connected_to_serial() == None:
-    print("Did not connect to any serial ports", flush=True)
 
-time.sleep(2)
 
 def send_motor_instruction(mode: int, direction:int, speed:int ):
 
@@ -49,25 +45,27 @@ def send_motor_instruction(mode: int, direction:int, speed:int ):
         converted_direction = int(direction * 63 / 127)
 
     speed = max(min(speed, 100), -100)
-
-    if not connected_to_serial():
-        print("No serial connection, skipping write", flush=True)
-        return
         
     output = mode.to_bytes(1, 'little', signed=True) + \
             converted_direction.to_bytes(1, 'little', signed=False) + \
             speed.to_bytes(1, 'little', signed=True)
-    serial_conn.write(output)
+    
+    if not SERIAL_CONN:
+        return
+
+    SERIAL_CONN.write(output)
 
 
 def read_from_arduino():
+    BACKGROUND_GREEN = "\033[42m"
+    RESET = "\033[0m"
+
+    if not SERIAL_CONN:
+        print("No serial connection, skipping read", flush=True)
+        return
 
     try:
-        if connected_to_serial():
-            response = serial_conn.read_until()
-            print(response.decode('utf-8'), flush=True)
-        else:
-            print("No serial connection, skipping read", flush=True)
-
+        response = SERIAL_CONN.read_until()
+        return response.decode('utf-8')
     except Exception as e:
         print(f"Error reading from serial: {e}", flush=True)

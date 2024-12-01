@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from interfaces.msg import Motor
-from ros_nav.utils.motor_serial import send_motor_instruction
+from ros_nav.utils.motor_serial import send_motor_instruction, SERIAL_NAME, SERIAL_CONN
 
 class MotorController(Node):
     def __init__(self):
@@ -12,11 +12,16 @@ class MotorController(Node):
             self.listener_callback,
             1)
         self.subscription
+        self.BACKGROUND_GREEN = "\033[42m"
+        self.BACKGROUND_RED = "\033[41m"
+        self.RESET = "\033[0m"
     
     def listener_callback(self, msg):
+        bg_color = self.BACKGROUND_GREEN
+        if not SERIAL_CONN:
+            bg_color = self.BACKGROUND_RED
 
-        print(f"s: {msg.speed}, d: {msg.direction}, m: {msg.mode}")
-
+        self.get_logger().info(f"{bg_color} {SERIAL_NAME} {self.RESET} s: {msg.speed}, d: {msg.direction}, m: {msg.mode}")
         send_motor_instruction(msg.mode, msg.direction, msg.speed)
 
 
