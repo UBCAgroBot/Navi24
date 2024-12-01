@@ -11,9 +11,12 @@ serial_conn = None
 for SERIAL_PORT in POTENTIAL_SERIAL_PORTS:
     try:
         serial_conn = serial.Serial(port=SERIAL_PORT, baudrate=9600, timeout=None)
+        print("Using port: ", SERIAL_PORT)
         break
     except serial.SerialException:
         continue
+if serial_conn == None:
+    print("Did not connect to any serial ports")
 
 time.sleep(2)
 
@@ -30,6 +33,8 @@ def send_motor_instruction(mode: int, direction:int, speed:int ):
 
     # We want to map [-127, -1] to [191, 255]
     # We want to map [0, 127] to [0, 63]
+    # -127 SHOULD BE MAPPED TO ALL ZERO's
+    # 127 SHOULD BE MAPPED TO ALL ONCES
     converted_direction = None
     if (direction < 0):
         converted_direction =  int(191 + (direction + 127) * 64 / 126)
@@ -59,3 +64,9 @@ def read_from_arduino():
 
     except Exception as e:
         print(f"Error reading from serial: {e}")
+
+def connected_to_serial():
+    if serial_conn is not None:
+        return True
+    else:
+        return False

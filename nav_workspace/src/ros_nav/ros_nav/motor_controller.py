@@ -14,7 +14,8 @@ class MotorController(Node):
         self.subscription
     
     def listener_callback(self, msg):
-        # print(f"Speed: {msg.speed}, Direction: {msg.direction}, Mode: {msg.mode}")
+
+        print(f"s: {msg.speed}, d: {msg.direction}, m: {msg.mode}")
 
         send_motor_instruction(msg.mode, msg.direction, msg.speed)
 
