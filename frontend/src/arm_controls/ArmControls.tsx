@@ -101,7 +101,9 @@ function ArmControls() {
 				</div>
 			</div>
 			<div className="bg-[#1A1A1D] flex items-center !h-[80px] w-full px-24 text-[#D9D9D9] font-light">
-				<button className="border border-[#676767] h-[42px] flex items-center justify-center px-8 rounded-[8px] mx-4 transition-all duration-300 hover:text-shadow-lg hover:shadow-red-700">
+				<button
+					onClick={()=>sendRosMsg(rosRef, 0, 0, connectionStatus)}
+					className="border border-[#676767] h-[42px] flex items-center justify-center px-8 rounded-[8px] mx-4 transition-all duration-300 hover:text-shadow-lg hover:shadow-red-700">
 					<p>Stop</p>
 				</button>
 				<button className="border border-[#676767] h-[42px] flex items-center justify-center px-8 rounded-[8px] mx-4 transition-all duration-300 hover:text-shadow-lg hover:shadow-blue-700"><p>Activate Auto Pilot</p></button>
