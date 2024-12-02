@@ -9,16 +9,17 @@ from launch_xml.launch_description_sources import XMLLaunchDescriptionSource
 
 def generate_launch_description():
     return launch.LaunchDescription([
+        launch.actions.SetEnvironmentVariable('RCUTILS_CONSOLE_OUTPUT_FORMAT', '{message}'),
         launch_ros.actions.Node(
             package='ros_nav',
-            executable='motor_controller',
-            name='motor_controller',
+            executable='motor',
+            name='motor',
             output='screen',
         ),
         launch_ros.actions.Node(
             package='ros_nav',
-            executable='arduino_listener',
-            name='arduino_listener',
+            executable='listener',
+            name='listener',
             output='screen',
         ),
         IncludeLaunchDescription(

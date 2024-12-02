@@ -23,8 +23,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'motor_controller = ros_nav.motor_controller:main',
-            'arduino_listener = ros_nav.arduino_listener:main'
+            'motor = ros_nav.motor_controller:main',
+            'listener = ros_nav.arduino_listener:main'
         ],
     },
 )
