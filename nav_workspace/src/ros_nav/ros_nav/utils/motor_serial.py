@@ -24,6 +24,13 @@ def connected_to_serial():
 
 
 def send_motor_instruction(mode: int, direction:int, speed:int ):
+    """
+    Send a motor instruction through the SERIAL_CONN.
+
+    Mode: [0,2] (unused, should be set to 0)
+    Direction: [-180, 180] (Direction to point the wheels, 0 is forward)
+    Speed: [-128, 127] (How fast to spin the wheels, negative speed means backwards.)
+    """
 
     if (mode > 2):
         raise ValueError("Invalid mode")
@@ -31,23 +38,13 @@ def send_motor_instruction(mode: int, direction:int, speed:int ):
     if (speed > 127 or speed < -128):
         raise ValueError("Invalid speed")
 
-    if (direction > 127 or direction < -128):
+    if (direction > 180 or direction < -180):
         raise ValueError("Invalid direction")
-
-    # We want to map [-127, -1] to [191, 255]
-    # We want to map [0, 127] to [0, 63]
-    # -127 SHOULD BE MAPPED TO ALL ZERO's
-    # 127 SHOULD BE MAPPED TO ALL ONCES
-    converted_direction = None
-    if (direction < 0):
-        converted_direction =  int(191 + (direction + 127) * 64 / 126)
-    else:
-        converted_direction = int(direction * 63 / 127)
 
     speed = max(min(speed, 100), -100)
         
     output = mode.to_bytes(1, 'little', signed=True) + \
-            converted_direction.to_bytes(1, 'little', signed=False) + \
+            direction.to_bytes(2, 'little', signed=True) + \
             speed.to_bytes(1, 'little', signed=True)
     
     if not SERIAL_CONN:

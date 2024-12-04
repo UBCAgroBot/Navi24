@@ -6,44 +6,23 @@ the Arduino, no ROS.
 import argparse
 from motor_serial import send_motor_instruction, read_from_arduino
 
-no_speed = 0
-half_speed = 63
-
-def go_forward():
-    send_motor_instruction(0, 0, half_speed)
-
-def go_left():
-    send_motor_instruction(0, 60, half_speed)
-
-def go_right():
-    send_motor_instruction(0, 60, half_speed)
-
-def go_stop():
-    send_motor_instruction(0, 0, 0)
-
 def main():
-    # Set up argument parser
-    parser = argparse.ArgumentParser(description="Control motor direction")
+    parser = argparse.ArgumentParser(description="Send motor direction and speed")
     parser.add_argument(
         'direction',
-        choices=['f', 'l', 'r', 's'],
-        help="Specify 's' for straight, 'l' for left, or 'r' for right"
+        type=int,
+        help="Direction of the motor [-180 to 180]."
     )
-    
-    # Parse the arguments
+    parser.add_argument(
+        'speed',
+        type=int,
+        help="Speed of the motor [-128 to 127]."
+    )
+
     args = parser.parse_args()
     
-    # Call the appropriate function based on the flag
-    if args.direction == 'f':
-        go_forward()
-    elif args.direction == 'l':
-        go_left()
-    elif args.direction == 'r':
-        go_right()
-    elif args.direction == 's':
-        go_stop()
-    
-    read_from_arduino()
+    send_motor_instruction(0, args.direction, args.speed)
+    print(read_from_arduino())
 
 if __name__ == "__main__":
     main()
