@@ -8,15 +8,17 @@ from omegaconf import OmegaConf
 
 from image_processing.utils.SeesawAlgorithm import SeesawAlgorithm
 from image_processing.utils.change_res import change_res_2
+from image_processing.utils.HoughAlgorithm import HoughAlgorithm
+from image_processing.utils.CenterRowAlgorithm import CenterRowAlgorithm
 
 
 def run_algorithm(frame):
 
     # set video config
-    vid_config = OmegaConf.load(f'image_processing/image_processing/utils/config/algorithm/seesaw.yaml')
+    vid_config = OmegaConf.load(f'image_processing/image_processing/utils/config/video/crop.yaml')
 
     # set algorithm config
-    alg_config = OmegaConf.load(f'image_processing/image_processing/utils/config/video/crop.yaml')
+    alg_config = OmegaConf.load(f'image_processing/image_processing/utils/config/algorithm/hough.yaml')
 
     # merge config files
     config = OmegaConf.merge(alg_config, vid_config)
@@ -24,10 +26,13 @@ def run_algorithm(frame):
     frame = change_res_2(frame, 720)
     frame = pre_process.standardize_frame(frame)
  
-    alg = SeesawAlgorithm(config)
+    # alg = SeesawAlgorithm(config)
+    # alg = CenterRowAlgorithm(config)
+    alg = HoughAlgorithm(config)
+
     processed_image, angle = alg.process_frame(frame)
 
-    #cv.imshow(f'processing', processed_image)
+    cv.imshow(f'processing', processed_image)
     print(angle)
 
     return angle
