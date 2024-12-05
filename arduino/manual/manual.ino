@@ -90,38 +90,46 @@ void loop() {
     //read the angles of the wheels
     int pot_front_left_val = analogRead(POT_FRONT_LEFT);
     int pot_front_right_val = analogRead(POT_FRONT_RIGHT);
-    int pot_front_left_angle = map(pot_front_left_val, 0, 1023, 0, 360);
-    int pot_front_right_angle = map(pot_front_right_val, 0, 1023, 0, 360);
+    int pot_front_left_angle = map(pot_front_left_val, 0, 1023, -180, 180);
+    int pot_front_right_angle = map(pot_front_right_val, 0, 1023, -180, 180);
 
+
+    //Serial.print("wheel angle: ");
+    //Serial.println(pot_front_right_angle);
+
+    //input angle and wheel angle are same, cut power
+    if(abs(pot_front_right_angle - wheel_direction.front_right) <= 5){
+      analogWrite(M_FRONT_LEFT_TURN, 0);
+      analogWrite(M_FRONT_RIGHT_TURN, 0);
+      
+      //process finished break out of the loop
+      check = true;
+      break;
+    }
+    
+   
     //turn the wheels if input angle and the wheel angle are not the same
-    if(pot_front_right_angle != wheel_direction.front_right){
+    else if(pot_front_right_angle != wheel_direction.front_right && abs(pot_front_right_angle - wheel_direction.front_right) > 5){
 
       //turn right
       if((wheel_direction.front_right - pot_front_right_angle) < 180){
-        digitalWrite(M_FRONT_LEFT_TURN_DIR, 0);
-        digitalWrite(M_FRONT_RIGHT_TURN_DIR, 0);
+        Serial.print("Diff : ");
+        Serial.println(wheel_direction.front_right - pot_front_right_angle);
+        digitalWrite(M_FRONT_LEFT_TURN_DIR, 1);
+        digitalWrite(M_FRONT_RIGHT_TURN_DIR, 1);
         analogWrite(M_FRONT_LEFT_TURN, (int)(turn_input));
         analogWrite(M_FRONT_RIGHT_TURN, (int)(turn_input));
       }
       //turn left
       else if((wheel_direction.front_right - pot_front_right_angle) >= 180){
-        digitalWrite(M_FRONT_LEFT_TURN_DIR, 1);
-        digitalWrite(M_FRONT_RIGHT_TURN_DIR, 1);
+        digitalWrite(M_FRONT_LEFT_TURN_DIR, 0);
+        digitalWrite(M_FRONT_RIGHT_TURN_DIR, 0);
         analogWrite(M_FRONT_LEFT_TURN, (int)(turn_input));
         analogWrite(M_FRONT_RIGHT_TURN, (int)(turn_input));
       }
       
     }
     
-    //input angle and wheel angle are same, cut power
-    else{
-      analogWrite(M_FRONT_LEFT_TURN, 0);
-      analogWrite(M_FRONT_RIGHT_TURN, 0);
-      
-      //process finished break out of the loop
-      check = true;
-    }
-
     //check for new input
     recvWithEndMarker();
     if (newData == true) {
