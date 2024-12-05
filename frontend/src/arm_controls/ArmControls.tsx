@@ -8,7 +8,6 @@ function ArmControls() {
 
 	const [apiEndpoint, setApiEndpoint] = useState<string>("ws://localhost:9090");
 	const [connectionStatus, setConnectionStatus] = useState<boolean>(false);
-	const [gamepadConnected, setGamepadConnected] = useState<boolean>(false);
 
 	const [speed, setSpeed] = useState<number>(0);
 	const [direction, setDirection] = useState<number>(0);
@@ -134,7 +133,7 @@ function ArmControls() {
 					</p>
 				</div>
 				<div className="h-[42px] flex items-center justify-center px-8 rounded-[8px] mx-4">
-					{gamepadConnected ?
+					{false ?
 						<p className="text-green-600">Connected to Controller</p>
 						:
 						<p className="">No Controller</p>

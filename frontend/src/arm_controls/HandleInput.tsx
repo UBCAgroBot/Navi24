@@ -1,5 +1,15 @@
 import { useEffect } from "react";
 
+interface HandleInputProps {
+	speed: number;
+	direction: number;
+	setSpeed: React.Dispatch<React.SetStateAction<number>>
+	setDirection: React.Dispatch<React.SetStateAction<number>>
+	setWPressed: React.Dispatch<React.SetStateAction<boolean>>
+	setAPressed: React.Dispatch<React.SetStateAction<boolean>>
+	setSPressed: React.Dispatch<React.SetStateAction<boolean>>
+	setDPressed: React.Dispatch<React.SetStateAction<boolean>>
+}
 function HandleInput({
 	speed,
 	direction,
@@ -9,10 +19,13 @@ function HandleInput({
 	setAPressed,
 	setSPressed,
 	setDPressed
-}) {
+}:HandleInputProps) {
+	
+	speed = speed;
+	direction = direction;
 	useEffect(() => {
 
-		function handleKeyDown(event) {
+		function handleKeyDown(event:KeyboardEvent) {
 			const key = event.key;
 	
 			if (key !== "w" &&
@@ -45,7 +58,7 @@ function HandleInput({
 			}
 		}
 	
-		function handleKeyUp(event) {
+		function handleKeyUp(event:KeyboardEvent) {
 			const key = event.key;
 	
 			if (key !== "w" &&
