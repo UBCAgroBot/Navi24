@@ -1,5 +1,6 @@
 import launch
 import launch_ros.actions
+from launch.actions import ExecuteProcess
 
 import os
 from launch import LaunchDescription
@@ -20,5 +21,14 @@ def generate_launch_description():
             XMLLaunchDescriptionSource([os.path.join(
                 get_package_share_directory('rosbridge_server'), 'launch'),
                 '/rosbridge_websocket_launch.xml'])
+        ),
+        ExecuteProcess(
+            cmd=[
+                'bash', '-c',
+                'npm i --prefix ../frontend && ' +
+                'npm run build --prefix ../frontend && ' + 
+                'npm run preview --prefix ../frontend'
+                ],
+            output='screen',
         ),
     ])

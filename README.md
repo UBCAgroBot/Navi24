@@ -16,22 +16,38 @@ Once the Zed cameras arrive they will publish data to ROS and the path planning 
 
 ## Quickstart
 
-For the quickstart we will run the frontend, the ros server and the motor controller to see how a request goes from the frontend to the aurduino.
+For the quickstart we will use a ROS launchfile to launch the entire navigation stack.
 
 Firstly you will need a ROS2 environment. To get one open the command palette in VS Code and select *Dev Containers: Rebuild and Reopen in Container*.  
-In the container's terminal run:  
 
-~~~
-colcon build
-source install/setup.bash
-ros2 launch ros_nav nav_launch.py
-~~~
+Our project is always built and run inside the `nav_workspace` directory. So cd into it:  
+`cd nav_workspace`
 
-Finally in a new terminal outside of the ros evironment start the frontend:  
-~~~
-cd frontend
-pnpm i
-pnpm dev
-~~~
+The three command to build and run our stack are in a shell script, so finally run:
+```
+./launch.sh
+```
 
-When you use the web interface you will see the `motor_controller` node printing the motor instructions it receives 🥳.
+Congrats 🥳. The entire navigation stack is running locally on your computer! Head to 
+[http://localhost:4173/arm-controls](http://localhost:4173/arm-controls) to remotely control agrobot!
+
+When you interact with the web interface you should see your actions reflected in the terminal like this:
+```
+[motor-1]  MOTOR NODE  mod:0, dir: -180, spd: -127
+[motor-1]  NO ARDUINO  not connected through serial
+[motor-1]  MOTOR NODE  mod:0, dir: -180, spd: 127
+[motor-1]  NO ARDUINO  not connected through serial
+[motor-1]  MOTOR NODE  mod:0, dir: 180, spd: 127
+[motor-1]  NO ARDUINO  not connected through serial
+[motor-1]  MOTOR NODE  mod:0, dir: 0, spd: 127
+[motor-1]  NO ARDUINO  not connected through serial
+[motor-1]  MOTOR NODE  mod:0, dir: 0, spd: -127
+[motor-1]  NO ARDUINO  not connected through serial
+[motor-1]  MOTOR NODE  mod:0, dir: -180, spd: -127
+[motor-1]  NO ARDUINO  not connected through serial
+[motor-1]  MOTOR NODE  mod:0, dir: 0, spd: 0
+```
+
+The MOTOR NODE line displays the value the ROS MOTOR NODE received. The NO ARDUINO line 
+displays the line the arduino send back to us through serial. When no arduino is connected 
+we try to run everything as realistically as possible so we replace the arduino response with "not connected through serial".
