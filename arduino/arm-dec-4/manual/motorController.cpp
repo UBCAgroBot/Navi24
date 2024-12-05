@@ -2,16 +2,7 @@
 #include "Arduino.h"
 
 // Initialize global variables
-WheelDirection wheel_direction = {0, 0, 0, 0};
 Command current_command = {0, 0, 0};
-const int MAX_ROTATION_ANGLE = 90;
-
-// Define functions
-int clamp(int val, int min_val, int max_val) {
-    if (val < min_val) return min_val;
-    if (val > max_val) return max_val;
-    return val;
-}
 
 void processCommand(byte * receivedBytes) {
   // One char should equal one int8_t
@@ -28,12 +19,6 @@ void processCommand(byte * receivedBytes) {
   Serial.print(", spd: ");
   Serial.print(current_command.speed);
   Serial.println();
-
-  wheel_direction.front_right = current_command.direction;
-  wheel_direction.front_left = current_command.direction;
-  wheel_direction.rear_right = 0;
-  wheel_direction.rear_left = 0;
-
 }
 
 float get_drive_speed() {

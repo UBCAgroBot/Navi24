@@ -2,6 +2,7 @@
 #define MOTOR_CONTROLLER_H
 
 #include <stdint.h>
+#include <Arduino.h>
 
 // Define constants
 #define M_REAR_LEFT_DRIVE 2
@@ -21,20 +22,12 @@ struct Command {
     int8_t speed;
 };
 
-struct WheelDirection {
-    int16_t front_right;
-    int16_t front_left;
-    int16_t rear_right;
-    int16_t rear_left;
-};
 
 // Declare global variables as extern to avoid multiple definitions
-extern WheelDirection wheel_direction;
 extern Command current_command;
-extern const int MAX_ROTATION_ANGLE;
 
 // Function declarations
-void processCommand(byte* receivedChars);
+void processCommand(byte * receivedBytes);
 float get_drive_speed();
 
 #endif

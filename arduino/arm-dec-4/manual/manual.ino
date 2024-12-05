@@ -46,8 +46,16 @@ void loop() {
   //check for new input
   recvWithEndMarker();
 
+  // Variable definitions
   const float turn_motor_speed = 64;
   float speed_input = get_drive_speed();
+
+
+  // ===========================================
+  //
+  // Motor forward/backward control
+  //
+  // ===========================================
 
   //go backwards
   if(speed_input < 0){
@@ -70,12 +78,50 @@ void loop() {
   analogWrite(M_REAR_RIGHT_DRIVE, (int)(MAX_SPEED * speed_input));
   analogWrite(M_FRONT_RIGHT_DRIVE, (int)(MAX_SPEED * speed_input));
 
-  int pot_front_left_val = analogRead(POT_FRONT_LEFT);
-  int pot_front_right_val = analogRead(POT_FRONT_RIGHT);
-  int pot_front_left_angle = map(pot_front_left_val, 0, 1023, 0, 360);
-  int pot_front_right_angle = map(pot_front_right_val, 0, 1023, 0, 360);
+  // ===========================================
+  //
+  // Motor left/right control
+  //
+  // ===========================================
 
-  int clockwise_diff = 0;
+  //int pot_front_left_val = analogRead(POT_FRONT_LEFT);
+  int pot_front_right_val = analogRead(POT_FRONT_RIGHT);
+  //int actual_front_left_angle = map(pot_front_left_val, 0, 1023, -180, 180);
+  int actual_front_right_angle = map(pot_front_right_val, 0, 1023, -180, 180);
+
+  int desired_angle = current_command.direction;
+  // Moving clockwise is asking how many values do
+  // we need to add to get to our desired angle
+  int front_right_clockwise_diff = desired_angle - actual_front_right_angle;
+  if (front_right_clockwise_diff < 0) {
+    // If desired angle is less than actual angle
+    // we need to add a full rotation
+    front_right_clockwise_diff += 180;
+  }
+
+  // Moving counter clockwise is asking how many values
+  // do we need to subtract to get to our angle
+  int front_right_counter_clockwise_diff =  actual_front_right_angle - desired_angle;
+  if (front_right_counter_clockwise_diff < 0) {
+    // If actual angle is less than desired angle we
+    // will need to add a full rotation
+    front_right_counter_clockwise_diff += 180;
+  }
+
+  if (front_right_clockwise_diff < front_right_counter_clockwise_diff) {
+    // MOVE CLOCKWISE
+    digitalWrite(M_FRONT_LEFT_TURN_DIR, 1);
+    digitalWrite(M_FRONT_RIGHT_TURN_DIR, 1);
+    analogWrite(M_FRONT_LEFT_TURN, (int)(turn_motor_speed));
+    analogWrite(M_FRONT_RIGHT_TURN, (int)(turn_motor_speed));
+  }
+  else {
+    // MOVE COUNTERCLOCKWISE
+    digitalWrite(M_FRONT_LEFT_TURN_DIR, 0);
+    digitalWrite(M_FRONT_RIGHT_TURN_DIR, 0);
+    analogWrite(M_FRONT_LEFT_TURN, (int)(turn_motor_speed));
+    analogWrite(M_FRONT_RIGHT_TURN, (int)(turn_motor_speed));
+  }
 }
 
 void recvWithEndMarker() {
