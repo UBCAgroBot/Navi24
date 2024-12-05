@@ -63,7 +63,7 @@ sudo apt install ros-humble-ros-ign-gazebo
 sudo apt install ros-humble-ros-ign-bridge
 ```
 
-Navigate to the `navigation_gazebo` folder. Run
+Navigate to the `virtual_maize_field` folder. Run
 ```bash
 colcon build
 source install/setup.bash
