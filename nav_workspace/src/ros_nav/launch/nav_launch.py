@@ -16,12 +16,6 @@ def generate_launch_description():
             name='motor',
             output='screen',
         ),
-        launch_ros.actions.Node(
-            package='ros_nav',
-            executable='listener',
-            name='listener',
-            output='screen',
-        ),
         IncludeLaunchDescription(
             XMLLaunchDescriptionSource([os.path.join(
                 get_package_share_directory('rosbridge_server'), 'launch'),

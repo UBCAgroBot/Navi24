@@ -4,5 +4,4 @@
 
 colcon build
 source install/setup.bash
-ros2 launch rosbridge_server rosbridge_websocket_launch.xml &
-ros2 run ros_nav motor_controller
+ros2 launch ros_nav nav_launch.py

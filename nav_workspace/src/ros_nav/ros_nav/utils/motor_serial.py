@@ -3,11 +3,13 @@ import serial
 
 POTENTIAL_SERIAL_PORTS = ["/dev/ttyACM0", "/dev/ttyACM1", "/dev/cu.usbmodem1101"]
 
+TIMEOUT_SECONDS = 2
 SERIAL_CONN = None
-SERIAL_NAME = "NO SERIAL CONN"
+SERIAL_NAME = " NO ARDUINO "
 for SERIAL_PORT in POTENTIAL_SERIAL_PORTS:
     try:
         SERIAL_CONN = serial.Serial(port=SERIAL_PORT, baudrate=9600, timeout=None)
+        SERIAL_CONN.timeout = TIMEOUT_SECONDS
         SERIAL_NAME = SERIAL_PORT
         break
     except serial.SerialException:
@@ -48,9 +50,10 @@ def send_motor_instruction(mode: int, direction:int, speed:int ):
             speed.to_bytes(1, 'little', signed=True)
     
     if not SERIAL_CONN:
-        return
+        return "not connected through serial"
 
     SERIAL_CONN.write(output)
+    return read_from_arduino()
 
 
 def read_from_arduino():
