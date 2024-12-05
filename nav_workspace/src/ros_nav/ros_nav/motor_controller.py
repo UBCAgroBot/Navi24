@@ -14,21 +14,12 @@ class MotorController(Node):
             1)
         self.subscription
 
-        self.last_msg_time = 0.0
-        self.min_interval = 0.08
-
         self.BACKGROUND_GREEN = "\033[42m"
         self.BACKGROUND_RED = "\033[41m"
         self.BACKGROUND_YELLOW = "\033[43m"
         self.RESET = "\033[0m"
     
     def listener_callback(self, msg):
-        # Only allow one msg every 8ms
-        current_time = time.time()
-        if current_time - self.last_msg_time < self.min_interval:
-            return
-        self.last_msg_time = current_time
-
         bg_color = self.BACKGROUND_GREEN
         if not SERIAL_CONN:
             bg_color = self.BACKGROUND_RED
