@@ -47,7 +47,7 @@ void processCommand(char * receivedChars) {
 }
 
 int calculateWheelDirections() {
-    int direction = map(current_command.direction, 0, 255, 0, 360);
+    float direction = current_command.direction;
     switch (current_command.mode) {
         case 0b01:
             wheel_direction.rear_right = direction;
