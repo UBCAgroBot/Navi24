@@ -1,7 +1,7 @@
 {
     "name": "ROS2 Dev Container",
     "remoteUser": "vscode",
-    "image": "agrobotappliedai/ros-containers:new",
+    "image": "agrobotappliedai/ros-containers:gazebo",
     "customizations":{
         "settings": {
             "terminal.integrated.shell.linux": "bash"
@@ -15,6 +15,7 @@
         "-it",
         "--device=/dev/ttyACM0",
         "--privileged",
+        "--ipc=host",
         // For X
         "--volume=/tmp/.X11-unix:/tmp/.X11-unix",
         "--volume=/home/finn/.Xauthority:/home/vscode/.Xauthority",

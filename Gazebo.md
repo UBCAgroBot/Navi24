@@ -50,7 +50,7 @@ To test if it works, run
 ```
 xeyes
 ```
-If you see a pair of eyes, you;re good to go!
+If you see a pair of eyes, you're good to go!
 
 ## Setup Gazebo
 Install a bunch of packages:
@@ -63,16 +63,31 @@ sudo apt install ros-humble-ros-ign-gazebo
 sudo apt install ros-humble-ros-ign-bridge
 ```
 
-Navigate to the `virtual_maize_field` folder. Run
+Navigate to the `navigation_gazebo` folder. Run
 ```bash
 colcon build
 source install/setup.bash
 ros2 run virtual_maize_field generate_world
 ```
+If it shows some weird error about "QThread", run this instead:
+```bash
+QT_QPA_PLATFORM=minimal ros2 run virtual_maize_field generate_world
+```
+In this case, it's not actually using QT to show a window, but to do some weird opencv thing, so using the minimal platform works.
+
+Now launch gazebo:
+```bash
+ros2 launch virtual_maize_field simulation.launch.py
+```
+If it seems to launch but doesn't pop up, then the DISPLAY variable is probably wrong.
+Go to your host system and find out the display (`echo $DISPLAY`). Now, run Gazebo with the display:
+```bash
+DISPLAY=:0 ros2 launch virtual_maize_field simulation.launch.py
+```
 
 ## Launch Gazebo
 Now, in the VNC window (if using), and in the `virtual_maize_field` folder, run:
-```
+```bash
 source install/setup.bash
 ros2 launch virtual_maize_field simulation.launch.py
 ```
