@@ -34,9 +34,7 @@ extern Command current_command;
 extern const int MAX_ROTATION_ANGLE;
 
 // Function declarations
-int clamp(int val, int min_val, int max_val);
-void processCommand(char* receivedChars);
-int calculateWheelDirections();
+void processCommand(byte* receivedChars);
 float get_drive_speed();
 
 #endif

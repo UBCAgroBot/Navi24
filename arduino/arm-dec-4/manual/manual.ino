@@ -1,7 +1,7 @@
 #include "motorController.h"
 
-const byte MESSAGE_LENGTH = 4;
-char receivedChars[MESSAGE_LENGTH];   // an array to store the received data
+const int MESSAGE_LENGTH = 4;
+byte receivedBytes[MESSAGE_LENGTH];   // an array to store the received data
 
 // Potentiometer connections to analog ports
 #define POT_FRONT_RIGHT A0
@@ -41,16 +41,13 @@ void setup() {
 
 }
 
-float speed_input = 0;
-float turn_input = 64;
-bool drive_dir = 0;
-bool turn_dir = 0;
-
 void loop() {
 
   //check for new input
   recvWithEndMarker();
-  speed_input = get_drive_speed();
+
+  const float turn_motor_speed = 64;
+  float speed_input = get_drive_speed();
 
   //go backwards
   if(speed_input < 0){
@@ -72,13 +69,20 @@ void loop() {
   analogWrite(M_FRONT_LEFT_DRIVE, (int)(MAX_SPEED * speed_input));
   analogWrite(M_REAR_RIGHT_DRIVE, (int)(MAX_SPEED * speed_input));
   analogWrite(M_FRONT_RIGHT_DRIVE, (int)(MAX_SPEED * speed_input));
+
+  int pot_front_left_val = analogRead(POT_FRONT_LEFT);
+  int pot_front_right_val = analogRead(POT_FRONT_RIGHT);
+  int pot_front_left_angle = map(pot_front_left_val, 0, 1023, 0, 360);
+  int pot_front_right_angle = map(pot_front_right_val, 0, 1023, 0, 360);
+
+  int clockwise_diff = 0;
 }
 
 void recvWithEndMarker() {
 
   if (Serial.available() < MESSAGE_LENGTH) { return; }
 
-  Serial.readBytes(receivedChars, MESSAGE_LENGTH);
-  processCommand(receivedChars);
+  Serial.readBytes(receivedBytes, MESSAGE_LENGTH);
+  processCommand(receivedBytes);
 
 }

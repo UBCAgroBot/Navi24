@@ -13,7 +13,7 @@ int clamp(int val, int min_val, int max_val) {
     return val;
 }
 
-void processCommand(char * receivedBytes) {
+void processCommand(byte * receivedBytes) {
   // One char should equal one int8_t
   current_command.mode = receivedBytes[0];
   uint8_t lowByte = static_cast<uint8_t>(receivedBytes[1]); // Least significant byte
@@ -29,32 +29,11 @@ void processCommand(char * receivedBytes) {
   Serial.print(current_command.speed);
   Serial.println();
 
-  calculateWheelDirections();
+  wheel_direction.front_right = current_command.direction;
+  wheel_direction.front_left = current_command.direction;
+  wheel_direction.rear_right = 0;
+  wheel_direction.rear_left = 0;
 
-}
-
-int calculateWheelDirections() {
-    float direction = current_command.direction;
-    switch (current_command.mode) {
-        case 0b01:
-            wheel_direction.rear_right = direction;
-            wheel_direction.rear_left = direction;
-        default:
-            wheel_direction.front_right = direction;
-            wheel_direction.front_left = direction;
-            if (current_command.mode == 0b00) {
-                wheel_direction.rear_right = 0;
-                wheel_direction.rear_left = 0;
-            }
-            break;
-        case 0b10:
-            wheel_direction.front_right = 45;
-            wheel_direction.front_left = -45;
-            wheel_direction.rear_right = 45;
-            wheel_direction.rear_left = -45;
-            break;
-    }
-    return 0;
 }
 
 float get_drive_speed() {
