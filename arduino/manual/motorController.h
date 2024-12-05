@@ -17,7 +17,7 @@
 // Structures for commands and wheel directions
 struct Command {
     int8_t mode;
-    uint8_t direction;
+    int16_t direction;
     int8_t speed;
 };
 

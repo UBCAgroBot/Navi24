@@ -30,9 +30,13 @@ int bits_to_int(const int* bits, int num_bits) {
     return value;
 }
 
-void processCommand(char * receivedChars) {
+void processCommand(char * receivedBytes) {
   // One char should equal one int8_t
-  current_command = {receivedChars[0], receivedChars[1], receivedChars[2]};
+  current_command.mode = receivedBytes[0];
+  uint8_t lowByte = static_cast<uint8_t>(receivedBytes[1]); // Least significant byte
+  uint8_t highByte = static_cast<uint8_t>(receivedBytes[2]); // Most significant byte
+  current_command.direction = static_cast<int16_t>(lowByte | (highByte << 8));
+  current_command.speed = receivedBytes[3];
 
   Serial.print("Mode: ");
   Serial.print(current_command.mode);

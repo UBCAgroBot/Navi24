@@ -1,6 +1,6 @@
 #include "motorController.h"
 
-const byte MESSAGE_LENGTH = 3;
+const byte MESSAGE_LENGTH = 4;
 char receivedChars[MESSAGE_LENGTH];   // an array to store the received data
 
 boolean newData = false;
@@ -93,11 +93,6 @@ void loop() {
     int pot_front_left_angle = map(pot_front_left_val, 0, 1023, 0, 360);
     int pot_front_right_angle = map(pot_front_right_val, 0, 1023, 0, 360);
 
-    Serial.print("wheel angle: ");
-    Serial.println(pot_front_right_angle);
-    Serial.print("target angle: ");
-    Serial.println(wheel_direction.front_right);
-
     //turn the wheels if input angle and the wheel angle are not the same
     if(pot_front_right_angle != wheel_direction.front_right){
 
@@ -144,12 +139,11 @@ void loop() {
 void recvWithEndMarker() {
   if (Serial.available() < MESSAGE_LENGTH) { return; }
 
-  Serial.readBytes(receivedChars, 3);
+  Serial.readBytes(receivedChars, MESSAGE_LENGTH);
 
   // Validate to make sure the mode is correct
   if (receivedChars[0] > 2) {
     Serial.println("INVALID COMMAND");
-
     // Throw out the data
     return;
   }
