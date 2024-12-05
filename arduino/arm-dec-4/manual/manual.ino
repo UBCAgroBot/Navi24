@@ -38,7 +38,6 @@ void setup() {
 
   pinMode(POT_FRONT_RIGHT, INPUT);
   pinMode(POT_FRONT_LEFT, INPUT);
-
 }
 
 void loop() {
@@ -90,33 +89,17 @@ void loop() {
   int actual_front_right_angle = map(pot_front_right_val, 0, 1023, -180, 180);
 
   int desired_angle = current_command.direction;
-  // Moving clockwise is asking how many values do
-  // we need to add to get to our desired angle
-  int front_right_clockwise_diff = desired_angle - actual_front_right_angle;
-  if (front_right_clockwise_diff < 0) {
-    // If desired angle is less than actual angle
-    // we need to add a full rotation
-    front_right_clockwise_diff += 180;
-  }
 
-  // Moving counter clockwise is asking how many values
-  // do we need to subtract to get to our angle
-  int front_right_counter_clockwise_diff =  actual_front_right_angle - desired_angle;
-  if (front_right_counter_clockwise_diff < 0) {
-    // If actual angle is less than desired angle we
-    // will need to add a full rotation
-    front_right_counter_clockwise_diff += 180;
-  }
+  int front_right_angle_diff = normalize_angle(desired_angle - actual_front_right_angle);
 
-  if (front_right_clockwise_diff < front_right_counter_clockwise_diff) {
-    // MOVE CLOCKWISE
+  int angle_error_margin = 1
+
+  if (front_right_angle_diff > angle_error_margin) {
     digitalWrite(M_FRONT_LEFT_TURN_DIR, 1);
     digitalWrite(M_FRONT_RIGHT_TURN_DIR, 1);
     analogWrite(M_FRONT_LEFT_TURN, (int)(turn_motor_speed));
     analogWrite(M_FRONT_RIGHT_TURN, (int)(turn_motor_speed));
-  }
-  else {
-    // MOVE COUNTERCLOCKWISE
+  } else if (front_right_angle_diff < -angle_error_margin) {
     digitalWrite(M_FRONT_LEFT_TURN_DIR, 0);
     digitalWrite(M_FRONT_RIGHT_TURN_DIR, 0);
     analogWrite(M_FRONT_LEFT_TURN, (int)(turn_motor_speed));
@@ -131,4 +114,11 @@ void recvWithEndMarker() {
   Serial.readBytes(receivedBytes, MESSAGE_LENGTH);
   processCommand(receivedBytes);
 
+}
+
+int normalize_angle(int angle) {
+  // Ensure the angle is in the range [-180, 180]
+  while (angle > 180) angle -= 360;
+  while (angle < -180) angle += 360;
+  return angle;
 }
