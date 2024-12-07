@@ -82,7 +82,7 @@ void loop() {
   // Motor left/right control
   //
   // ===========================================
-
+  delay(1);
   //int pot_front_left_val = analogRead(POT_FRONT_LEFT);
   int pot_front_right_val = analogRead(POT_FRONT_RIGHT);
   //int actual_front_left_angle = map(pot_front_left_val, 0, 1023, -180, 180);
@@ -92,14 +92,14 @@ void loop() {
 
   int front_right_angle_diff = normalize_angle(desired_angle - actual_front_right_angle);
 
-  int angle_error_margin = 1
+  int angle_error_margin = 1;
 
   if (front_right_angle_diff > angle_error_margin) {
     digitalWrite(M_FRONT_LEFT_TURN_DIR, 1);
     digitalWrite(M_FRONT_RIGHT_TURN_DIR, 1);
     analogWrite(M_FRONT_LEFT_TURN, (int)(turn_motor_speed));
     analogWrite(M_FRONT_RIGHT_TURN, (int)(turn_motor_speed));
-  } else if (front_right_angle_diff < -angle_error_margin) {
+  } else if (front_right_angle_diff < angle_error_margin) {
     digitalWrite(M_FRONT_LEFT_TURN_DIR, 0);
     digitalWrite(M_FRONT_RIGHT_TURN_DIR, 0);
     analogWrite(M_FRONT_LEFT_TURN, (int)(turn_motor_speed));
