@@ -37,8 +37,14 @@ def send_motor_instruction(mode: int, direction:int, speed:int ):
     if (mode > 2):
         raise ValueError("Invalid mode")
 
-    if (speed > 127 or speed < -128):
-        raise ValueError("Invalid speed")
+    #### I AM A BUG FIX ME LATER
+    #### I AM A BUG FIX ME LATER
+    #### I AM A BUG FIX ME LATER
+    #### I AM A BUG FIX ME LATER
+    #### I AM A BUG FIX ME LATER
+    if (speed > 127 or speed < 0):
+        return "no negative speed allowed"
+        # raise ValueError("Invalid speed")
 
     if (direction > 180 or direction < -180):
         raise ValueError("Invalid direction")
