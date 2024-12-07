@@ -3,8 +3,12 @@ FROM agrobotappliedai/ros-containers:latest
 USER root
 
 RUN apt-get update && \
-    apt-get install -y ros-humble-rosbridge-suite python3-opencv python3-serial python3-rosdep ros-humble-cv-bridge && \
+    apt-get install -y ros-humble-rosbridge-suite python3-opencv python3-serial python3-rosdep ros-humble-cv-bridge nodejs npm && \
     rm -rf /var/lib/apt/lists/*
+
+RUN sudo npm install -g n
+RUN sudo n stable
+RUN hash -r
 
 RUN rosdep init && rosdep update
 
