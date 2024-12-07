@@ -1,130 +1,183 @@
 import { useEffect, useState } from "react";
 
 interface HandleInputProps {
-  speed: number;
-  direction: number;
-  setSpeed: React.Dispatch<React.SetStateAction<number>>;
-  setDirection: React.Dispatch<React.SetStateAction<number>>;
-  setWPressed: React.Dispatch<React.SetStateAction<boolean>>;
-  setAPressed: React.Dispatch<React.SetStateAction<boolean>>;
-  setSPressed: React.Dispatch<React.SetStateAction<boolean>>;
-  setDPressed: React.Dispatch<React.SetStateAction<boolean>>;
+	speed: number;
+	direction: number;
+	setSpeed: React.Dispatch<React.SetStateAction<number>>;
+	setDirection: React.Dispatch<React.SetStateAction<number>>;
+	setWPressed: React.Dispatch<React.SetStateAction<boolean>>;
+	setAPressed: React.Dispatch<React.SetStateAction<boolean>>;
+	setSPressed: React.Dispatch<React.SetStateAction<boolean>>;
+	setDPressed: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function HandleInput({
-  speed,
-  direction,
-  setSpeed,
-  setDirection,
-  setWPressed,
-  setAPressed,
-  setSPressed,
-  setDPressed,
+	speed,
+	direction,
+	setSpeed,
+	setDirection,
+	setWPressed,
+	setAPressed,
+	setSPressed,
+	setDPressed,
 }: HandleInputProps) {
-  const [targetSpeed, setTargetSpeed] = useState(speed);
-  const [targetDirection, setTargetDirection] = useState(direction);
+	const [targetSpeed, setTargetSpeed] = useState(speed);
+	const [targetDirection, setTargetDirection] = useState(direction);
 
-  const speed_smoothing_factor = 0.10;
-  const turn_smoothing_factor = 0.25;
+	const speed_accelerate_smoothing_factor = 0.3;
+	const speed_return_smoothing_factor = 1;
+	const direction_accelerate_smoothing_factor = 0.1;
+	const direction_return_smoothing_factor = 0.1;
 
-  useEffect(() => {
-    const smoothUpdate = () => {
-      setSpeed((currentSpeed) => {
-        if (currentSpeed === targetSpeed) return currentSpeed;
+	useEffect(() => {
+		const smoothUpdate = () => {
+			setSpeed((currentSpeed) => {
+				if (currentSpeed === targetSpeed) { return currentSpeed; }
 
-        const diff = targetSpeed - currentSpeed;
-        const step = Math.cbrt(Math.abs(diff)) * Math.sign(diff) * speed_smoothing_factor; // Cubic smoothing step
-        const nextSpeed = currentSpeed + step;
+				const diff = targetSpeed - currentSpeed;
 
-        return Math.abs(diff) < 0.5 ? targetSpeed : nextSpeed; // Stop when close enough
-      });
+				let speed_smoothing_factor = undefined;
+				// Going up away from zero
+				if (diff > 0 && currentSpeed >= 0) {
+					speed_smoothing_factor = speed_accelerate_smoothing_factor;	
+				}
+				// Going down toward zero
+				if (diff < 0 && currentSpeed > 0) {
+					speed_smoothing_factor = speed_return_smoothing_factor;	
+				}
 
-      setDirection((currentDirection) => {
-        if (currentDirection === targetDirection) return currentDirection;
+				// Going up toward zero
+				if (diff > 0 && currentSpeed < 0) {
+					speed_smoothing_factor = speed_return_smoothing_factor;	
+				}
+				// Going down away from zero
+				if (diff < 0 && currentSpeed <= 0) {
+					speed_smoothing_factor = speed_accelerate_smoothing_factor;
+				}
 
-        const diff = targetDirection - currentDirection;
-        const step = Math.cbrt(Math.abs(diff)) * Math.sign(diff) * turn_smoothing_factor; // Cubic smoothing step
-        const nextDirection = currentDirection + step;
+				if (!speed_smoothing_factor) {
+					alert("Bug in deciding a speed smoothing factor")
+					speed_smoothing_factor = 1
+				}
 
-        return Math.abs(diff) < 0.5 ? targetDirection : nextDirection; // Stop when close enough
-      });
-    };
+				const step = Math.cbrt(Math.abs(diff)) * Math.sign(diff) * speed_smoothing_factor; // Cubic smoothing step
+				const nextSpeed = currentSpeed + step;
 
-    const interval = setInterval(smoothUpdate, 16); // Approx 60 FPS
-    return () => clearInterval(interval);
-  }, [targetSpeed, targetDirection]);
+				return Math.abs(diff) < 0.5 ? targetSpeed : nextSpeed; // Stop when close enough
+			});
 
-  useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      const key = event.key;
+			setDirection((currentDirection) => {
+				if (currentDirection === targetDirection) { return currentDirection; }
 
-      if (key !== "w" && key !== "a" && key !== "s" && key !== "d") {
-        return;
-      }
+				const diff = targetDirection - currentDirection;
+				
+				
+				let direction_smoothing_factor = undefined;
+				// Going up away from zero
+				if (diff > 0 && currentDirection >= 0) {
+					direction_smoothing_factor = direction_accelerate_smoothing_factor;	
+				}
+				// Going down toward zero
+				if (diff < 0 && currentDirection > 0) {
+					direction_smoothing_factor = direction_return_smoothing_factor;	
+				}
 
-      switch (key) {
-        case "w":
-          setTargetSpeed(127);
-          setWPressed(true);
-          break;
+				// Going up toward zero
+				if (diff > 0 && currentDirection < 0) {
+					direction_smoothing_factor = direction_return_smoothing_factor;	
+				}
+				// Going down away from zero
+				if (diff < 0 && currentDirection <= 0) {
+					direction_smoothing_factor = direction_accelerate_smoothing_factor;
+				}
 
-        case "a":
-          setTargetDirection(-180);
-          setAPressed(true);
-          break;
+				if (!direction_smoothing_factor) {
+					alert("Bug in deciding a speed smoothing factor")
+					direction_smoothing_factor = 1
+				}
 
-        case "s":
-          setTargetSpeed(-127);
-          setSPressed(true);
-          break;
+				const step = Math.cbrt(Math.abs(diff)) * Math.sign(diff) * direction_smoothing_factor; // Cubic smoothing step
+				const nextDirection = currentDirection + step;
 
-        case "d":
-          setTargetDirection(180);
-          setDPressed(true);
-          break;
-      }
-    }
+				return Math.abs(diff) < 0.5 ? targetDirection : nextDirection; // Stop when close enough
+			});
+		};
 
-    function handleKeyUp(event: KeyboardEvent) {
-      const key = event.key;
+		const interval = setInterval(smoothUpdate, 16); // Approx 60 FPS
+		return () => clearInterval(interval);
+	}, [targetSpeed, targetDirection]);
 
-      if (key !== "w" && key !== "a" && key !== "s" && key !== "d") {
-        return;
-      }
+	useEffect(() => {
+		function handleKeyDown(event: KeyboardEvent) {
+			const key = event.key;
 
-      switch (key) {
-        case "w":
-          setTargetSpeed(0);
-          setWPressed(false);
-          break;
+			if (key !== "w" && key !== "a" && key !== "s" && key !== "d") {
+				return;
+			}
 
-        case "a":
-          setTargetDirection(0);
-          setAPressed(false);
-          break;
+			switch (key) {
+				case "w":
+					setTargetSpeed(127);
+					setWPressed(true);
+					break;
 
-        case "s":
-          setTargetSpeed(0);
-          setSPressed(false);
-          break;
+				case "a":
+					setTargetDirection(-180);
+					setAPressed(true);
+					break;
 
-        case "d":
-          setTargetDirection(0);
-          setDPressed(false);
-          break;
-      }
-    }
+				case "s":
+					setTargetSpeed(-127);
+					setSPressed(true);
+					break;
 
-    window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
+				case "d":
+					setTargetDirection(180);
+					setDPressed(true);
+					break;
+			}
+		}
 
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
+		function handleKeyUp(event: KeyboardEvent) {
+			const key = event.key;
 
-  return null;
+			if (key !== "w" && key !== "a" && key !== "s" && key !== "d") {
+				return;
+			}
+
+			switch (key) {
+				case "w":
+					setTargetSpeed(0);
+					setWPressed(false);
+					break;
+
+				case "a":
+					setTargetDirection(0);
+					setAPressed(false);
+					break;
+
+				case "s":
+					setTargetSpeed(0);
+					setSPressed(false);
+					break;
+
+				case "d":
+					setTargetDirection(0);
+					setDPressed(false);
+					break;
+			}
+		}
+
+		window.addEventListener("keydown", handleKeyDown);
+		window.addEventListener("keyup", handleKeyUp);
+
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+			window.removeEventListener("keyup", handleKeyUp);
+		};
+	}, []);
+
+	return null;
 }
 
 export default HandleInput;

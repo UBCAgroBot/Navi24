@@ -6,7 +6,7 @@ import ROSLIB from 'roslib';
 function ArmControls() {
 	const rosRef = useRef<null | ROSLIB.Ros>(null);
 
-	const [apiEndpoint, setApiEndpoint] = useState<string>("ws://localhost:9090");
+	const [apiEndpoint, setApiEndpoint] = useState<string>("ws://agrobot.local:9090");
 	const [connectionStatus, setConnectionStatus] = useState<boolean>(false);
 
 	const [speed, setSpeed] = useState<number>(0);
@@ -98,17 +98,17 @@ function ArmControls() {
 						</div>
 					</div>
 				</div>
-				<div className="w-[60%] flex flex-col items-center justify-center text-[24px]">
+				<div className="w-[60%] bg-[#323232d9] flex flex-col items-center justify-center text-[24px]">
 				</div>
 			</div>
 			<div className="bg-[#1A1A1D] flex items-center !h-[80px] w-full px-24 text-[#D9D9D9] font-light">
 				<button
 					onClick={()=>sendRosMsg(rosRef, 0, 0, connectionStatus)}
-					className="border border-[#676767] h-[42px] flex items-center justify-center px-8 rounded-[8px] mx-4 transition-all duration-300 hover:text-shadow-lg hover:shadow-red-700">
+					className="bg-[#2f2f32] h-[42px] flex items-center justify-center px-8 rounded-[8px] mx-4 transition-all duration-300 hover:text-red-400">
 					<p>Stop</p>
 				</button>
-				<button className="border border-[#676767] h-[42px] flex items-center justify-center px-8 rounded-[8px] mx-4 transition-all duration-300 hover:text-shadow-lg hover:shadow-blue-700"><p>Activate Auto Pilot</p></button>
-				<div className="border border-[#676767] h-[42px] flex items-center justify-center px-8 rounded-[8px] mx-4">
+				<button className="bg-[#2f2f32] h-[42px] flex items-center justify-center px-8 rounded-[8px] mx-4 transition-all duration-300 hover:text-blue-400"><p>Activate Auto Pilot</p></button>
+				<div className="bg-[#2f2f32] h-[42px] flex items-center justify-center px-8 rounded-[8px] mx-4">
 					<select
 						value={apiEndpoint} 
 						className="bg-inherit text-inherit"
