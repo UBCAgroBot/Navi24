@@ -47,6 +47,7 @@ function ArmControls() {
 			speed,
 			connectionStatus,
 		);
+		console.log(direction)
 	}, [speed, direction])
 
 
@@ -65,9 +66,10 @@ function ArmControls() {
 			<div className="flex flex-grow">
 				<div className="w-[40%] flex flex-col">
 					<div className="flex flex-col relative items-center justify-center h-[50%]">
-						<p className="text-[96px]">{speed}</p>
+						<p className="text-[96px]">{speed.toFixed(1)}</p>
 						{/* Direction gauge */}
-						<div className="bottom-0 absolute h-[25px] w-[400px] bg-[#D9D9D9]" />
+						{/* <div className="bottom-0 absolute h-[25px] w-[400px] bg-[#D9D9D9]" /> */}
+						<p className="text-[48px]">{direction.toFixed(1)}</p>
 					</div>
 					<div className="h-[50%] flex items-center justify-center">
 						<div className="grid grid-rows-2 grid-cols-3 gap-4 text-[32px]">
