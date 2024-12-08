@@ -11,6 +11,11 @@ interface HandleInputProps {
 	setDPressed: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+function cube(x){
+    return x*x*x;
+}
+
+
 function HandleInput({
 	speed,
 	direction,
@@ -60,7 +65,9 @@ function HandleInput({
 					speed_smoothing_factor = 1
 				}
 
-				const step = Math.cbrt(Math.abs(diff)) * Math.sign(diff) * speed_smoothing_factor; // Cubic smoothing step
+                const step = cube(Math.abs(diff))* speed_smoothing_factor/(3*100*100);
+
+				//const step = Math.cbrt(Math.abs(diff)) * Math.sign(diff) * speed_smoothing_factor; Cubic smoothing step
 				const nextSpeed = currentSpeed + step;
 
 				return Math.abs(diff) < 0.5 ? targetSpeed : nextSpeed; // Stop when close enough
@@ -96,7 +103,7 @@ function HandleInput({
 					direction_smoothing_factor = 1
 				}
 
-				const step = Math.cbrt(Math.abs(diff)) * Math.sign(diff) * direction_smoothing_factor; // Cubic smoothing step
+				const step = cube(Math.abs(diff))* direction_smoothing_factor/(3*100*100);
 				const nextDirection = currentDirection + step;
 
 				return Math.abs(diff) < 0.5 ? targetDirection : nextDirection; // Stop when close enough
