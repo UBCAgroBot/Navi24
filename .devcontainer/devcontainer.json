@@ -1,7 +1,7 @@
 {
     "name": "ROS2 Dev Container",
     "remoteUser": "vscode",
-    "image": "agrobotappliedai/ros-containers:dec-6-npm",
+    "image": "agrobotappliedai/ros-containers:new",
     "customizations":{
         "settings": {
             "terminal.integrated.shell.linux": "bash"
